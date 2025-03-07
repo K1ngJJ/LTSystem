@@ -1,0 +1,170 @@
+﻿@model List<LTS_app.Models.Committee>
+
+@{
+    ViewData["Title"] = "Committee Management";
+}
+
+<link rel="stylesheet" href="~/css/committee_management.css" />
+
+<div class="hero-section">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Committees</h1>
+            <p class="lead">Committee Management</p>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <div class="d-flex gap-2 mb-3">
+        @if (User.IsInRole("Admin"))
+        {
+            <button class="btn btn-primary" onclick="openCreateModal()">
+                <i class="bi bi-plus-circle"></i> Add Committee
+            </button>
+        }
+        <a href="@Url.Action("Dashboard", User.IsInRole("Admin") ? "Admin" : "Legislator")" class="btn btn-secondary">Dashboard</a>
+
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Date Created</th>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <th>Actions</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var committee in Model)
+                    {
+                        <tr>
+                            <td>@committee.Name</td>
+                            <td>@committee.Description</td>
+                            <td>@committee.CreatedAt.ToString("MMMM dd, yyyy")</td>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <td>
+                                    <button class="btn btn-warning btn-sm"
+                                            onclick="openEditModal('@committee.Id', '@committee.Name', '@committee.Description')">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </button>
+                                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                            data-bs-target="#deleteCommitteeModal"
+                                            onclick="setDeleteCommittee(@committee.Id, '@committee.Name')">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Success Message -->
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success text-center">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (User.IsInRole("Admin"))
+{
+    <!-- Create Committee Modal -->
+    <div class="modal fade" id="createCommitteeModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create Committee</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" asp-action="Create">
+                        <div class="mb-3">
+                            <label class="form-label">Name:</label>
+                            <input type="text" name="Name" class="form-control" required />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description:</label>
+                            <textarea name="Description" class="form-control" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Committee Modal -->
+    <div class="modal fade" id="editCommitteeModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Committee</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" id="editCommitteeForm" asp-action="Edit">
+                        <input type="hidden" name="Id" id="editCommitteeId" />
+
+                        <div class="mb-3">
+                            <label class="form-label">Name:</label>
+                            <input type="text" name="Name" id="editCommitteeName" class="form-control" required />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description:</label>
+                            <textarea name="Description" id="editCommitteeDescription" class="form-control" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-warning">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Committee Modal -->
+    <div class="modal fade" id="deleteCommitteeModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete Committee</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete <strong id="deleteCommitteeName"></strong>?</p>
+                    <form method="post" asp-action="Delete">
+                        <input type="hidden" name="id" id="deleteCommitteeId" />
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script src="~/js/committee_management.js"></script>
+    <script>
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+
+        window.onpageshow = function(event) {
+            if (event.persisted) {
+                window.location.reload();
+            }
+        };
+    </script>
+}
+

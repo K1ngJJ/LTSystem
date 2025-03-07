@@ -1,0 +1,227 @@
+﻿@model List<LTS_app.Models.Bill>
+
+@{
+    ViewData["Title"] = "Bill Management";
+}
+
+<link rel="stylesheet" href="~/css/bill_management.css" />
+
+<div class="hero-section">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Bills</h1>
+            <p class="lead">Manage Legislative Bills</p>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <div class="d-flex gap-2 mb-3">
+        @if (User.IsInRole("Legislator"))
+        {
+            <button class="btn btn-primary" onclick="openCreateModal()">
+                <i class="bi bi-plus-circle"></i> Add Bill
+            </button>
+        }
+        <a href="@Url.Action("Dashboard", User.IsInRole("Admin") ? "Admin" : "Legislator")" class="btn btn-secondary">Dashboard</a>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Committee</th>
+                        <th>Session</th>
+                        <th>Status</th>
+                        @if (User.IsInRole("Legislator"))
+                        {
+                            <th>Actions</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var bill in Model)
+                    {
+                        <tr>
+                            <td>@bill.Title</td>
+                            <td>@bill.Description</td>
+                            <td>@bill.Committee?.Name ?? "Unassigned"</td>
+                            <td>@bill.Session?.Year</td>
+                            <td>
+                                @if (bill.BillHistories.Any())
+                                {
+                                    <span class="badge bg-info">@bill.BillHistories.Last().Status</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">Draft</span>
+                                }
+                            </td>
+                            @if (User.IsInRole("Legislator"))
+                            {
+                                <td>
+                                    <button class="btn btn-warning btn-sm"
+                                            onclick="openEditModal('@bill.Id', '@bill.Title', '@bill.Description', '@bill.CommitteeId', '@bill.SessionId')">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </button>
+                                    <button class="btn btn-danger btn-sm"
+                                            onclick="setDeleteBill(@bill.Id, '@bill.Title')">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Success Message -->
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success text-center">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (User.IsInRole("Legislator"))
+{
+    <!-- Create Bill Modal -->
+    <div class="modal fade" id="createBillModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create Bill</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" asp-action="Create">
+                        <div class="mb-3">
+                            <label class="form-label">Title:</label>
+                            <input type="text" name="Title" class="form-control" required />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description:</label>
+                            <textarea name="Description" class="form-control" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Committee:</label>
+                            <select name="CommitteeId" class="form-control">
+                                <option value="">Select Committee</option>
+                                @foreach (var committee in ViewBag.Committees)
+                                {
+                                    <option value="@committee.Id">@committee.Name</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Session:</label>
+                            <select name="SessionId" class="form-control">
+                                @foreach (var session in ViewBag.Sessions)
+                                {
+                                    <option value="@session.Id">@session.Year</option>
+                                }
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Bill Modal -->
+    <div class="modal fade" id="editBillModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Bill</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" id="editBillForm" asp-action="Edit">
+                        <input type="hidden" name="Id" id="editBillId" />
+
+                        <div class="mb-3">
+                            <label class="form-label">Title:</label>
+                            <input type="text" name="Title" id="editBillTitle" class="form-control" required />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description:</label>
+                            <textarea name="Description" id="editBillDescription" class="form-control" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Committee:</label>
+                            <select name="CommitteeId" id="editBillCommittee" class="form-control">
+                                <option value="">Select Committee</option>
+                                @foreach (var committee in ViewBag.Committees)
+                                {
+                                    <option value="@committee.Id">@committee.Name</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Session:</label>
+                            <select name="SessionId" id="editBillSession" class="form-control">
+                                @foreach (var session in ViewBag.Sessions)
+                                {
+                                    <option value="@session.Id">@session.Year</option>
+                                }
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-warning">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Bill Modal -->
+    <div class="modal fade" id="deleteBillModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete Bill</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete <strong id="deleteBillName"></strong>?</p>
+                    <form method="post" asp-action="Delete">
+                        <input type="hidden" name="id" id="deleteBillId" />
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script src="~/js/bill_management.js"></script>
+    <script>
+        function openCreateModal() {
+            $("#createBillModal").modal("show");
+        }
+
+        function openEditModal(id, title, description, committeeId, sessionId) {
+            $("#editBillId").val(id);
+            $("#editBillTitle").val(title);
+            $("#editBillDescription").val(description);
+            $("#editBillCommittee").val(committeeId);
+            $("#editBillSession").val(sessionId);
+            $("#editBillModal").modal("show");
+        }
+
+        function setDeleteBill(id, title) {
+            $("#deleteBillId").val(id);
+            $("#deleteBillName").text(title);
+            $("#deleteBillModal").modal("show");
+        }
+    </script>
+}

@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<link rel="stylesheet" href="~/css/home.css" />
+
+<div class="hero-section">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Welcome to the Legislative Tracking System</h1>
+            <p class="lead">
+                Stay updated with the latest bills, legislative sessions, and decisions that shape our community.
+            </p>
+            <div class="hero-buttons">
+                <a href="/Auth/Register" class="btn btn-primary">Get Started</a>
+                <a href="/Home/About" class="btn btn-outline-light">Learn More</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="features-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 feature-box">
+                <i class="fas fa-balance-scale icon"></i>
+                <h3>Track Bills</h3>
+                <p>Monitor the progress of proposed bills and legislative actions.</p>
+            </div>
+            <div class="col-md-4 feature-box">
+                <i class="fas fa-users icon"></i>
+                <h3>Engage with Legislators</h3>
+                <p>See who represents you and submit your feedback.</p>
+            </div>
+            <div class="col-md-4 feature-box">
+                <i class="fas fa-bell icon"></i>
+                <h3>Stay Notified</h3>
+                <p>Get real-time updates on legislative changes and voting results.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+
+    window.onpageshow = function(event) {
+        if (event.persisted) {
+            window.location.reload();
+        }
+    };
+</script>

@@ -1,0 +1,183 @@
+﻿@model List<LTS_app.Models.User>
+
+
+@{
+    ViewData["Title"] = "User Management";
+}
+
+<link rel="stylesheet" href="~/css/user_management.css" />
+
+<div class="hero-section">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Accounts</h1>
+            <p class="lead">
+               Account Management
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <div class="d-flex gap-2 mb-3">
+        <button class="btn btn-primary" onclick="openCreateModal()">
+            <i class="bi bi-plus-circle"></i> Add User
+        </button>
+        <a href="@Url.Action("Dashboard", "Admin")" class="btn btn-secondary">Dashboard</a>
+    </div>
+
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <!--th>ID</th-->
+                        <th>Username</th>
+                        <th>Email Address</th>
+                        <th>Role</th>
+                        <th>Date Created</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model)
+                    {
+                        <tr>
+                            <!--td>@user.Id</td-->
+                            <td>@user.Username</td>
+                            <td>@user.Email</td>
+                            <td>@user.Role</td>
+                            <td>@user.CreatedAt.ToString("MMMM dd, yyyy")</td>
+                            <td>
+                                <span class="badge @(user.IsActive ? "bg-success" : "bg-danger")">
+                                    @(user.IsActive ? "Allow " : "Block")
+                                </span>
+                            </td>
+                            <td>
+                                <button class="btn btn-warning btn-sm" onclick="openEditModal('@user.Id', '@user.Username', '@user.Email', '@user.Role')">
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>
+                                <button class="btn btn-danger btn-sm" onclick="openDeleteModal('@user.Id', '@user.Username')">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                                <a asp-action="ToggleStatus" asp-controller="User" asp-route-id="@user.Id"
+                                   class="btn btn-sm @(user.IsActive ? "btn-secondary" : "btn-success")">
+                                    @(user.IsActive ? "Revoke" : "Grant ")
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Create User Modal -->
+<div class="modal fade" id="createUserModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Create User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="@Url.Action("Create", "User")">
+                    <div class="mb-3">
+                        <label class="form-label">Username:</label>
+                        <input type="text" name="Username" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email:</label>
+                        <input type="email" name="Email" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password:</label>
+                        <input type="password" name="Password" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Role:</label>
+                        <select name="Role" class="form-control">
+                            <option value="User">User</option>
+                            <option value="Legislator">Legislator</option>
+                            <option value="Admin">Admin</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit User Modal -->
+<div class="modal fade" id="editUserModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="@Url.Action("Edit", "User")">
+                    <input type="hidden" name="Id" id="editUserId" />
+
+                    <div class="mb-3">
+                        <label class="form-label">Username:</label>
+                        <input type="text" name="Username" id="editUsername" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Email:</label>
+                        <input type="email" name="Email" id="editEmail" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Role:</label>
+                        <select name="Role" id="editRole" class="form-control">
+                            <option value="User">User</option>
+                            <option value="Legislator">Legislator</option>
+                            <option value="Admin">Admin</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-warning">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete User Modal -->
+<div class="modal fade" id="deleteUserModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete <strong id="deleteUsername"></strong>?</p>
+                <form method="post" action="@Url.Action("DeleteConfirmed", "User")">
+                    <input type="hidden" name="Id" id="deleteUserId" />
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/user_management.js"></script>
+    <script>
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+
+        window.onpageshow = function(event) {
+            if (event.persisted) {
+                window.location.reload();
+            }
+        };
+    </script>
+  
+}

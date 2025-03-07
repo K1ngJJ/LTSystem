@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+<link rel="stylesheet" href="~/css/auth.css" />
+
+<div class="login-container">
+    <div class="login-card">
+        <h2>Login</h2>
+
+        @if (!string.IsNullOrEmpty(ViewBag.Error))
+        {
+            <div class="error-message">@ViewBag.Error</div>
+        }
+
+        @if (!string.IsNullOrEmpty(ViewBag.Message))
+        {
+            <div class="success-message">@ViewBag.Message</div>
+        }
+
+        <form method="post" action="@Url.Action("Login", "Auth")">
+            <div class="input-group">
+                <input type="text" name="username" placeholder="Username or Email" required />
+            </div>
+            <div class="input-group">
+                <input type="password" name="password" placeholder="Password" required />
+            </div>
+            <button type="submit" class="btn-login">Login</button>
+        </form>
+
+        <p class="register-link">Don't have an account? <a href="@Url.Action("Register", "Auth")">Register here</a></p>
+        <p class="forgot-password"><a href="@Url.Action("ForgotPassword", "Auth")">Forgot Password?</a></p>
+    </div>
+</div>
+
+<script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+</script>

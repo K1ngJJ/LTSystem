@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+    var username = User.Identity.IsAuthenticated ? User.Identity.Name : "Admin";
+}
+
+<link rel="stylesheet" href="~/css/admin_dashboard.css" />
+
+<div class="hero-section">
+    <div class="container">
+        <div class="hero-content">
+            <h1>ITO AY ADMIN DASHBOARD</h1>
+            <p class="lead">
+                Welcome, <strong>@username</strong>!
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <div class="list-group">
+        <a class="list-group-item list-group-item-action" asp-controller="User" asp-action="Index">Manage Users</a>
+        <a class="list-group-item list-group-item-action" asp-controller="Bill" asp-action="Index">Manage Bills</a>
+        <a class="list-group-item list-group-item-action" asp-controller="Committee" asp-action="Index">Manage Committees</a>
+        <a class="list-group-item list-group-item-action text-danger" asp-controller="Auth" asp-action="Logout">Logout</a>
+    </div>
+</div>

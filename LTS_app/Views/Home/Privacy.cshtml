@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+}
+
+<link rel="stylesheet" href="~/css/privacy.css" />
+
+<div class="hero-section">
+    <div class="container text-center">
+        <div class="hero-content">
+            <h1>Privacy Policy</h1>
+            <p class="lead">
+                Learn how we handle your data with transparency and security.
+            </p>
+        </div>
+    </div>
+</div>
+
+<section class="features-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="feature-box">
+                    <i class="icon fas fa-database"></i>
+                    <h3>Data Collection</h3>
+                    <p>We collect necessary data to improve your experience and ensure security.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-box">
+                    <i class="icon fas fa-lock"></i>
+                    <h3>Data Protection</h3>
+                    <p>Your data is encrypted and secured with the latest technology.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-box">
+                    <i class="icon fas fa-user-shield"></i>
+                    <h3>Your Rights</h3>
+                    <p>You have full control over your data and privacy settings.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+
+    window.onpageshow = function(event) {
+        if (event.persisted) {
+            window.location.reload();
+        }
+    };
+</script>

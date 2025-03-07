@@ -1,0 +1,23 @@
+﻿@model LTS_app.Models.User
+@{
+    ViewData["Title"] = "Delete User";
+}
+
+<link rel="stylesheet" href="~/css/user_management.css" asp-append-version="true">
+
+
+<div class="container mt-5">
+    <div class="card custom-card">
+        <div class="card-header bg-danger text-white">
+            <h5 class="mb-0">Delete User</h5>
+        </div>
+        <div class="card-body text-center">
+            <p class="mb-4">Are you sure you want to delete <strong>@Model.Username</strong>?</p>
+
+            <form method="post" asp-action="DeleteConfirmed" asp-controller="User" asp-route-id="@Model.Id">
+                <button type="submit" class="btn btn-danger me-2">Yes, Delete</button>
+                <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
