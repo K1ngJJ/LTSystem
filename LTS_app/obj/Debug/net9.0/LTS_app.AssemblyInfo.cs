@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LTS_app")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+39f3e4890437bca4c7f1305374260ffdb95b5d53")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a69c209c8a216931a054b96129d0c4593d3c176f")]
 [assembly: System.Reflection.AssemblyProductAttribute("LTS_app")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LTS_app")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
