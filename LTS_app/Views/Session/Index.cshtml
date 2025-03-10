@@ -1,16 +1,16 @@
-﻿@model List<LTS_app.Models.Committee>
+﻿@model List<LTS_app.Models.Session>
 
 @{
-    ViewData["Title"] = "Committee Management";
+    ViewData["Title"] = "Session Management";
 }
 
-<link rel="stylesheet" href="~/css/committee_management.css" />
+<link rel="stylesheet" href="~/css/session_management.css" />
 
 <div class="hero-section">
     <div class="container">
         <div class="hero-content">
-            <h1>Committees</h1>
-            <p class="lead">Committee Management</p>
+            <h1>Sessions</h1>
+            <p class="lead">Manage Legislative Sessions</p>
         </div>
     </div>
 </div>
@@ -20,7 +20,7 @@
         @if (User.IsInRole("Admin"))
         {
             <button class="btn btn-primary" onclick="openCreateModal()">
-                <i class="bi bi-plus-circle"></i> Add Committee
+                <i class="bi bi-plus-circle"></i> Add Session
             </button>
         }
         <a href="@Url.Action("Dashboard", User.IsInRole("Admin") ? "Admin" : "Legislator")" class="btn btn-secondary">Dashboard</a>
@@ -32,33 +32,33 @@
                 <thead class="table-dark">
                     <tr>
                         <th>Name</th>
-                        <th>Description</th>
-                        <th>Date Created</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var committee in Model)
+                    @foreach (var session in Model)
                     {
                         <tr>
-                            <td>@committee.Name</td>
-                            <td>@committee.Description</td>
-                            <td>@committee.CreatedAt.ToString("MMMM dd, yyyy")</td>
+                            <td>@session.Name</td>
+                            <td>@session.StartDate.ToString("MMMM dd, yyyy")</td>
+                            <td>@session.EndDate.ToString("MMMM dd, yyyy")</td>
                             <td>
                                 <button class="btn btn-info btn-sm"
-                                        onclick="openViewModal('@committee.Name', '@committee.Description', '@committee.CreatedAt.ToString("MMMM dd, yyyy")')">
+                                        onclick="openViewModal('@session.Name', '@session.StartDate.ToString("MMMM dd, yyyy")', '@session.EndDate.ToString("MMMM dd, yyyy")')">
                                     <i class="bi bi-eye"></i> View
                                 </button>
 
                                 @if (User.IsInRole("Admin"))
                                 {
                                     <button class="btn btn-warning btn-sm"
-                                            onclick="openEditModal('@committee.Id', '@committee.Name', '@committee.Description')">
+                                            onclick="openEditModal('@session.Id', '@session.Name', '@session.StartDate.ToString("MMMM dd, yyyy")', '@session.EndDate.ToString("MMMM dd, yyyy")')">
                                         <i class="bi bi-pencil-square"></i> Edit
                                     </button>
                                     <button class="btn btn-danger btn-sm"
-                                            onclick="setDeleteCommittee(@committee.Id, '@committee.Name')"
-                                            data-bs-toggle="modal" data-bs-target="#deleteCommitteeModal">
+                                            onclick="setDeleteSession(@session.Id, '@session.Name')"
+                                            data-bs-toggle="modal" data-bs-target="#deleteSessionModal">
                                         <i class="bi bi-trash"></i> Delete
                                     </button>
                                 }
@@ -79,18 +79,18 @@
     </div>
 }
 
-<!-- View Committee Modal -->
-<div class="modal fade" id="viewCommitteeModal" tabindex="-1" aria-hidden="true">
+<!-- View Session Modal -->
+<div class="modal fade" id="viewSessionModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Committee Details</h5>
+                <h5 class="modal-title">Session Details</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <p><strong>Name:</strong> <span id="viewCommitteeName"></span></p>
-                <p><strong>Description:</strong> <span id="viewCommitteeDescription"></span></p>
-                <p><strong>Date Created:</strong> <span id="viewCommitteeDate"></span></p>
+                <p><strong>Name:</strong> <span id="viewSessionName"></span></p>
+                <p><strong>Start Date:</strong> <span id="viewSessionStartDate"></span></p>
+                <p><strong>End Date:</strong> <span id="viewSessionEndDate"></span></p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -101,12 +101,12 @@
 
 @if (User.IsInRole("Admin"))
 {
-    <!-- Create Committee Modal -->
-    <div class="modal fade" id="createCommitteeModal" tabindex="-1" aria-hidden="true">
+    <!-- Create Session Modal -->
+    <div class="modal fade" id="createSessionModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Create Committee</h5>
+                    <h5 class="modal-title">Create Session</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
@@ -116,8 +116,12 @@
                             <input type="text" name="Name" class="form-control" required />
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Description:</label>
-                            <textarea name="Description" class="form-control" required></textarea>
+                            <label class="form-label">Start Date:</label>
+                            <input type="date" name="StartDate" class="form-control" required />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">End Date:</label>
+                            <input type="date" name="EndDate" class="form-control" required />
                         </div>
                         <button type="submit" class="btn btn-primary">Create</button>
                     </form>
@@ -126,25 +130,29 @@
         </div>
     </div>
 
-    <!-- Edit Committee Modal -->
-    <div class="modal fade" id="editCommitteeModal" tabindex="-1" aria-hidden="true">
+    <!-- Edit Session Modal -->
+    <div class="modal fade" id="editSessionModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Edit Committee</h5>
+                    <h5 class="modal-title">Edit Session</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="post" id="editCommitteeForm" asp-action="Edit">
-                        <input type="hidden" name="Id" id="editCommitteeId" />
+                    <form method="post" id="editSessionForm" asp-action="Edit">
+                        <input type="hidden" name="Id" id="editSessionId" />
 
                         <div class="mb-3">
                             <label class="form-label">Name:</label>
-                            <input type="text" name="Name" id="editCommitteeName" class="form-control" required />
+                            <input type="text" name="Name" id="editSessionName" class="form-control" required />
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Description:</label>
-                            <textarea name="Description" id="editCommitteeDescription" class="form-control" required></textarea>
+                            <label class="form-label">Start Date:</label>
+                            <input type="date" name="StartDate" id="editSessionStartDate" class="form-control" required />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">End Date:</label>
+                            <input type="date" name="EndDate" id="editSessionEndDate" class="form-control" required />
                         </div>
                         <button type="submit" class="btn btn-warning">Save Changes</button>
                     </form>
@@ -153,18 +161,18 @@
         </div>
     </div>
 
-    <!-- Delete Committee Modal -->
-    <div class="modal fade" id="deleteCommitteeModal" tabindex="-1" aria-hidden="true">
+    <!-- Delete Session Modal -->
+    <div class="modal fade" id="deleteSessionModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Delete Committee</h5>
+                    <h5 class="modal-title">Delete Session</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Are you sure you want to delete <strong id="deleteCommitteeName"></strong>?</p>
+                    <p>Are you sure you want to delete <strong id="deleteSessionName"></strong>?</p>
                     <form method="post" asp-action="Delete">
-                        <input type="hidden" name="id" id="deleteCommitteeId" />
+                        <input type="hidden" name="id" id="deleteSessionId" />
                         <button type="submit" class="btn btn-danger">Delete</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     </form>
@@ -175,29 +183,30 @@
 }
 
 @section Scripts {
-    <script src="~/js/committee_management.js"></script>
+    <script src="~/js/session_management.js"></script>
     <script>
         function openCreateModal() {
-            $("#createCommitteeModal").modal("show");
+            $("#createSessionModal").modal("show");
         }
 
-        function openEditModal(id, name, description) {
-            $("#editCommitteeId").val(id);
-            $("#editCommitteeName").val(name);
-            $("#editCommitteeDescription").val(description);
-            $("#editCommitteeModal").modal("show");
+        function openEditModal(id, name, startDate, endDate) {
+            $("#editSessionId").val(id);
+            $("#editSessionName").val(name);
+            $("#editSessionStartDate").val(startDate);
+            $("#editSessionEndDate").val(endDate);
+            $("#editSessionModal").modal("show");
         }
 
-        function setDeleteCommittee(id, name) {
-            $("#deleteCommitteeId").val(id);
-            $("#deleteCommitteeName").text(name);
+        function setDeleteSession(id, name) {
+            $("#deleteSessionId").val(id);
+            $("#deleteSessionName").text(name);
         }
 
-        function openViewModal(name, description, dateCreated) {
-            $("#viewCommitteeName").text(name);
-            $("#viewCommitteeDescription").text(description);
-            $("#viewCommitteeDate").text(dateCreated);
-            $("#viewCommitteeModal").modal("show");
+        function openViewModal(name, startDate, endDate) {
+            $("#viewSessionName").text(name);
+            $("#viewSessionStartDate").text(startDate);
+            $("#viewSessionEndDate").text(endDate);
+            $("#viewSessionModal").modal("show");
         }
     </script>
 }

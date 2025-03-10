@@ -7,15 +7,15 @@ namespace LTS_app.Data
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-        public DbSet<Bill> Bills { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Legislator> Legislators { get; set; }
+        public DbSet<Bill> Bills { get; set; }
         public DbSet<Committee> Committees { get; set; }
         public DbSet<Vote> Votes { get; set; }
         public DbSet<Session> Sessions { get; set; }
         public DbSet<Amendment> Amendments { get; set; }
         public DbSet<BillHistory> BillHistories { get; set; }
         public DbSet<CitizenFeedback> CitizenFeedbacks { get; set; }
-        public DbSet<User> Users { get; set; }
         public DbSet<Notification> Notifications { get; set; }
 
         public override int SaveChanges()
@@ -30,6 +30,10 @@ namespace LTS_app.Data
                 {
                     entity.CreatedAt = DateTime.UtcNow;
                 }
+                else
+                {
+                    Entry(entity).Property(x => x.CreatedAt).IsModified = false; // Prevent modification of CreatedAt
+                }
                 entity.UpdatedAt = DateTime.UtcNow;
             }
 
@@ -40,67 +44,90 @@ namespace LTS_app.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Bill -> Legislator (One-to-Many)
+            // 🏛 Legislator - User (One-to-One)
+            modelBuilder.Entity<Legislator>()
+                .HasOne(l => l.User)
+                .WithOne(u => u.Legislator)
+                .HasForeignKey<Legislator>(l => l.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // 📜 Bill -> Legislator (One-to-Many)
             modelBuilder.Entity<Bill>()
                 .HasOne(b => b.Legislator)
-                .WithMany(l => l.Bills)  // Ensure Legislator has Bills collection in Legislator.cs
+                .WithMany(l => l.Bills)
                 .HasForeignKey(b => b.LegislatorId)
-                .OnDelete(DeleteBehavior.Restrict); // Avoid cascading delete
+                .OnDelete(DeleteBehavior.Restrict);
 
-            // Bill -> Committee (One-to-Many)
+            // 📜 Bill -> Committee (One-to-Many, Optional)
             modelBuilder.Entity<Bill>()
                 .HasOne(b => b.Committee)
-                .WithMany(c => c.Bills)  // Ensure Committee has Bills collection in Committee.cs
+                .WithMany(c => c.Bills)
                 .HasForeignKey(b => b.CommitteeId)
-                .OnDelete(DeleteBehavior.Restrict); // Avoid cascading delete
+                .OnDelete(DeleteBehavior.SetNull);
 
-            // Bill - Amendments (One-to-Many)
+            // 📜 Bill -> Session (One-to-Many)
+            modelBuilder.Entity<Bill>()
+                .HasOne(b => b.Session)
+                .WithMany(s => s.Bills)
+                .HasForeignKey(b => b.SessionId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // ✏️ Amendment -> Bill (One-to-Many)
             modelBuilder.Entity<Amendment>()
                 .HasOne(a => a.Bill)
                 .WithMany(b => b.Amendments)
                 .HasForeignKey(a => a.BillId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Bill - BillHistory (One-to-Many)
+            // 🏛 Committee -> Legislators (Many-to-Many)
+            modelBuilder.Entity<Committee>()
+                .HasMany(c => c.Legislators)
+                .WithMany(l => l.Committees)
+                .UsingEntity(j => j.ToTable("CommitteeLegislators"));
+
+            // 📜 Bill History -> Bill (One-to-Many)
             modelBuilder.Entity<BillHistory>()
                 .HasOne(bh => bh.Bill)
                 .WithMany(b => b.BillHistories)
                 .HasForeignKey(bh => bh.BillId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Bill - Votes (One-to-Many)
+            // 🗳 Vote -> Bill (One-to-Many)
             modelBuilder.Entity<Vote>()
                 .HasOne(v => v.Bill)
                 .WithMany(b => b.Votes)
                 .HasForeignKey(v => v.BillId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Vote - Legislator (One-to-Many)
+            // 🗳 Vote -> Legislator (One-to-Many)
             modelBuilder.Entity<Vote>()
                 .HasOne(v => v.Legislator)
                 .WithMany(l => l.Votes)
                 .HasForeignKey(v => v.LegislatorId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Citizen Feedback - Bill (One-to-Many)
+            // 💬 Citizen Feedback -> Bill (One-to-Many)
             modelBuilder.Entity<CitizenFeedback>()
                 .HasOne(cf => cf.Bill)
                 .WithMany(b => b.CitizenFeedbacks)
                 .HasForeignKey(cf => cf.BillId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Notification - User (One-to-Many)
+            // 🔔 Notification -> User (One-to-Many)
             modelBuilder.Entity<Notification>()
                 .HasOne(n => n.User)
                 .WithMany(u => u.Notifications)
                 .HasForeignKey(n => n.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Ensure Enum is stored as a string
+            // 💾 Enum Conversions for Better Storage
             modelBuilder.Entity<User>()
                 .Property(u => u.Role)
                 .HasConversion<string>();
-        }
 
+            modelBuilder.Entity<BillHistory>()
+                .Property(bh => bh.Status)
+                .HasConversion<string>();
+        }
     }
 }

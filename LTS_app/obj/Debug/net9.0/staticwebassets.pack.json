@@ -1,523 +1,531 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\LTS_app.bundle.scp.css",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\LTS_app.bundle.scp.css",
       "PackagePath": "staticwebassets\\LTS_app.6kgbt3tnpc.bundle.scp.css"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\css\\access_denied.css",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\css\\access_denied.css",
       "PackagePath": "staticwebassets\\css\\access_denied.css"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\css\\admin_dashboard.css",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\css\\admin_dashboard.css",
       "PackagePath": "staticwebassets\\css\\admin_dashboard.css"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\css\\auth.css",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\css\\auth.css",
       "PackagePath": "staticwebassets\\css\\auth.css"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\css\\committee_management.css",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\css\\bill_management.css",
+      "PackagePath": "staticwebassets\\css\\bill_management.css"
+    },
+    {
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\css\\committee_management.css",
       "PackagePath": "staticwebassets\\css\\committee_management.css"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\css\\demo.css",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\css\\demo.css",
       "PackagePath": "staticwebassets\\css\\demo.css"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\css\\home.css",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\css\\home.css",
       "PackagePath": "staticwebassets\\css\\home.css"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\css\\legislator_dashboard.css",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\css\\legislator_dashboard.css",
       "PackagePath": "staticwebassets\\css\\legislator_dashboard.css"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\css\\nav.css",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\css\\nav.css",
       "PackagePath": "staticwebassets\\css\\nav.css"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\css\\privacy.css",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\css\\privacy.css",
       "PackagePath": "staticwebassets\\css\\privacy.css"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\css\\user_dashboard.css",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\css\\session_management.css",
+      "PackagePath": "staticwebassets\\css\\session_management.css"
+    },
+    {
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\css\\user_dashboard.css",
       "PackagePath": "staticwebassets\\css\\user_dashboard.css"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\css\\user_management.css",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\css\\user_management.css",
       "PackagePath": "staticwebassets\\css\\user_management.css"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\favicon.ico",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\avatars\\1.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\avatars\\1.png",
       "PackagePath": "staticwebassets\\img\\avatars\\1.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\avatars\\2.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\avatars\\2.png",
       "PackagePath": "staticwebassets\\img\\avatars\\2.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\avatars\\3.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\avatars\\3.png",
       "PackagePath": "staticwebassets\\img\\avatars\\3.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\avatars\\4.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\avatars\\4.png",
       "PackagePath": "staticwebassets\\img\\avatars\\4.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\avatars\\5.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\avatars\\5.png",
       "PackagePath": "staticwebassets\\img\\avatars\\5.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\avatars\\6.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\avatars\\6.png",
       "PackagePath": "staticwebassets\\img\\avatars\\6.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\avatars\\7.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\avatars\\7.png",
       "PackagePath": "staticwebassets\\img\\avatars\\7.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\backgrounds\\18.jpg",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\backgrounds\\18.jpg",
       "PackagePath": "staticwebassets\\img\\backgrounds\\18.jpg"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\elements\\1.jpg",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\elements\\1.jpg",
       "PackagePath": "staticwebassets\\img\\elements\\1.jpg"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\elements\\11.jpg",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\elements\\11.jpg",
       "PackagePath": "staticwebassets\\img\\elements\\11.jpg"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\elements\\12.jpg",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\elements\\12.jpg",
       "PackagePath": "staticwebassets\\img\\elements\\12.jpg"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\elements\\13.jpg",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\elements\\13.jpg",
       "PackagePath": "staticwebassets\\img\\elements\\13.jpg"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\elements\\17.jpg",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\elements\\17.jpg",
       "PackagePath": "staticwebassets\\img\\elements\\17.jpg"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\elements\\18.jpg",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\elements\\18.jpg",
       "PackagePath": "staticwebassets\\img\\elements\\18.jpg"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\elements\\19.jpg",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\elements\\19.jpg",
       "PackagePath": "staticwebassets\\img\\elements\\19.jpg"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\elements\\2.jpg",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\elements\\2.jpg",
       "PackagePath": "staticwebassets\\img\\elements\\2.jpg"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\elements\\20.jpg",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\elements\\20.jpg",
       "PackagePath": "staticwebassets\\img\\elements\\20.jpg"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\elements\\3.jpg",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\elements\\3.jpg",
       "PackagePath": "staticwebassets\\img\\elements\\3.jpg"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\elements\\4.jpg",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\elements\\4.jpg",
       "PackagePath": "staticwebassets\\img\\elements\\4.jpg"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\elements\\5.jpg",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\elements\\5.jpg",
       "PackagePath": "staticwebassets\\img\\elements\\5.jpg"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\elements\\7.jpg",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\elements\\7.jpg",
       "PackagePath": "staticwebassets\\img\\elements\\7.jpg"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\favicon\\favicon.ico",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\favicon\\favicon.ico",
       "PackagePath": "staticwebassets\\img\\favicon\\favicon.ico"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\icons\\brands\\asana.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\icons\\brands\\asana.png",
       "PackagePath": "staticwebassets\\img\\icons\\brands\\asana.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\icons\\brands\\aws.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\icons\\brands\\aws.png",
       "PackagePath": "staticwebassets\\img\\icons\\brands\\aws.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\icons\\brands\\behance.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\icons\\brands\\behance.png",
       "PackagePath": "staticwebassets\\img\\icons\\brands\\behance.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\icons\\brands\\dribbble.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\icons\\brands\\dribbble.png",
       "PackagePath": "staticwebassets\\img\\icons\\brands\\dribbble.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\icons\\brands\\facebook.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\icons\\brands\\facebook.png",
       "PackagePath": "staticwebassets\\img\\icons\\brands\\facebook.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\icons\\brands\\github.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\icons\\brands\\github.png",
       "PackagePath": "staticwebassets\\img\\icons\\brands\\github.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\icons\\brands\\google.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\icons\\brands\\google.png",
       "PackagePath": "staticwebassets\\img\\icons\\brands\\google.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\icons\\brands\\instagram.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\icons\\brands\\instagram.png",
       "PackagePath": "staticwebassets\\img\\icons\\brands\\instagram.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\icons\\brands\\mailchimp.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\icons\\brands\\mailchimp.png",
       "PackagePath": "staticwebassets\\img\\icons\\brands\\mailchimp.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\icons\\brands\\slack.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\icons\\brands\\slack.png",
       "PackagePath": "staticwebassets\\img\\icons\\brands\\slack.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\icons\\brands\\twitter.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\icons\\brands\\twitter.png",
       "PackagePath": "staticwebassets\\img\\icons\\brands\\twitter.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\icons\\misc\\aviato.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\icons\\misc\\aviato.png",
       "PackagePath": "staticwebassets\\img\\icons\\misc\\aviato.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\icons\\misc\\bitbank.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\icons\\misc\\bitbank.png",
       "PackagePath": "staticwebassets\\img\\icons\\misc\\bitbank.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\icons\\misc\\triangle-light.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\icons\\misc\\triangle-light.png",
       "PackagePath": "staticwebassets\\img\\icons\\misc\\triangle-light.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\icons\\misc\\zipcar.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\icons\\misc\\zipcar.png",
       "PackagePath": "staticwebassets\\img\\icons\\misc\\zipcar.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\icons\\payments\\american-bank.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\icons\\payments\\american-bank.png",
       "PackagePath": "staticwebassets\\img\\icons\\payments\\american-bank.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\icons\\payments\\citi.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\icons\\payments\\citi.png",
       "PackagePath": "staticwebassets\\img\\icons\\payments\\citi.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\icons\\payments\\digital-ocean.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\icons\\payments\\digital-ocean.png",
       "PackagePath": "staticwebassets\\img\\icons\\payments\\digital-ocean.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\icons\\payments\\gumroad.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\icons\\payments\\gumroad.png",
       "PackagePath": "staticwebassets\\img\\icons\\payments\\gumroad.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\icons\\payments\\mastercard-2.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\icons\\payments\\mastercard-2.png",
       "PackagePath": "staticwebassets\\img\\icons\\payments\\mastercard-2.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\icons\\payments\\stripes.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\icons\\payments\\stripes.png",
       "PackagePath": "staticwebassets\\img\\icons\\payments\\stripes.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\illustrations\\404.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\illustrations\\404.png",
       "PackagePath": "staticwebassets\\img\\illustrations\\404.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\illustrations\\auth-basic-mask-light.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\illustrations\\auth-basic-mask-light.png",
       "PackagePath": "staticwebassets\\img\\illustrations\\auth-basic-mask-light.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\illustrations\\misc-mask-light.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\illustrations\\misc-mask-light.png",
       "PackagePath": "staticwebassets\\img\\illustrations\\misc-mask-light.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\illustrations\\misc-under-maintenance.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\illustrations\\misc-under-maintenance.png",
       "PackagePath": "staticwebassets\\img\\illustrations\\misc-under-maintenance.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\illustrations\\tree-3.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\illustrations\\tree-3.png",
       "PackagePath": "staticwebassets\\img\\illustrations\\tree-3.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\illustrations\\tree.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\illustrations\\tree.png",
       "PackagePath": "staticwebassets\\img\\illustrations\\tree.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\illustrations\\trophy.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\illustrations\\trophy.png",
       "PackagePath": "staticwebassets\\img\\illustrations\\trophy.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\layouts\\layout-container-light.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\layouts\\layout-container-light.png",
       "PackagePath": "staticwebassets\\img\\layouts\\layout-container-light.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\layouts\\layout-fluid-light.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\layouts\\layout-fluid-light.png",
       "PackagePath": "staticwebassets\\img\\layouts\\layout-fluid-light.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\layouts\\layout-without-menu-light.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\layouts\\layout-without-menu-light.png",
       "PackagePath": "staticwebassets\\img\\layouts\\layout-without-menu-light.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\img\\layouts\\layout-without-navbar-light.png",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\img\\layouts\\layout-without-navbar-light.png",
       "PackagePath": "staticwebassets\\img\\layouts\\layout-without-navbar-light.png"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\js\\committee_management.js",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\js\\committee_management.js",
       "PackagePath": "staticwebassets\\js\\committee_management.js"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\js\\site.js",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\js\\user_management.js",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\js\\user_management.js",
       "PackagePath": "staticwebassets\\js\\user_management.js"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\LICENSE",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\LICENSE",
       "PackagePath": "staticwebassets\\lib\\bootstrap"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.css.map"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.rtl.min.css.map"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.css.map"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.rtl.min.css.map"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.css.map"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.min.css.map"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.css.map"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css.map"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.css.map"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.js.map"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.esm.min.js.map"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js.map"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
       "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\jquery-validation-unobtrusive\\dist\\jquery.validate.unobtrusive.js",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\jquery-validation-unobtrusive\\dist\\jquery.validate.unobtrusive.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\dist\\jquery.validate.unobtrusive.js"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\jquery-validation-unobtrusive\\dist\\jquery.validate.unobtrusive.min.js",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\jquery-validation-unobtrusive\\dist\\jquery.validate.unobtrusive.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\dist\\jquery.validate.unobtrusive.min.js"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\LICENSE.md"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.js"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.min.js"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.js"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\jquery\\LICENSE.txt",
       "PackagePath": "staticwebassets\\lib\\jquery\\LICENSE.txt"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\jquery\\dist\\jquery.js",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.js"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.js"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\jquery\\dist\\jquery.slim.js",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\jquery\\dist\\jquery.slim.js",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.slim.js"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\jquery\\dist\\jquery.slim.min.js",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\jquery\\dist\\jquery.slim.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.slim.min.js"
     },
     {
-      "Id": "C:\\Users\\Jay\\source\\repos\\LTS_app\\LTS_app\\wwwroot\\lib\\jquery\\dist\\jquery.slim.min.map",
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\lib\\jquery\\dist\\jquery.slim.min.map",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.slim.min.map"
     },
     {

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LTS_app.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250307075257_AddStatusBillHistory")]
-    partial class AddStatusBillHistory
+    [Migration("20250308064852_FirstInitial")]
+    partial class FirstInitial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,21 @@ namespace LTS_app.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("CommitteeLegislator", b =>
+                {
+                    b.Property<int>("CommitteesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LegislatorsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CommitteesId", "LegislatorsId");
+
+                    b.HasIndex("LegislatorsId");
+
+                    b.ToTable("CommitteeLegislators", (string)null);
+                });
 
             modelBuilder.Entity("LTS_app.Models.Amendment", b =>
                 {
@@ -36,13 +51,27 @@ namespace LTS_app.Migrations
                     b.Property<int>("BillId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateProposed")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("LegislatorId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BillId");
+
+                    b.HasIndex("LegislatorId");
 
                     b.ToTable("Amendments");
                 });
@@ -55,14 +84,32 @@ namespace LTS_app.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CommitteeId")
+                    b.Property<int?>("CommitteeId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("IntroducedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("LegislatorId")
                         .HasColumnType("int");
+
+                    b.Property<int?>("SessionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -72,6 +119,8 @@ namespace LTS_app.Migrations
                     b.HasIndex("CommitteeId");
 
                     b.HasIndex("LegislatorId");
+
+                    b.HasIndex("SessionId");
 
                     b.ToTable("Bills");
                 });
@@ -84,8 +133,15 @@ namespace LTS_app.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("ActionTaken")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("BillId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("ChangedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -129,15 +185,20 @@ namespace LTS_app.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("SubmittedAt")
+                    b.Property<DateTime>("DateSubmitted")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BillId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("CitizenFeedbacks");
                 });
@@ -177,29 +238,17 @@ namespace LTS_app.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("District")
+                    b.Property<string>("Position")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Party")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("State")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Legislators");
                 });
@@ -213,6 +262,9 @@ namespace LTS_app.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateSent")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Message")
@@ -246,18 +298,15 @@ namespace LTS_app.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Status")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("UpdatedAt")
+                    b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -279,6 +328,10 @@ namespace LTS_app.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -323,7 +376,14 @@ namespace LTS_app.Migrations
                     b.Property<int>("BillId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Choice")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateVoted")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("LegislatorId")
@@ -331,13 +391,6 @@ namespace LTS_app.Migrations
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("VoteDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("VoteType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -348,6 +401,21 @@ namespace LTS_app.Migrations
                     b.ToTable("Votes");
                 });
 
+            modelBuilder.Entity("CommitteeLegislator", b =>
+                {
+                    b.HasOne("LTS_app.Models.Committee", null)
+                        .WithMany()
+                        .HasForeignKey("CommitteesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LTS_app.Models.Legislator", null)
+                        .WithMany()
+                        .HasForeignKey("LegislatorsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("LTS_app.Models.Amendment", b =>
                 {
                     b.HasOne("LTS_app.Models.Bill", "Bill")
@@ -356,7 +424,15 @@ namespace LTS_app.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("LTS_app.Models.Legislator", "Legislator")
+                        .WithMany()
+                        .HasForeignKey("LegislatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Bill");
+
+                    b.Navigation("Legislator");
                 });
 
             modelBuilder.Entity("LTS_app.Models.Bill", b =>
@@ -364,8 +440,7 @@ namespace LTS_app.Migrations
                     b.HasOne("LTS_app.Models.Committee", "Committee")
                         .WithMany("Bills")
                         .HasForeignKey("CommitteeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("LTS_app.Models.Legislator", "Legislator")
                         .WithMany("Bills")
@@ -373,9 +448,16 @@ namespace LTS_app.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("LTS_app.Models.Session", "Session")
+                        .WithMany("Bills")
+                        .HasForeignKey("SessionId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.Navigation("Committee");
 
                     b.Navigation("Legislator");
+
+                    b.Navigation("Session");
                 });
 
             modelBuilder.Entity("LTS_app.Models.BillHistory", b =>
@@ -397,7 +479,26 @@ namespace LTS_app.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("LTS_app.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Bill");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("LTS_app.Models.Legislator", b =>
+                {
+                    b.HasOne("LTS_app.Models.User", "User")
+                        .WithOne("Legislator")
+                        .HasForeignKey("LTS_app.Models.Legislator", "UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("LTS_app.Models.Notification", b =>
@@ -453,8 +554,16 @@ namespace LTS_app.Migrations
                     b.Navigation("Votes");
                 });
 
+            modelBuilder.Entity("LTS_app.Models.Session", b =>
+                {
+                    b.Navigation("Bills");
+                });
+
             modelBuilder.Entity("LTS_app.Models.User", b =>
                 {
+                    b.Navigation("Legislator")
+                        .IsRequired();
+
                     b.Navigation("Notifications");
                 });
 #pragma warning restore 612, 618

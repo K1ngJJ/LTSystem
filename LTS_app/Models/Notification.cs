@@ -9,16 +9,13 @@ namespace LTS_app.Models
         public int Id { get; set; }
 
         [Required]
-        public int UserId { get; set; }
-        [ForeignKey("UserId")]
-        public User User { get; set; }
-
-        [Required]
         public string Message { get; set; }
 
         [Required]
-        public DateTime CreatedAt { get; set; }
+        public DateTime DateSent { get; set; } = DateTime.UtcNow;
+
+        [ForeignKey("User")]
+        public int UserId { get; set; }
+        public User User { get; set; }
     }
-
-
 }

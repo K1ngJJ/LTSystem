@@ -41,9 +41,9 @@ namespace LTS_app.Services
             return (true, "Login successful.", user);
         }
 
-        public async Task<(bool Success, string Message)> RegisterUserAsync(string username, string email, string password, string role)
+        public async Task<(bool Success, string Message)> RegisterUserAsync(string username, string email, string password, string role, string fullName)
         {
-            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(fullName))
                 return (false, "All fields are required.");
 
             if (await _context.Users.AnyAsync(u => u.Username == username || u.Email == email))
@@ -61,11 +61,12 @@ namespace LTS_app.Services
                 Username = username,
                 Email = email,
                 PasswordHash = hashedPassword,
-                Role = await _context.Users.AnyAsync() ? role : "Admin",
+                Role = await _context.Users.AnyAsync() ? role : "Admin",  // Default to "Admin" for the first user
                 Token = GenerateToken(),
                 IsActive = true, // Users are active by default
                 IsConfirmed = false, // Must verify email
                 ConfirmationToken = confirmationToken,
+                FullName = fullName, // Store the FullName
                 CreatedAt = DateTime.UtcNow
             };
 
@@ -76,6 +77,7 @@ namespace LTS_app.Services
 
             return (true, "Registration successful! Please check your email to verify your account.");
         }
+
 
         public async Task<(bool Success, string Message)> VerifyEmailAsync(string token)
         {

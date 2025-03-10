@@ -19,15 +19,29 @@ namespace LTS_app.Controllers
             _context = context;
         }
 
-        // List all committees - Accessible by both Admin & Legislator
+        // ✅ List all committees - Async for better performance
         [HttpGet("")]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var committees = _context.Committees.ToList();
+            var committees = await _context.Committees.ToListAsync();
             return View(committees);
         }
 
-        // Admin only: Show form to create a new committee
+        // ✅ View Committee Details
+        [HttpGet("Details/{id}")]
+        public async Task<IActionResult> Details(int id)
+        {
+            var committee = await _context.Committees
+                .Include(c => c.Bills) // Assuming Committee has a collection of Bills
+                .FirstOrDefaultAsync(c => c.Id == id);
+
+            if (committee == null)
+                return NotFound();
+
+            return View(committee);
+        }
+
+        // ✅ Admin only: Show form to create a new committee
         [Authorize(Roles = "Admin")]
         [HttpGet("Create")]
         public IActionResult Create()
@@ -35,7 +49,7 @@ namespace LTS_app.Controllers
             return View();
         }
 
-        // Admin only: Save new committee
+        // ✅ Admin only: Save new committee
         [Authorize(Roles = "Admin")]
         [HttpPost("Create")]
         [ValidateAntiForgeryToken]
@@ -50,7 +64,7 @@ namespace LTS_app.Controllers
             return View(committee);
         }
 
-        // Admin only: Show edit form
+        // ✅ Admin only: Show edit form
         [Authorize(Roles = "Admin")]
         [HttpGet("Edit/{id}")]
         public async Task<IActionResult> Edit(int id)
@@ -62,7 +76,7 @@ namespace LTS_app.Controllers
             return View(committee);
         }
 
-        // Admin only: Update committee details
+        // ✅ Admin only: Update committee details
         [Authorize(Roles = "Admin")]
         [HttpPost("Edit/{id}")]
         [ValidateAntiForgeryToken]
@@ -80,7 +94,7 @@ namespace LTS_app.Controllers
             return View(committee);
         }
 
-        // Admin only: Delete committee
+        // ✅ Admin only: Delete committee
         [Authorize(Roles = "Admin")]
         [HttpPost("Delete")]
         [ValidateAntiForgeryToken]
@@ -96,17 +110,22 @@ namespace LTS_app.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // Legislators & Admins can assign bills to committees
+        // ✅ Legislators & Admins can assign bills to committees
         [Authorize(Roles = "Legislator,Admin")]
         [HttpPost("AssignBill")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AssignBill(int billId, int committeeId)
         {
             var bill = await _context.Bills.FindAsync(billId);
-            if (bill == null)
+            var committee = await _context.Committees.FindAsync(committeeId);
+
+            if (bill == null || committee == null)
                 return NotFound();
 
             bill.CommitteeId = committeeId;
+            _context.Bills.Update(bill);
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index), "Bill");
         }
     }

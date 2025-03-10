@@ -1,0 +1,208 @@
+﻿@model List<LTS_app.Models.Legislator>
+
+@{
+    ViewData["Title"] = "Legislator Management";
+}
+
+<link rel="stylesheet" href="~/css/legislator_management.css" />
+
+<div class="hero-section">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Legislators</h1>
+            <p class="lead">Legislator Management</p>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <div class="d-flex gap-2 mb-3">
+        @if (User.IsInRole("Admin"))
+        {
+            <button class="btn btn-primary" onclick="openCreateModal()">
+                <i class="bi bi-plus-circle"></i> Add Legislator
+            </button>
+        }
+        <a href="@Url.Action("Dashboard", User.IsInRole("Admin") ? "Admin" : "Legislator")" class="btn btn-secondary">Dashboard</a>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Position</th>
+                        <th>Number of Bills</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var legislator in Model)
+                    {
+                        <tr>
+                            <td>@legislator.User.FullName</td>
+                            <td>@legislator.Position</td>
+                            <td>@legislator.Bills.Count</td>
+                            <td>
+                                <button class="btn btn-info btn-sm"
+                                        onclick="openViewModal('@legislator.User.FullName', '@legislator.Position', '@legislator.Bills.Count')">
+                                    <i class="bi bi-eye"></i> View
+                                </button>
+
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <button class="btn btn-warning btn-sm"
+                                            onclick="openEditModal('@legislator.Id', '@legislator.User.FullName', '@legislator.Position')">
+                                        <i class="bi bi-pencil-square"></i> Edit
+                                    </button>
+                                    <button class="btn btn-danger btn-sm"
+                                            onclick="setDeleteLegislator(@legislator.Id, '@legislator.User.FullName')"
+                                            data-bs-toggle="modal" data-bs-target="#deleteLegislatorModal">
+                                        <i class="bi bi-trash"></i> Delete
+                                    </button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Success Message -->
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success text-center">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<!-- View Legislator Modal -->
+<div class="modal fade" id="viewLegislatorModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Legislator Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Full Name:</strong> <span id="viewLegislatorName"></span></p>
+                <p><strong>Position:</strong> <span id="viewLegislatorPosition"></span></p>
+                <p><strong>Number of Bills:</strong> <span id="viewLegislatorBillsCount"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (User.IsInRole("Admin"))
+{
+    <!-- Create Legislator Modal -->
+    <div class="modal fade" id="createLegislatorModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create Legislator</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" asp-action="Create">
+                        <div class="mb-3">
+                            <label class="form-label">Full Name:</label>
+                            <select class="form-control" name="UserId">
+                                @foreach (var user in ViewBag.Users)
+                                {
+                                    <option value="@user.Id">@user.FullName</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Position:</label>
+                            <input type="text" name="Position" class="form-control" required />
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create Legislator</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Legislator Modal -->
+    <div class="modal fade" id="editLegislatorModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Legislator</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" id="editLegislatorForm" asp-action="Edit">
+                        <input type="hidden" name="Id" id="editLegislatorId" />
+
+                        <div class="mb-3">
+                            <label class="form-label">Full Name:</label>
+                            <input type="text" name="FullName" id="editLegislatorName" class="form-control" required />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Position:</label>
+                            <input type="text" name="Position" id="editLegislatorPosition" class="form-control" required />
+                        </div>
+                        <button type="submit" class="btn btn-warning">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Legislator Modal -->
+    <div class="modal fade" id="deleteLegislatorModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete Legislator</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete <strong id="deleteLegislatorName"></strong>?</p>
+                    <form method="post" asp-action="Delete">
+                        <input type="hidden" name="id" id="deleteLegislatorId" />
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script src="~/js/legislator_management.js"></script>
+    <script>
+        function openCreateModal() {
+            $("#createLegislatorModal").modal("show");
+        }
+
+        function openEditModal(id, name, position) {
+            $("#editLegislatorId").val(id);
+            $("#editLegislatorName").val(name);
+            $("#editLegislatorPosition").val(position);
+            $("#editLegislatorModal").modal("show");
+        }
+
+        function setDeleteLegislator(id, name) {
+            $("#deleteLegislatorId").val(id);
+            $("#deleteLegislatorName").text(name);
+        }
+
+        function openViewModal(name, position, billsCount) {
+            $("#viewLegislatorName").text(name);
+            $("#viewLegislatorPosition").text(position);
+            $("#viewLegislatorBillsCount").text(billsCount);
+            $("#viewLegislatorModal").modal("show");
+        }
+    </script>
+}

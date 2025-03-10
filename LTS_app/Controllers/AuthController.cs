@@ -97,19 +97,26 @@ namespace LTS_app.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(string username, string email, string password, string role = "User")
+        public async Task<IActionResult> Register(string username, string email, string password, string role = "User", string fullName = "")
         {
-            var result = await _authService.RegisterUserAsync(username, email, password, role);
+            if (string.IsNullOrWhiteSpace(fullName))
+            {
+                ModelState.AddModelError("", "Full Name is required.");
+                return View();
+            }
+
+            var result = await _authService.RegisterUserAsync(username, email, password, role, fullName);
             if (!result.Success)
             {
                 ModelState.AddModelError("", result.Message);
                 return View();
             }
 
-            // ✅ Instead of session, show success message & ask user to verify email
+            // Show success message & ask user to verify email
             ViewBag.Message = "Registration successful! Please check your email to verify your account.";
             return View();
         }
+
 
 
         public async Task<IActionResult> VerifyEmail(string token)

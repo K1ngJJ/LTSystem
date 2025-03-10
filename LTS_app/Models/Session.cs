@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LTS_app.Models
 {
@@ -9,7 +8,7 @@ namespace LTS_app.Models
         public int Id { get; set; }
 
         [Required]
-        public int Year { get; set; }
+        public string Name { get; set; } // Example: "2025 Legislative Session"
 
         [Required]
         public DateTime StartDate { get; set; }
@@ -17,10 +16,6 @@ namespace LTS_app.Models
         [Required]
         public DateTime EndDate { get; set; }
 
-        [Required]
-        public string Status { get; set; }
-
+        public ICollection<Bill> Bills { get; set; } = new List<Bill>();
     }
-
-
 }

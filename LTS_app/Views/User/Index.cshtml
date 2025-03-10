@@ -1,6 +1,5 @@
 ﻿@model List<LTS_app.Models.User>
 
-
 @{
     ViewData["Title"] = "User Management";
 }
@@ -12,7 +11,7 @@
         <div class="hero-content">
             <h1>Accounts</h1>
             <p class="lead">
-               Account Management
+                Account Management
             </p>
         </div>
     </div>
@@ -26,13 +25,12 @@
         <a href="@Url.Action("Dashboard", "Admin")" class="btn btn-secondary">Dashboard</a>
     </div>
 
-
     <div class="card shadow-sm">
         <div class="card-body">
             <table class="table table-striped">
                 <thead class="table-dark">
                     <tr>
-                        <!--th>ID</th-->
+                        <th>Full Name</th>
                         <th>Username</th>
                         <th>Email Address</th>
                         <th>Role</th>
@@ -45,7 +43,7 @@
                     @foreach (var user in Model)
                     {
                         <tr>
-                            <!--td>@user.Id</td-->
+                            <td>@user.FullName</td>
                             <td>@user.Username</td>
                             <td>@user.Email</td>
                             <td>@user.Role</td>
@@ -56,7 +54,10 @@
                                 </span>
                             </td>
                             <td>
-                                <button class="btn btn-warning btn-sm" onclick="openEditModal('@user.Id', '@user.Username', '@user.Email', '@user.Role')">
+                                <button class="btn btn-info btn-sm" onclick="viewDetails('@user.Id', '@user.FullName', '@user.Username', '@user.Email', '@user.Role')">
+                                    <i class="bi bi-eye"></i> View
+                                </button>
+                                <button class="btn btn-warning btn-sm" onclick="openEditModal('@user.Id', '@user.Username', '@user.Email', '@user.Role', '@user.FullName')">
                                     <i class="bi bi-pencil-square"></i>
                                 </button>
                                 <button class="btn btn-danger btn-sm" onclick="openDeleteModal('@user.Id', '@user.Username')">
@@ -85,6 +86,10 @@
             </div>
             <div class="modal-body">
                 <form method="post" action="@Url.Action("Create", "User")">
+                    <div class="mb-3">
+                        <label class="form-label">Full Name:</label>
+                        <input type="text" name="FullName" class="form-control" required />
+                    </div>
                     <div class="mb-3">
                         <label class="form-label">Username:</label>
                         <input type="text" name="Username" class="form-control" required />
@@ -124,6 +129,10 @@
                 <form method="post" action="@Url.Action("Edit", "User")">
                     <input type="hidden" name="Id" id="editUserId" />
 
+                    <div class="mb-3">
+                        <label class="form-label">Full Name:</label>
+                        <input type="text" name="FullName" id="editFullName" class="form-control" required />
+                    </div>
                     <div class="mb-3">
                         <label class="form-label">Username:</label>
                         <input type="text" name="Username" id="editUsername" class="form-control" required />
@@ -166,18 +175,61 @@
     </div>
 </div>
 
+<!-- View User Details Modal -->
+<div class="modal fade" id="viewUserDetailsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">User Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Full Name:</strong> <span id="viewFullName"></span></p>
+                <p><strong>Username:</strong> <span id="viewUsername"></span></p>
+                <p><strong>Email:</strong> <span id="viewEmail"></span></p>
+                <p><strong>Role:</strong> <span id="viewRole"></span></p>
+                <p><strong>Date Created:</strong> <span id="viewCreatedAt"></span></p>
+                <p><strong>Status:</strong> <span id="viewStatus"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <script src="~/js/user_management.js"></script>
     <script>
-        if (window.history.replaceState) {
-            window.history.replaceState(null, null, window.location.href);
+        function openCreateModal() {
+            var createModal = new bootstrap.Modal(document.getElementById('createUserModal'));
+            createModal.show();
         }
 
-        window.onpageshow = function(event) {
-            if (event.persisted) {
-                window.location.reload();
-            }
-        };
+        function openEditModal(id, username, email, role, fullName) {
+            document.getElementById("editUserId").value = id;
+            document.getElementById("editUsername").value = username;
+            document.getElementById("editEmail").value = email;
+            document.getElementById("editRole").value = role;
+            document.getElementById("editFullName").value = fullName;
+
+            var editModal = new bootstrap.Modal(document.getElementById('editUserModal'));
+            editModal.show();
+        }
+
+        function openDeleteModal(id, username) {
+            document.getElementById("deleteUserId").value = id;
+            document.getElementById("deleteUsername").innerText = username;
+
+            var deleteModal = new bootstrap.Modal(document.getElementById('deleteUserModal'));
+            deleteModal.show();
+        }
+
+        function viewDetails(id, fullName, username, email, role) {
+            document.getElementById("viewFullName").innerText = fullName;
+            document.getElementById("viewUsername").innerText = username;
+            document.getElementById("viewEmail").innerText = email;
+            document.getElementById("viewRole").innerText = role;
+
+            var viewModal = new bootstrap.Modal(document.getElementById('viewUserDetailsModal'));
+            viewModal.show();
+        }
     </script>
-  
 }

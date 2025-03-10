@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LTS_app.Models
@@ -9,17 +10,21 @@ namespace LTS_app.Models
         public int Id { get; set; }
 
         [Required]
+        public string ActionTaken { get; set; } // Example: "Bill passed committee review"
+
+        [Required]
+        public DateTime Date { get; set; } = DateTime.UtcNow;
+
+        [ForeignKey("Bill")]
         public int BillId { get; set; }
-        [ForeignKey("BillId")]
         public Bill Bill { get; set; }
 
+        // ✅ Add the missing properties below
         [Required]
-        public DateTime Date { get; set; }
+        public string Status { get; set; }  // Fix for CS1061
 
-        [Required]
-        public string Description { get; set; }
+        public string Description { get; set; } // Fix for CS0117
 
-        [Required]
-        public string Status { get; set; } // Added Status field
+        public DateTime ChangedAt { get; set; } = DateTime.UtcNow; // Fix for CS0117
     }
 }

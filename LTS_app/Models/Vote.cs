@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-
 namespace LTS_app.Models
 {
     public class Vote : BaseEntity
@@ -10,21 +9,17 @@ namespace LTS_app.Models
         public int Id { get; set; }
 
         [Required]
+        public string Choice { get; set; } // YES, NO, ABSTAIN
+
+        [Required]
+        public DateTime DateVoted { get; set; } = DateTime.UtcNow;
+
+        [ForeignKey("Bill")]
         public int BillId { get; set; }
-        [ForeignKey("BillId")]
         public Bill Bill { get; set; }
 
-        [Required]
+        [ForeignKey("Legislator")]
         public int LegislatorId { get; set; }
-        [ForeignKey("LegislatorId")]
         public Legislator Legislator { get; set; }
-
-        [Required]
-        public string VoteType { get; set; }
-
-        [Required]
-        public DateTime VoteDate { get; set; }
     }
-
-
 }

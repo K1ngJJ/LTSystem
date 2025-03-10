@@ -8,28 +8,32 @@ namespace LTS_app.Models
         [Key]
         public int Id { get; set; }
 
-        // Legislator Relationship
         [Required]
-        public int LegislatorId { get; set; }
+        public string Title { get; set; }
 
-        [ForeignKey(nameof(LegislatorId))]  // Ensure EF Core links this correctly
+        public string Description { get; set; }
+
+        [Required]
+        public DateTime IntroducedDate { get; set; } = DateTime.UtcNow;
+
+        public string Status { get; set; } = "Draft"; // Draft, In Committee, Voted, Passed, Rejected
+
+        [ForeignKey("Legislator")]
+        public int LegislatorId { get; set; }
         public Legislator Legislator { get; set; }
 
-        // Committee Relationship
-        [Required]
-        public int CommitteeId { get; set; }
+        [ForeignKey("Committee")]
+        public int? CommitteeId { get; set; }
+        public Committee? Committee { get; set; }
 
-        [ForeignKey(nameof(CommitteeId))]  // Ensure EF Core links this correctly
-        public Committee Committee { get; set; }
+        [ForeignKey("Session")]
+        public int? SessionId { get; set; }
+        public Session? Session { get; set; }
 
-        // Related Collections
-        public ICollection<Vote> Votes { get; set; } = new List<Vote>();
         public ICollection<Amendment> Amendments { get; set; } = new List<Amendment>();
+        public ICollection<Vote> Votes { get; set; } = new List<Vote>();
         public ICollection<BillHistory> BillHistories { get; set; } = new List<BillHistory>();
         public ICollection<CitizenFeedback> CitizenFeedbacks { get; set; } = new List<CitizenFeedback>();
+
     }
-
-
-
-
 }

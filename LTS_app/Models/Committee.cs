@@ -14,7 +14,6 @@ namespace LTS_app.Models
         public string Description { get; set; }
 
         public ICollection<Bill> Bills { get; set; } = new List<Bill>();
-
+        public ICollection<Legislator> Legislators { get; set; } = new List<Legislator>();
     }
-
 }

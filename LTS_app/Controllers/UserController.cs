@@ -11,6 +11,9 @@ using System.Net;
 using System.Net.Mail;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using System;
 
 namespace LTS_app.Controllers
 {
@@ -62,11 +65,11 @@ namespace LTS_app.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(string username, string email, string password, string role)
+        public IActionResult Create(string username, string email, string password, string role, string fullName)
         {
             if (!IsAdmin()) return RedirectToAction("Login", "Auth");
 
-            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(email))
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(fullName))
             {
                 ModelState.AddModelError("", "All fields are required.");
                 return View();
@@ -94,6 +97,7 @@ namespace LTS_app.Controllers
                 Email = email,
                 PasswordHash = hashedPassword,
                 Role = role,
+                FullName = fullName, // Add FullName field here
                 Token = GenerateToken(),
                 IsConfirmed = true,
                 IsActive = false,
@@ -180,7 +184,7 @@ namespace LTS_app.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(int id, string username, string email, string role)
+        public IActionResult Edit(int id, string username, string email, string role, string fullName)
         {
             if (!IsAdmin()) return RedirectToAction("Login", "Auth");
 
@@ -190,6 +194,7 @@ namespace LTS_app.Controllers
             user.Username = username;
             user.Email = email;
             user.Role = role;
+            user.FullName = fullName; // Update FullName here
             user.UpdatedAt = DateTime.UtcNow;
 
             _context.SaveChanges();

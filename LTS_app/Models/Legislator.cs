@@ -3,26 +3,25 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LTS_app.Models
 {
-    public class Legislator : BaseEntity
+    public class Legislator
     {
         [Key]
         public int Id { get; set; }
 
-        [Required]
-        public string Name { get; set; }
+        [ForeignKey("User")]
+        public int UserId { get; set; }
+
+        public User User { get; set; } // Navigation Property
 
         [Required]
-        public string Party { get; set; }
-
-        [Required]
-        public string State { get; set; }
-
-        [Required]
-        public string District { get; set; }
+        public string Position { get; set; } // Example: "Senator", "Representative"
 
         public ICollection<Bill> Bills { get; set; } = new List<Bill>();
         public ICollection<Vote> Votes { get; set; } = new List<Vote>();
+        public ICollection<Committee> Committees { get; set; } = new List<Committee>();
 
+        // Ensure only users with role "Legislator" are linked here (Logic applied in queries)
+        [NotMapped]
+        public bool IsLegislator => User?.Role == "Legislator";
     }
-
 }
