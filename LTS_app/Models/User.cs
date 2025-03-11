@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LTS_app.Models
 {
-     public class User : BaseEntity
+    public class User : BaseEntity
     {
         [Key]
         public int Id { get; set; }
@@ -22,19 +22,23 @@ namespace LTS_app.Models
         [Required]
         public string Role { get; set; }
 
-        public string FullName { get; set; } // New field for name
+        public string FullName { get; set; }
 
-        public string Token { get; set; } // Store authentication token
+        public string Token { get; set; }
 
-        public bool IsActive { get; set; } = true; // Enable/Disable feature
+        public bool IsActive { get; set; } = true;
 
-        public bool IsConfirmed { get; set; } = false; // Email verification status
+        public bool IsConfirmed { get; set; } = false;
 
-        public string? ConfirmationToken { get; set; } // Unique token for verification
+        public string? ConfirmationToken { get; set; }
+
+        public string? ResetPasswordToken { get; set; }  // Token for resetting password
+
+        public DateTime? ResetPasswordExpiry { get; set; } // Expiry time for reset token
 
         public ICollection<Notification> Notifications { get; set; } = new List<Notification>();
 
-        // Legislator Navigation Property (only if user is a Legislator)
         public Legislator Legislator { get; set; }
     }
+
 }

@@ -1,83 +1,94 @@
 ﻿@model List<LTS_app.Models.Legislator>
 
 @{
-    ViewData["Title"] = "Legislator Management";
+    ViewData["Title"] = "Legislators";
 }
 
-<link rel="stylesheet" href="~/css/legislator_management.css" />
+<link rel="stylesheet" href="~/assets/css/styles.min.css" />
 
-<div class="hero-section">
-    <div class="container">
-        <div class="hero-content">
-            <h1>Legislators</h1>
-            <p class="lead">Legislator Management</p>
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+     data-sidebar-position="fixed" data-header-position="fixed">
+    <!-- Main wrapper -->
+    <div class="body-wrapper">
+        <div class="container-fluid mt-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title fw-semibold mb-4">Legislators</h5>
+                    <p class="mb-0">Manage all legislators.</p>
+                </div>
+            </div>
+
+            <div class="d-flex gap-2 mb-3">
+                @if (User.IsInRole("Admin"))
+                {
+                    <button class="btn btn-primary" onclick="openCreateModal()">
+                        <i class="bi bi-plus-circle"></i> Add Legislator
+                    </button>
+                }
+                <a href="@Url.Action("Dashboard", User.IsInRole("Admin") ? "Admin" : "Legislator")" class="btn btn-secondary">Dashboard</a>
+            </div>
+
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Full Name</th>
+                                <th>Position</th>
+                                <!--th>Number of Bills</th-->
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var legislator in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @if (legislator.User != null)
+                                        {
+                                            @($"{legislator.User.FullName} ({legislator.User.Email})")
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Unknown User</span>
+                                        }
+                                    </td>
+                                    <td>@legislator.Position</td>
+                                    <td>
+                                        <button class="btn btn-info btn-sm"
+                                                onclick="openViewModal('@legislator.User?.FullName', '@legislator.Position')">
+                                            <i class="bi bi-eye"></i> View
+                                        </button>
+
+
+                                        @if (User.IsInRole("Admin"))
+                                        {
+                                            <button class="btn btn-warning btn-sm"
+                                                    onclick="openEditModal(@legislator.Id, '@legislator.User?.FullName', '@legislator.Position')">
+                                                <i class="bi bi-pencil-square"></i> Edit
+                                            </button>
+                                            <button class="btn btn-danger btn-sm"
+                                                    onclick="setDeleteLegislator(@legislator.Id, '@legislator.User?.FullName')">
+                                                <i class="bi bi-trash"></i> Delete
+                                            </button>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- Success Message -->
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success text-center">
+                    @TempData["SuccessMessage"]
+                </div>
+            }
         </div>
     </div>
 </div>
-
-<div class="container mt-4">
-    <div class="d-flex gap-2 mb-3">
-        @if (User.IsInRole("Admin"))
-        {
-            <button class="btn btn-primary" onclick="openCreateModal()">
-                <i class="bi bi-plus-circle"></i> Add Legislator
-            </button>
-        }
-        <a href="@Url.Action("Dashboard", User.IsInRole("Admin") ? "Admin" : "Legislator")" class="btn btn-secondary">Dashboard</a>
-    </div>
-
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <table class="table table-striped">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Full Name</th>
-                        <th>Position</th>
-                        <th>Number of Bills</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var legislator in Model)
-                    {
-                        <tr>
-                            <td>@legislator.User.FullName</td>
-                            <td>@legislator.Position</td>
-                            <td>@legislator.Bills.Count</td>
-                            <td>
-                                <button class="btn btn-info btn-sm"
-                                        onclick="openViewModal('@legislator.User.FullName', '@legislator.Position', '@legislator.Bills.Count')">
-                                    <i class="bi bi-eye"></i> View
-                                </button>
-
-                                @if (User.IsInRole("Admin"))
-                                {
-                                    <button class="btn btn-warning btn-sm"
-                                            onclick="openEditModal('@legislator.Id', '@legislator.User.FullName', '@legislator.Position')">
-                                        <i class="bi bi-pencil-square"></i> Edit
-                                    </button>
-                                    <button class="btn btn-danger btn-sm"
-                                            onclick="setDeleteLegislator(@legislator.Id, '@legislator.User.FullName')"
-                                            data-bs-toggle="modal" data-bs-target="#deleteLegislatorModal">
-                                        <i class="bi bi-trash"></i> Delete
-                                    </button>
-                                }
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-<!-- Success Message -->
-@if (TempData["SuccessMessage"] != null)
-{
-    <div class="alert alert-success text-center">
-        @TempData["SuccessMessage"]
-    </div>
-}
 
 <!-- View Legislator Modal -->
 <div class="modal fade" id="viewLegislatorModal" tabindex="-1" aria-hidden="true">
@@ -90,7 +101,6 @@
             <div class="modal-body">
                 <p><strong>Full Name:</strong> <span id="viewLegislatorName"></span></p>
                 <p><strong>Position:</strong> <span id="viewLegislatorPosition"></span></p>
-                <p><strong>Number of Bills:</strong> <span id="viewLegislatorBillsCount"></span></p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -98,6 +108,7 @@
         </div>
     </div>
 </div>
+
 
 @if (User.IsInRole("Admin"))
 {
@@ -113,10 +124,11 @@
                     <form method="post" asp-action="Create">
                         <div class="mb-3">
                             <label class="form-label">Full Name:</label>
-                            <select class="form-control" name="UserId">
+                            <select class="form-control" name="UserId" required>
+                                <option value="">-- Select a Legislator --</option>
                                 @foreach (var user in ViewBag.Users)
                                 {
-                                    <option value="@user.Id">@user.FullName</option>
+                                    <option value="@user.Id">@user.FullName (@user.Email)</option>
                                 }
                             </select>
                         </div>
@@ -126,6 +138,7 @@
                         </div>
                         <button type="submit" class="btn btn-primary">Create Legislator</button>
                     </form>
+
                 </div>
             </div>
         </div>
@@ -145,7 +158,7 @@
 
                         <div class="mb-3">
                             <label class="form-label">Full Name:</label>
-                            <input type="text" name="FullName" id="editLegislatorName" class="form-control" required />
+                            <input type="text" id="editLegislatorName" class="form-control" readonly />
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Position:</label>
@@ -153,6 +166,7 @@
                         </div>
                         <button type="submit" class="btn btn-warning">Save Changes</button>
                     </form>
+
                 </div>
             </div>
         </div>
@@ -168,7 +182,7 @@
                 </div>
                 <div class="modal-body">
                     <p>Are you sure you want to delete <strong id="deleteLegislatorName"></strong>?</p>
-                    <form method="post" asp-action="Delete">
+                    <form method="post" id="deleteLegislatorForm" asp-action="Delete">
                         <input type="hidden" name="id" id="deleteLegislatorId" />
                         <button type="submit" class="btn btn-danger">Delete</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -180,29 +194,49 @@
 }
 
 @section Scripts {
-    <script src="~/js/legislator_management.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="~/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/js/sidebarmenu.js"></script>
+    <script src="~/assets/js/app.min.js"></script>
+    <script src="~/assets/libs/simplebar/dist/simplebar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         function openCreateModal() {
             $("#createLegislatorModal").modal("show");
         }
 
         function openEditModal(id, name, position) {
+            console.log("Opening Edit Modal for ID:", id, "Name:", name, "Position:", position);
+
             $("#editLegislatorId").val(id);
-            $("#editLegislatorName").val(name);
-            $("#editLegislatorPosition").val(position);
-            $("#editLegislatorModal").modal("show");
+            $("#editLegislatorName").val(name); // Read-only field
+            $("#editLegislatorPosition").val(position); // Editable field
+
+            var modal = new bootstrap.Modal(document.getElementById('editLegislatorModal'));
+            modal.show();
         }
 
         function setDeleteLegislator(id, name) {
+            console.log("Opening Delete Modal for ID:", id, "Name:", name);
+
             $("#deleteLegislatorId").val(id);
-            $("#deleteLegislatorName").text(name);
+            $("#deleteLegislatorName").text(name); // Fix for missing name inside modal
+
+            var modal = new bootstrap.Modal(document.getElementById('deleteLegislatorModal'));
+            modal.show();
         }
 
-        function openViewModal(name, position, billsCount) {
-            $("#viewLegislatorName").text(name);
-            $("#viewLegislatorPosition").text(position);
-            $("#viewLegislatorBillsCount").text(billsCount);
-            $("#viewLegislatorModal").modal("show");
+
+        function openViewModal(name, position) {
+            console.log("Opening View Modal for:", name, "Position:", position);
+
+            $("#viewLegislatorName").text(name || "N/A");
+            $("#viewLegislatorPosition").text(position || "N/A");
+
+            var modal = new bootstrap.Modal(document.getElementById('viewLegislatorModal'));
+            modal.show();
         }
-    </script>
+        </script>
 }

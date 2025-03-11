@@ -27,7 +27,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.LoginPath = "/Auth/Login";
+        options.LoginPath = "/Home";
         options.AccessDeniedPath = "/Auth/AccessDenied";
         options.ExpireTimeSpan = TimeSpan.FromMinutes(60); // Extend session timeout
         options.SlidingExpiration = true; // Reset timeout on activity

@@ -18,12 +18,12 @@ body {
 .hero-content h1 {
     font-size: 2.2rem; /* Smaller */
     font-weight: 600;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     text-shadow: none; /* Remove dark shadow */
 }
 
 .hero-content .lead {
     font-size: 1rem; /* Reduce text size */
     opacity: 0.8;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }

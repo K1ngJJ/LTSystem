@@ -132,6 +132,48 @@ namespace LTS_app.Controllers
             return RedirectToAction("Login");
         }
 
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(string email)
+        {
+            var result = await _authService.RequestPasswordResetAsync(email);
+            if (!result.Success)
+            {
+                ModelState.AddModelError("", result.Message);
+                return View();
+            }
+
+            ViewBag.Message = result.Message;
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult ResetPassword(string token)
+        {
+            ViewBag.Token = token;
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(string token, string newPassword)
+        {
+            var result = await _authService.ResetPasswordAsync(token, newPassword);
+            if (!result.Success)
+            {
+                ModelState.AddModelError("", result.Message);
+                return View(new { token });
+            }
+
+            ViewBag.Message = result.Message;
+            return RedirectToAction("Login");
+        }
+
+
 
         public async Task<IActionResult> Logout()
         {

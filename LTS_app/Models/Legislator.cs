@@ -3,11 +3,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LTS_app.Models
 {
-    public class Legislator
+    public class Legislator : BaseEntity
     {
         [Key]
         public int Id { get; set; }
 
+        [Required]
         [ForeignKey("User")]
         public int UserId { get; set; }
 

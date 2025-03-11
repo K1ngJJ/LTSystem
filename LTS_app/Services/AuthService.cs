@@ -133,5 +133,59 @@ namespace LTS_app.Services
                 await smtp.SendMailAsync(message);
             }
         }
+
+        public async Task<(bool Success, string Message)> RequestPasswordResetAsync(string email)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            if (user == null || !user.IsConfirmed)
+                return (false, "No confirmed account found with this email.");
+
+            user.ResetPasswordToken = GenerateToken();
+            user.ResetPasswordExpiry = DateTime.UtcNow.AddHours(1); // Token valid for 1 hour
+
+            await _context.SaveChangesAsync();
+
+            await SendResetPasswordEmailAsync(user.Email, user.ResetPasswordToken);
+
+            return (true, "Password reset link has been sent to your email.");
+        }
+
+        public async Task<(bool Success, string Message)> ResetPasswordAsync(string token, string newPassword)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.ResetPasswordToken == token);
+            if (user == null || user.ResetPasswordExpiry < DateTime.UtcNow)
+                return (false, "Invalid or expired token.");
+
+            user.PasswordHash = HashPassword(newPassword);
+            user.ResetPasswordToken = null;
+            user.ResetPasswordExpiry = null;
+
+            await _context.SaveChangesAsync();
+
+            return (true, "Password has been reset successfully.");
+        }
+
+        private async Task SendResetPasswordEmailAsync(string email, string token)
+        {
+            var smtpUser = _config["EmailSettings:SmtpUser"];
+            var smtpPassword = _config["EmailSettings:SmtpPassword"];
+            var smtpHost = _config["EmailSettings:SmtpServer"];
+            var smtpPort = int.Parse(_config["EmailSettings:SmtpPort"]);
+
+            var resetLink = $"https://{_config["AppDomain"]}/Auth/ResetPassword?token={WebUtility.UrlEncode(token)}";
+            var fromAddress = new MailAddress(smtpUser, "LTS App");
+            var toAddress = new MailAddress(email);
+            const string subject = "Reset Your Password - LTS App";
+            string body = $"Click the link to reset your password: <a href='{resetLink}'>Reset Password</a>";
+
+            using (var smtp = new SmtpClient(smtpHost, smtpPort) { EnableSsl = true, Credentials = new NetworkCredential(smtpUser, smtpPassword) })
+            using (var message = new MailMessage(fromAddress, toAddress) { Subject = subject, Body = body, IsBodyHtml = true })
+            {
+                await smtp.SendMailAsync(message);
+            }
+        }
+
+
+
     }
 }

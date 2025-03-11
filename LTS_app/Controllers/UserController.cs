@@ -17,6 +17,7 @@ using System;
 
 namespace LTS_app.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
         private readonly ApplicationDbContext _context;
