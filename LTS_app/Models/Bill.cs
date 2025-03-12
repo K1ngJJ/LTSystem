@@ -16,16 +16,20 @@ namespace LTS_app.Models
         [Required]
         public DateTime IntroducedDate { get; set; } = DateTime.UtcNow;
 
+        [Required]
         public string Status { get; set; } = "Draft"; // Draft, In Committee, Voted, Passed, Rejected
 
+        [Required]
         [ForeignKey("Legislator")]
         public int LegislatorId { get; set; }
         public Legislator Legislator { get; set; }
 
+        [Required]
         [ForeignKey("Committee")]
-        public int? CommitteeId { get; set; }
-        public Committee? Committee { get; set; }
+        public int CommitteeId { get; set; }
+        public Committee Committee { get; set; }
 
+        [Required]
         [ForeignKey("Session")]
         public int? SessionId { get; set; }
         public Session? Session { get; set; }

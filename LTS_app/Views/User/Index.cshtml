@@ -30,7 +30,6 @@
                     <table class="table table-striped">
                         <thead class="table-dark">
                             <tr>
-                                <th>Username</th>
                                 <th>Email Address</th>
                                 <th>Role</th>
                                 <th>Date Created</th>
@@ -42,7 +41,6 @@
                             @foreach (var user in Model)
                             {
                                 <tr>
-                                    <td>@user.Username</td>
                                     <td>@user.Email</td>
                                     <td>@user.Role</td>
                                     <td>@user.CreatedAt.ToString("MMMM dd, yyyy")</td>
