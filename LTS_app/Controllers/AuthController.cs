@@ -70,7 +70,7 @@ namespace LTS_app.Controllers
             {
                 new Claim(ClaimTypes.NameIdentifier, result.User.Id.ToString()),
                 new Claim(ClaimTypes.Name, result.User.Username),
-                new Claim(ClaimTypes.Role, result.User.Role)
+                new Claim(ClaimTypes.Role, result.User.Role),
             };
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -206,26 +206,31 @@ namespace LTS_app.Controllers
             return RedirectToAction("Login");
         }
 
-        public async Task<IActionResult> Logout()
+        public async Task<IActionResult> Logout(string token)
         {
-            // Get User ID before signing out
+            // 🔹 Get User Information from Claims
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var username = User.FindFirst(ClaimTypes.Name)?.Value;
-            var fullName = User.FindFirst("FullName")?.Value; // Retrieve Full Name from Claims if added
-
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            var fullName = User.FindFirst("FullName")?.Value ?? "Unknown User";
 
             // 🔹 Log User Logout Activity
-            if (!string.IsNullOrEmpty(userId) && !string.IsNullOrEmpty(username))
+            if (!string.IsNullOrEmpty(userId))
             {
-                await _userLogService.LogActivityAsync(
-                    int.Parse(userId),
-                    username,
-                    fullName ?? "", // ✅ Full Name included if available
-                    "Logout",
-                    HttpContext.Connection.RemoteIpAddress?.ToString()
-                );
+                var user = await _authService.GetUserByTokenAsync(token);
+                if (user != null)
+                {
+                    await _userLogService.LogActivityAsync(
+                        user.Id,
+                        user.Username,
+                        user.FullName, // ✅ Now correctly fetching Full Name
+                        "Logout",
+                        HttpContext.Connection.RemoteIpAddress?.ToString()
+                    );
+                }
             }
+
+            // 🔹 Sign Out the User
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
             return RedirectToAction("Login", "Auth");
         }

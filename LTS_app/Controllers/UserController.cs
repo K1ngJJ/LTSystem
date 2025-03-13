@@ -239,11 +239,5 @@ namespace LTS_app.Controllers
 
             return RedirectToAction("Index");
         }
-
-        public async Task<IActionResult> Logout()
-        {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Login", "Auth");
-        }
     }
 }

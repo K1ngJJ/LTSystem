@@ -21,24 +21,20 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Username</th>
-                        <th>Full Name</th>
+                        <th>Name</th>
                         <th>Action</th>
                         <th>Timestamp</th>
-                        <th>IP Address</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var log in Model)
                     {
                         <tr>
-                            <td>@log.Id</td>
                             <td>@log.Username</td>
                             <td>@log.FullName</td> <!-- ✅ Display Full Name -->
                             <td>@log.Action</td>
-                            <td>@log.Timestamp.ToString("yyyy-MM-dd HH:mm:ss")</td>
-                            <td>@log.IPAddress</td>
+                            <td>@log.Timestamp.ToString("MMMM d, yyyy - h:mm tt")</td>
                         </tr>
                     }
                 </tbody>
