@@ -21,6 +21,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 // Register AuthService
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUserLogService, UserLogService>();
 
 
 // ✅ FIX: Use the default cookie authentication scheme

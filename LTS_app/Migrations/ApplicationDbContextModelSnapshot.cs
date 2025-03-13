@@ -81,7 +81,7 @@ namespace LTS_app.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CommitteeId")
+                    b.Property<int>("CommitteeId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
@@ -97,7 +97,7 @@ namespace LTS_app.Migrations
                     b.Property<int>("LegislatorId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("SessionId")
+                    b.Property<int>("SessionId")
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
@@ -374,6 +374,53 @@ namespace LTS_app.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("LTS_app.Models.UserLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Action")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("IPAddress")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserLogs");
+                });
+
             modelBuilder.Entity("LTS_app.Models.Vote", b =>
                 {
                     b.Property<int>("Id")
@@ -449,7 +496,8 @@ namespace LTS_app.Migrations
                     b.HasOne("LTS_app.Models.Committee", "Committee")
                         .WithMany("Bills")
                         .HasForeignKey("CommitteeId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .IsRequired();
 
                     b.HasOne("LTS_app.Models.Legislator", "Legislator")
                         .WithMany("Bills")
@@ -460,7 +508,8 @@ namespace LTS_app.Migrations
                     b.HasOne("LTS_app.Models.Session", "Session")
                         .WithMany("Bills")
                         .HasForeignKey("SessionId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Committee");
 
@@ -516,6 +565,17 @@ namespace LTS_app.Migrations
                         .WithMany("Notifications")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("LTS_app.Models.UserLog", b =>
+                {
+                    b.HasOne("LTS_app.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");

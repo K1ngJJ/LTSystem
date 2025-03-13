@@ -1,4 +1,4 @@
-using LTS_app.Data;
+﻿using LTS_app.Data;
 using LTS_app.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -41,17 +41,19 @@ namespace LTS_app.Services
             return (true, "Login successful.", user);
         }
 
-        public async Task<(bool Success, string Message)> RegisterUserAsync(string username, string email, string password, string role, string fullName)
+        public async Task<(bool Success, string Message, User? User)> RegisterUserAsync(
+     string username, string email, string password, string role, string fullName)
         {
-            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(fullName))
-                return (false, "All fields are required.");
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(email) ||
+                string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(fullName))
+                return (false, "All fields are required.", null);
 
             if (await _context.Users.AnyAsync(u => u.Username == username || u.Email == email))
-                return (false, "Username or Email is already taken.");
+                return (false, "Username or Email is already taken.", null);
 
             var validRoles = new[] { "Admin", "Legislator", "User" };
             if (!validRoles.Contains(role))
-                return (false, "Invalid role.");
+                return (false, "Invalid role.", null);
 
             string hashedPassword = HashPassword(password);
             string confirmationToken = GenerateToken();
@@ -61,12 +63,12 @@ namespace LTS_app.Services
                 Username = username,
                 Email = email,
                 PasswordHash = hashedPassword,
-                Role = await _context.Users.AnyAsync() ? role : "Admin",  // Default to "Admin" for the first user
+                Role = await _context.Users.AnyAsync() ? role : "Admin",
                 Token = GenerateToken(),
-                IsActive = true, // Users are active by default
-                IsConfirmed = false, // Must verify email
+                IsActive = true,
+                IsConfirmed = false,
                 ConfirmationToken = confirmationToken,
-                FullName = fullName, // Store the FullName
+                FullName = fullName,
                 CreatedAt = DateTime.UtcNow
             };
 
@@ -75,8 +77,9 @@ namespace LTS_app.Services
 
             await SendVerificationEmailAsync(email, confirmationToken);
 
-            return (true, "Registration successful! Please check your email to verify your account.");
+            return (true, "Registration successful! Please check your email to verify your account.", newUser);
         }
+
 
 
         public async Task<(bool Success, string Message)> VerifyEmailAsync(string token)
@@ -185,7 +188,11 @@ namespace LTS_app.Services
             }
         }
 
-
+        public async Task<User?> GetUserByTokenAsync(string token)
+        {
+            return await _context.Users
+                .FirstOrDefaultAsync(u => u.ResetPasswordToken == token);
+        }
 
     }
 }

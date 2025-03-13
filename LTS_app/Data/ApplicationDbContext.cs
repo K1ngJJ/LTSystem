@@ -17,6 +17,7 @@ namespace LTS_app.Data
         public DbSet<BillHistory> BillHistories { get; set; }
         public DbSet<CitizenFeedback> CitizenFeedbacks { get; set; }
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<UserLog> UserLogs { get; set; }
 
         public override int SaveChanges()
         {

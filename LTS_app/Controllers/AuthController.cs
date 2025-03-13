@@ -15,10 +15,12 @@ namespace LTS_app.Controllers
     public class AuthController : Controller
     {
         private readonly IAuthService _authService;
+        private readonly IUserLogService _userLogService;
 
-        public AuthController(IAuthService authService)
+        public AuthController(IAuthService authService, IUserLogService userLogService)
         {
             _authService = authService;
+            _userLogService = userLogService;
         }
 
         [Authorize] // ✅ Ensures only authenticated users can access this action
@@ -44,6 +46,7 @@ namespace LTS_app.Controllers
         {
             return View();
         }
+
         public IActionResult Login()
         {
             if (User.Identity.IsAuthenticated)
@@ -79,6 +82,15 @@ namespace LTS_app.Controllers
                 authProperties
             );
 
+            // 🔹 Log User Login Activity
+            await _userLogService.LogActivityAsync(
+                result.User.Id,
+                result.User.Username,
+                result.User.FullName, // ✅ Full Name included
+                "Login",
+                HttpContext.Connection.RemoteIpAddress?.ToString()
+            );
+
             return result.User.Role switch
             {
                 "Admin" => RedirectToAction("Dashboard", "Admin"),
@@ -89,7 +101,7 @@ namespace LTS_app.Controllers
 
         public IActionResult Register()
         {
-            if (User.Identity.IsAuthenticated)  // ✅ Check if user is logged in using authentication
+            if (User.Identity.IsAuthenticated)
             {
                 return RedirectToDashboard();
             }
@@ -106,26 +118,34 @@ namespace LTS_app.Controllers
             }
 
             var result = await _authService.RegisterUserAsync(username, email, password, role, fullName);
+
             if (!result.Success)
             {
                 ModelState.AddModelError("", result.Message);
                 return View();
             }
 
+            // ✅ Log user registration activity
+            await _userLogService.LogActivityAsync(
+                result.User!.Id,  // ✅ Fix: Now result.User is always available
+                result.User.Username,
+                result.User.FullName,
+                "Register",
+                HttpContext.Connection.RemoteIpAddress?.ToString()
+            );
+
             // Show success message & ask user to verify email
             ViewBag.Message = "Registration successful! Please check your email to verify your account.";
             return View();
         }
-
-
 
         public async Task<IActionResult> VerifyEmail(string token)
         {
             var result = await _authService.VerifyEmailAsync(token);
             if (!result.Success)
             {
-                TempData["Error"] = result.Message; // ✅ Store error message
-                return RedirectToAction("Login"); // ✅ Redirect to login with error
+                TempData["Error"] = result.Message;
+                return RedirectToAction("Login");
             }
 
             TempData["Message"] = result.Message;
@@ -169,17 +189,45 @@ namespace LTS_app.Controllers
                 return View(new { token });
             }
 
+            // 🔹 Log User Reset Password Activity
+            var user = await _authService.GetUserByTokenAsync(token);
+            if (user != null)
+            {
+                await _userLogService.LogActivityAsync(
+                    user.Id,
+                    user.Username,
+                    user.FullName, // ✅ Full Name included
+                    "Reset Password",
+                    HttpContext.Connection.RemoteIpAddress?.ToString()
+                );
+            }
+
             ViewBag.Message = result.Message;
             return RedirectToAction("Login");
         }
 
-
-
         public async Task<IActionResult> Logout()
         {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme); // ✅ Logs out user properly
+            // Get User ID before signing out
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var username = User.FindFirst(ClaimTypes.Name)?.Value;
+            var fullName = User.FindFirst("FullName")?.Value; // Retrieve Full Name from Claims if added
 
-            return RedirectToAction("Login", "Auth"); // ✅ Redirect to login after logout
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            // 🔹 Log User Logout Activity
+            if (!string.IsNullOrEmpty(userId) && !string.IsNullOrEmpty(username))
+            {
+                await _userLogService.LogActivityAsync(
+                    int.Parse(userId),
+                    username,
+                    fullName ?? "", // ✅ Full Name included if available
+                    "Logout",
+                    HttpContext.Connection.RemoteIpAddress?.ToString()
+                );
+            }
+
+            return RedirectToAction("Login", "Auth");
         }
     }
 }
