@@ -30,23 +30,11 @@
                     </a>
 
                     <!-- Brand -->
-                    <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand fw-bold text-nowrap logo-img">
+                    <a asp-area="" asp-controller="" asp-action="" class="navbar-brand fw-bold text-nowrap logo-img">
                         <img src="~/assets/images/logos/ITDCSystem.png" alt="Logo" class="img-fluid" style="max-width: 80px;" />
                     </a>
-
-                    <!-- Navigation Links -->
-                    @if (!isAuthenticated)
-                    {
-                        <a class="nav-link px-2 small-icon" asp-area="" asp-controller="Home" asp-action="Index" title="Home">
-                            <iconify-icon icon="solar:home-line-duotone" class="fs-5"></iconify-icon>
-                        </a>
-                        <a class="nav-link px-2 small-icon" asp-area="" asp-controller="Home" asp-action="Privacy" title="Privacy">
-                            <iconify-icon icon="solar:shield-check-line-duotone" class="fs-5"></iconify-icon>
-                        </a>
-                    }
-
                     <!-- Right Side -->
-                    <div class="navbar-collapse justify-content-end px-0 collapse" id="navbarNav">
+                    <div class="justify-content-end px-0">
                         <ul class="navbar-nav flex-row align-items-center ms-auto">
                             <!-- Notifications -->
                             @if (isAuthenticated)
@@ -89,13 +77,24 @@
                             }
                             else
                             {
+                                <!-- Navigation Links -->
                                <li class="nav-item">
-                                    <a class="btn btn-sm px-2 mx-1" asp-area="" asp-controller="Auth" asp-action="Login">
+                                    <a class="nav-link px-2 small-icon" asp-area="" asp-controller="Home" asp-action="Index" title="Home">
+                                        <iconify-icon icon="solar:home-line-duotone" class="fs-5"></iconify-icon>
+                                    </a>
+                               </li>
+                               <li class="nav-item">
+                                    <a class="nav-link px-2 small-icon" asp-area="" asp-controller="Home" asp-action="Privacy" title="Privacy">
+                                        <iconify-icon icon="solar:shield-check-line-duotone" class="fs-5"></iconify-icon>
+                                    </a>
+                               </li>
+                               <li class="nav-item">
+                                    <a class="nav-link px-2" asp-area="" asp-controller="Auth" asp-action="Login">
                                         <iconify-icon icon="solar:login-2-linear" class="fs-5"></iconify-icon>
                                     </a>
                                </li>
                                <li class="nav-item">
-                                    <a class="btn btn-sm px-2" asp-area="" asp-controller="Auth" asp-action="Register">
+                                    <a class="nav-link px-2" asp-area="" asp-controller="Auth" asp-action="Register">
                                         <iconify-icon icon="solar:user-plus-linear" class="fs-5"></iconify-icon>
                                     </a>
                                </li>
@@ -108,79 +107,190 @@
         <!-- Header End -->
         @if (isAuthenticated)
         {
-            <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
-                 data-sidebar-position="fixed" data-header-position="fixed">
-                <!-- Sidebar Start -->
-                <aside class="left-sidebar" id="sidebar">
-                    <div>
-                        <div class="brand-logo d-flex align-items-center justify-content-between">
-                            <a href="@Url.Action("Dashboard", "Admin")" class="text-nowrap logo-img">
-                                <img src="~/assets/images/logos/LTSystemSm.png" alt="Logo" class="img-fluid" style="max-width: 200px;" />
-                            </a>
-                            <!-- New Sidebar Toggle Button -->
-                            <button class="sidebar-toggler d-xl-none d-block" id="sidebarToggle">
-                                <i class="ti ti-menu"></i>
-                            </button>
+            @if (User.IsInRole("Admin"))
+            {
+                <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+                data-sidebar-position="fixed" data-header-position="fixed">
+                    <!-- Sidebar Start -->
+                    <aside class="left-sidebar" id="sidebar">
+                        <div>
+                            <div class="card shadow-sm bg-danger text-white p-1 text-center" style="font-size: 0.6rem; margin-bottom: 0;">
+                                <p class="mb-0">&copy; 2025 - LTS_app</p>
+                            </div>
+
+                            <div class="brand-logo d-flex align-items-center justify-content-between">
+                                <a href="@Url.Action("Dashboard", "Admin")" class="text-nowrap logo-img">
+                                    <img src="~/assets/images/logos/LTSystemSm.png" alt="Logo" class="img-fluid" style="max-width: 200px;" />
+                                </a>
+                                <!-- New Sidebar Toggle Button -->
+                            </div>
+                            <nav class="sidebar-nav scroll-sidebar">
+                                <ul id="sidebarnav">
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" href="@Url.Action("Dashboard", "Admin")">
+                                            <iconify-icon icon="solar:atom-line-duotone"></iconify-icon>
+                                            <span class="hide-menu small">Dashboard</span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-controller="Session" asp-action="Index">
+                                            <iconify-icon icon="solar:calendar-line-duotone"></iconify-icon>
+                                            <span class="hide-menu small">Sessions</span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-controller="Legislator" asp-action="Index">
+                                            <iconify-icon icon="solar:users-group-two-rounded-line-duotone"></iconify-icon>
+                                            <span class="hide-menu small">Legislators</span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-controller="Bill" asp-action="Index">
+                                            <iconify-icon icon="solar:document-text-line-duotone"></iconify-icon>
+                                            <span class="hide-menu small">Bills</span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-controller="Committee" asp-action="Index">
+                                            <iconify-icon icon="solar:city-line-duotone"></iconify-icon>
+                                            <span class="hide-menu small">Committees</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" href="#" onclick="toggleDropdown(event, 'accountDropdown')">
+                                            <span class="sidebar-link">
+                                                <iconify-icon icon="mdi:account-circle-outline"></iconify-icon>
+                                                <span class="hide-menu small">Accounts</span>
+                                            </span>
+                                            <iconify-icon icon="mdi:chevron-down"></iconify-icon> <!-- Dropdown Arrow -->
+                                        </a>
+                                        <ul class="collapse list-unstyled ps-3" id="accountDropdown">
+                                            <li class="sidebar-item">
+                                                <a class="sidebar-link" asp-controller="User" asp-action="Index">
+                                                    <iconify-icon icon="solar:user-id-line-duotone"></iconify-icon>
+                                                    <span class="hide-menu small">Users</span>
+                                                </a>
+                                            </li>
+                                            <li class="sidebar-item">
+                                                <a class="sidebar-link" asp-controller="Log" asp-action="Index">
+                                                    <iconify-icon icon="mdi:clipboard-list-outline"></iconify-icon>
+                                                    <span class="hide-menu small">Logs</span>
+                                                </a>
+                                            </li>
+                                            <li class="sidebar-item">
+                                                <a class="sidebar-link bg-danger text-white" asp-controller="Auth" asp-action="Logout">
+                                                    <iconify-icon icon="solar:logout-2-line-duotone"></iconify-icon>
+                                                    <span class="hide-menu">Logout</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </nav>
                         </div>
-                        <nav class="sidebar-nav scroll-sidebar">
-                            <ul id="sidebarnav">
-                                <li class="sidebar-item">
-                                    <a class="sidebar-link" href="@Url.Action("Dashboard", "Admin")">
-                                        <iconify-icon icon="solar:atom-line-duotone"></iconify-icon>
-                                        <span class="hide-menu">Dashboard</span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a class="sidebar-link" asp-controller="Session" asp-action="Index">
-                                        <iconify-icon icon="solar:calendar-line-duotone"></iconify-icon>
-                                        <span class="hide-menu">Sessions</span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a class="sidebar-link" asp-controller="Legislator" asp-action="Index">
-                                        <iconify-icon icon="solar:users-group-two-rounded-line-duotone"></iconify-icon>
-                                        <span class="hide-menu">Legislators</span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a class="sidebar-link" asp-controller="Bill" asp-action="Index">
-                                        <iconify-icon icon="solar:document-text-line-duotone"></iconify-icon>
-                                        <span class="hide-menu">Bills</span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a class="sidebar-link" asp-controller="User" asp-action="Index">
-                                        <iconify-icon icon="solar:user-id-line-duotone"></iconify-icon>
-                                        <span class="hide-menu">Users</span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a class="sidebar-link" asp-controller="Committee" asp-action="Index">
-                                        <iconify-icon icon="solar:city-line-duotone"></iconify-icon>
-                                        <span class="hide-menu">Committees</span>
-                                    </a>
-                                </li>
-								<li class="sidebar-item">
-									<a class="sidebar-link" asp-controller="Log" asp-action="Index">
-                                        <iconify-icon icon="mdi:clipboard-list-outline"></iconify-icon>
-										<span class="hide-menu">Logs</span>
-									</a>
-								</li>
-                                <li class="sidebar-item">
-                                    <a class="sidebar-link bg-danger text-white" asp-controller="Auth" asp-action="Logout">
-                                        <iconify-icon icon="solar:logout-2-line-duotone"></iconify-icon>
-                                        <span class="hide-menu">Logout</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                    <div class="container">
-                        &copy; 2025 - LTS_app - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                    </div>
-                </aside>
-            </div>
-            <!-- Sidebar End -->
+                    </aside>
+                </div>
+                <!-- Sidebar End -->
+            }
+            else if (User.IsInRole("Legislator"))
+            {
+                <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+                data-sidebar-position="fixed" data-header-position="fixed">
+                    <!-- Sidebar Start -->
+                    <aside class="left-sidebar" id="sidebar">
+                        <div>
+                            <div class="card shadow-sm bg-danger text-white p-1 text-center" style="font-size: 0.6rem; margin-bottom: 0;">
+                                <p class="mb-0">&copy; 2025 - LTS_app</p>
+                            </div>
+                            <div class="brand-logo d-flex align-items-center justify-content-between">
+                                <a href="@Url.Action("Dashboard", "Legislator")" class="text-nowrap logo-img">
+                                    <img src="~/assets/images/logos/LTSystemSm.png" alt="Logo" class="img-fluid" style="max-width: 200px;" />
+                                </a>
+                                <!-- New Sidebar Toggle Button -->
+                                <button class="sidebar-toggler d-xl-none d-block" id="sidebarToggle">
+                                    <i class="ti ti-menu"></i>
+                                </button>
+                            </div>
+                            <nav class="sidebar-nav scroll-sidebar">
+                                <ul id="sidebarnav">
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" href="@Url.Action("Dashboard", "Legislator")">
+                                            <iconify-icon icon="solar:atom-line-duotone"></iconify-icon>
+                                            <span class="hide-menu small">Dashboard</span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-controller="Session" asp-action="Index">
+                                            <iconify-icon icon="solar:calendar-line-duotone"></iconify-icon>
+                                            <span class="hide-menu small">Sessions</span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-controller="Bill" asp-action="Index">
+                                            <iconify-icon icon="solar:document-text-line-duotone"></iconify-icon>
+                                            <span class="hide-menu small">Bills</span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-controller="Committee" asp-action="Index">
+                                            <iconify-icon icon="solar:city-line-duotone"></iconify-icon>
+                                            <span class="hide-menu small">Committees</span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link bg-danger text-white" asp-controller="Auth" asp-action="Logout">
+                                            <iconify-icon icon="solar:logout-2-line-duotone"></iconify-icon>
+                                            <span class="hide-menu">Logout</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </aside>
+                </div>
+                <!-- Sidebar End -->
+            }
+            else if (User.IsInRole("User"))
+            {
+                <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+                     data-sidebar-position="fixed" data-header-position="fixed">
+                    <!-- Sidebar Start -->
+                    <aside class="left-sidebar" id="sidebar">
+                        <div>
+                            <div class="card shadow-sm bg-danger text-white p-1 text-center" style="font-size: 0.6rem; margin-bottom: 0;">
+                                <p class="mb-0">&copy; 2025 - LTS_app</p>
+                            </div>
+                            <div class="brand-logo d-flex align-items-center justify-content-between">
+                                <a href="@Url.Action("Dashboard", "Legislator")" class="text-nowrap logo-img">
+                                    <img src="~/assets/images/logos/LTSystemSm.png" alt="Logo" class="img-fluid" style="max-width: 200px;" />
+                                </a>
+                                <!-- New Sidebar Toggle Button -->
+                                <button class="sidebar-toggler d-xl-none d-block" id="sidebarToggle">
+                                    <i class="ti ti-menu"></i>
+                                </button>
+                            </div>
+                            <nav class="sidebar-nav scroll-sidebar">
+                                <ul id="sidebarnav">
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" href="@Url.Action("Dashboard", "User")">
+                                            <iconify-icon icon="solar:atom-line-duotone"></iconify-icon>
+                                            <span class="hide-menu small">Dashboard</span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link bg-danger text-white" asp-controller="Auth" asp-action="Logout">
+                                            <iconify-icon icon="solar:logout-2-line-duotone"></iconify-icon>
+                                            <span class="hide-menu">Logout</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </aside>
+                </div>
+                <!-- Sidebar End -->
+                }
         }
         <div class="">
             <main role="main" class="pb-3">
@@ -200,8 +310,50 @@
             }
         };
     </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let sidebarNav = document.querySelector(".sidebar-nav");
+
+            function updateSidebarScroll() {
+                let windowHeight = window.innerHeight;
+                let sidebarHeight = sidebarNav.scrollHeight;
+
+                if (sidebarHeight > windowHeight) {
+                    sidebarNav.style.overflowY = "auto";
+                    sidebarNav.style.maxHeight = (windowHeight - 20) + "px"; // Adjust height dynamically
+                } else {
+                    sidebarNav.style.overflowY = "visible";
+                }
+            }
+
+            // Run on page load and resize
+            updateSidebarScroll();
+            window.addEventListener("resize", updateSidebarScroll);
+        });
+    </script>
+
+    <script>
+        function toggleDropdown(event, dropdownId) {
+            event.preventDefault(); // Prevent default anchor behavior
+
+            // Close all open dropdowns
+            document.querySelectorAll('.collapse.show').forEach(dropdown => {
+                if (dropdown.id !== dropdownId) {
+                    new bootstrap.Collapse(dropdown, { toggle: false }).hide();
+                }
+            });
+
+            // Toggle the clicked dropdown
+            let dropdown = document.getElementById(dropdownId);
+            let bsCollapse = new bootstrap.Collapse(dropdown, { toggle: true });
+        }
+    </script>
+
     <script src="~/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
