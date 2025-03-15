@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿﻿using Microsoft.EntityFrameworkCore;
 using LTS_app.Models;
 
 namespace LTS_app.Data
@@ -52,11 +52,11 @@ namespace LTS_app.Data
                 .HasForeignKey<Legislator>(l => l.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // 📜 Bill -> Legislator (One-to-Many)
+            // 📜 Bill -> User (One-to-Many) - Each Bill has a Creator
             modelBuilder.Entity<Bill>()
-                .HasOne(b => b.Legislator)
-                .WithMany(l => l.Bills)
-                .HasForeignKey(b => b.LegislatorId)
+                .HasOne(b => b.User)
+                .WithMany(u => u.Bills)
+                .HasForeignKey(b => b.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // 📜 Bill -> Committee (One-to-Many, Optional)

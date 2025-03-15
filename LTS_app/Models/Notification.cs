@@ -12,7 +12,7 @@ namespace LTS_app.Models
         public string Message { get; set; }
 
         [Required]
-        public DateTime DateSent { get; set; } = DateTime.UtcNow;
+        public DateTime DateSent { get; set; } = DateTime.Now;
 
         [ForeignKey("User")]
         public int UserId { get; set; }

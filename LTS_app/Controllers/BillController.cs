@@ -22,24 +22,22 @@ namespace LTS_app.Controllers
 
         public async Task<IActionResult> Index()
         {
+            var userEmail = User.Identity.Name;
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == userEmail);
+
+            if (user != null)
+            {
+                ViewBag.UserName = user.FullName; // Set ViewBag to show user's name in the form
+            }
+
             var bills = await _context.Bills
-                .Include(b => b.Legislator)
-                    .ThenInclude(l => l.User)
+                .Include(b => b.User)
                 .Include(b => b.Committee)
                 .Include(b => b.Session)
                 .ToListAsync();
 
-            var legislators = await _context.Legislators
-                .Include(l => l.User)
-                .Where(l => l.User != null)  // Ensure User exists
-                .ToListAsync();
-
             var committees = await _context.Committees.ToListAsync();
             var sessions = await _context.Sessions.ToListAsync();
-
-            ViewBag.Legislators = legislators.Any()
-                ? new SelectList(legislators, "Id", "User.FullName")
-                : new SelectList(new List<Legislator>());
 
             ViewBag.Committees = committees.Any()
                 ? new SelectList(committees, "Id", "Name")
@@ -52,29 +50,52 @@ namespace LTS_app.Controllers
             return View(bills);
         }
 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Bill bill)
         {
-            if (bill.LegislatorId == 0 || bill.CommitteeId == 0 || bill.SessionId == 0 || string.IsNullOrEmpty(bill.Title))
+            if (!ModelState.IsValid)
             {
-                TempData["ErrorMessage"] = "Please fill in all required fields.";
+                TempData["ErrorMessage"] = "Invalid data. Please check the form inputs.";
                 return RedirectToAction(nameof(Index));
             }
 
-            var legislator = await _context.Legislators.FindAsync(bill.LegislatorId);
-            if (legislator == null)
+            // 1️⃣ Get the logged-in user's username from authentication claims
+            var username = User?.Identity?.Name; // This retrieves the username
+
+            if (string.IsNullOrEmpty(username))
             {
-                TempData["ErrorMessage"] = "Selected legislator not found.";
+                TempData["ErrorMessage"] = "User authentication failed.";
                 return RedirectToAction(nameof(Index));
             }
 
-            bill.IntroducedDate = DateTime.UtcNow; // Set current date when creating a bill
+            // 2️⃣ Retrieve the user from the database using the username
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+            if (user == null)
+            {
+                TempData["ErrorMessage"] = "Unauthorized: User not found.";
+                return RedirectToAction(nameof(Index));
+            }
 
-            _context.Bills.Add(bill);
-            await _context.SaveChangesAsync();
+            // 3️⃣ Assign UserId before saving
+            bill.UserId = user.Id;
+            bill.IntroducedDate = DateTime.UtcNow;
+            bill.CreatedAt = DateTime.UtcNow;
 
-            TempData["SuccessMessage"] = "Bill created successfully!";
+            try
+            {
+                // 4️⃣ Save the bill
+                _context.Bills.Add(bill);
+                await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Bill created successfully!";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error saving bill: {ex.Message}");
+                TempData["ErrorMessage"] = "An error occurred while saving the bill.";
+            }
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -84,10 +105,6 @@ namespace LTS_app.Controllers
         [HttpGet]
         public IActionResult GetDropdownData()
         {
-            var legislators = _context.Legislators
-                .Include(l => l.User)
-                .Select(l => new { id = l.Id, name = l.User.FullName })
-                .ToList();
 
             var committees = _context.Committees
                 .Select(c => new { id = c.Id, name = c.Name })
@@ -97,7 +114,7 @@ namespace LTS_app.Controllers
                 .Select(s => new { id = s.Id, name = s.Name })
                 .ToList();
 
-            return Json(new { legislators, committees, sessions });
+            return Json(new { committees, sessions });
         }
 
         [HttpPost]
@@ -111,7 +128,7 @@ namespace LTS_app.Controllers
             }
 
             // Validate if all required fields are provided
-            if (bill.LegislatorId == 0 || bill.CommitteeId == 0 || bill.SessionId == 0 || string.IsNullOrEmpty(bill.Title))
+            if (bill.CommitteeId == 0 || bill.SessionId == 0 || string.IsNullOrEmpty(bill.Title))
             {
                 TempData["ErrorMessage"] = "Please fill in all required fields.";
                 return RedirectToAction(nameof(Index));
@@ -127,7 +144,6 @@ namespace LTS_app.Controllers
             // Update fields
             existingBill.Title = bill.Title;
             existingBill.Description = bill.Description;
-            existingBill.LegislatorId = bill.LegislatorId;
             existingBill.CommitteeId = bill.CommitteeId;
             existingBill.SessionId = bill.SessionId;
             existingBill.Status = bill.Status;
@@ -182,7 +198,6 @@ namespace LTS_app.Controllers
         public async Task<IActionResult> GetBillDetails(int id)
         {
             var bill = await _context.Bills
-                .Include(b => b.Legislator).ThenInclude(l => l.User)
                 .Include(b => b.Committee)
                 .Include(b => b.Session)
                 .FirstOrDefaultAsync(b => b.Id == id);
@@ -195,7 +210,6 @@ namespace LTS_app.Controllers
                 title = bill.Title,
                 description = bill.Description,
                 status = bill.Status,
-                legislator = bill.Legislator?.User?.FullName ?? "N/A",
                 committee = bill.Committee?.Name ?? "N/A",
                 session = bill.Session?.Name ?? "N/A",
                 introducedDate = bill.IntroducedDate
@@ -207,3 +221,10 @@ namespace LTS_app.Controllers
 
     }
 }
+
+
+
+
+
+
+

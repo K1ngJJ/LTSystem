@@ -12,7 +12,7 @@ namespace LTS_app.Models
         public string Description { get; set; }
 
         [Required]
-        public DateTime DateProposed { get; set; } = DateTime.UtcNow;
+        public DateTime DateProposed { get; set; } = DateTime.Now;
 
         [ForeignKey("Bill")]
         public int BillId { get; set; }

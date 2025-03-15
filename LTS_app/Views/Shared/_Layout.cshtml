@@ -110,19 +110,14 @@
             @if (User.IsInRole("Admin"))
             {
                 <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
-                data-sidebar-position="fixed" data-header-position="fixed">
+                     data-sidebar-position="fixed" data-header-position="fixed">
                     <!-- Sidebar Start -->
                     <aside class="left-sidebar" id="sidebar">
                         <div>
-                            <div class="card shadow-sm bg-danger text-white p-1 text-center" style="font-size: 0.6rem; margin-bottom: 0;">
-                                <p class="mb-0">&copy; 2025 - LTS_app</p>
-                            </div>
-
                             <div class="brand-logo d-flex align-items-center justify-content-between">
-                                <a href="@Url.Action("Dashboard", "Admin")" class="text-nowrap logo-img">
-                                    <img src="~/assets/images/logos/LTSystemSm.png" alt="Logo" class="img-fluid" style="max-width: 200px;" />
-                                </a>
-                                <!-- New Sidebar Toggle Button -->
+                                 <a href="@Url.Action("Dashboard", "Admin")" class="text-nowrap logo-img">
+                                     <img src="~/assets/images/logos/LTSystemSm.png" alt="Logo" class="img-fluid" style="max-width: 190px;" />
+                                 </a>
                             </div>
                             <nav class="sidebar-nav scroll-sidebar">
                                 <ul id="sidebarnav">
@@ -156,35 +151,23 @@
                                             <span class="hide-menu small">Committees</span>
                                         </a>
                                     </li>
-
                                     <li class="sidebar-item">
-                                        <a class="sidebar-link" href="#" onclick="toggleDropdown(event, 'accountDropdown')">
-                                            <span class="sidebar-link">
-                                                <iconify-icon icon="mdi:account-circle-outline"></iconify-icon>
-                                                <span class="hide-menu small">Accounts</span>
-                                            </span>
-                                            <iconify-icon icon="mdi:chevron-down"></iconify-icon> <!-- Dropdown Arrow -->
+                                        <a class="sidebar-link" asp-controller="User" asp-action="Index">
+                                            <iconify-icon icon="solar:user-id-line-duotone"></iconify-icon>
+                                            <span class="hide-menu small">Users</span>
                                         </a>
-                                        <ul class="collapse list-unstyled ps-3" id="accountDropdown">
-                                            <li class="sidebar-item">
-                                                <a class="sidebar-link" asp-controller="User" asp-action="Index">
-                                                    <iconify-icon icon="solar:user-id-line-duotone"></iconify-icon>
-                                                    <span class="hide-menu small">Users</span>
-                                                </a>
-                                            </li>
-                                            <li class="sidebar-item">
-                                                <a class="sidebar-link" asp-controller="Log" asp-action="Index">
-                                                    <iconify-icon icon="mdi:clipboard-list-outline"></iconify-icon>
-                                                    <span class="hide-menu small">Logs</span>
-                                                </a>
-                                            </li>
-                                            <li class="sidebar-item">
-                                                <a class="sidebar-link bg-danger text-white" asp-controller="Auth" asp-action="Logout">
-                                                    <iconify-icon icon="solar:logout-2-line-duotone"></iconify-icon>
-                                                    <span class="hide-menu">Logout</span>
-                                                </a>
-                                            </li>
-                                        </ul>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-controller="Log" asp-action="Index">
+                                            <iconify-icon icon="mdi:clipboard-list-outline"></iconify-icon>
+                                            <span class="hide-menu small">Logs</span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link bg-danger text-white" asp-controller="Auth" asp-action="Logout">
+                                            <iconify-icon icon="solar:logout-2-line-duotone"></iconify-icon>
+                                            <span class="hide-menu small">Logout</span>
+                                        </a>
                                     </li>
                                 </ul>
                             </nav>
@@ -196,7 +179,7 @@
             else if (User.IsInRole("Legislator"))
             {
                 <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
-                data-sidebar-position="fixed" data-header-position="fixed">
+                     data-sidebar-position="fixed" data-header-position="fixed">
                     <!-- Sidebar Start -->
                     <aside class="left-sidebar" id="sidebar">
                         <div>
@@ -241,7 +224,7 @@
                                     <li class="sidebar-item">
                                         <a class="sidebar-link bg-danger text-white" asp-controller="Auth" asp-action="Logout">
                                             <iconify-icon icon="solar:logout-2-line-duotone"></iconify-icon>
-                                            <span class="hide-menu">Logout</span>
+                                            <span class="hide-menu small">Logout</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -281,7 +264,7 @@
                                     <li class="sidebar-item">
                                         <a class="sidebar-link bg-danger text-white" asp-controller="Auth" asp-action="Logout">
                                             <iconify-icon icon="solar:logout-2-line-duotone"></iconify-icon>
-                                            <span class="hide-menu">Logout</span>
+                                            <span class="hide-menu small">Logout</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -290,7 +273,7 @@
                     </aside>
                 </div>
                 <!-- Sidebar End -->
-                }
+            }
         }
         <div class="">
             <main role="main" class="pb-3">
@@ -309,10 +292,8 @@
                 window.location.reload();
             }
         };
-    </script>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
+         document.addEventListener("DOMContentLoaded", function () {
             let sidebarNav = document.querySelector(".sidebar-nav");
 
             function updateSidebarScroll() {
@@ -331,10 +312,8 @@
             updateSidebarScroll();
             window.addEventListener("resize", updateSidebarScroll);
         });
-    </script>
 
-    <script>
-        function toggleDropdown(event, dropdownId) {
+         function toggleDropdown(event, dropdownId) {
             event.preventDefault(); // Prevent default anchor behavior
 
             // Close all open dropdowns
@@ -348,6 +327,8 @@
             let dropdown = document.getElementById(dropdownId);
             let bsCollapse = new bootstrap.Collapse(dropdown, { toggle: true });
         }
+
+
     </script>
 
     <script src="~/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

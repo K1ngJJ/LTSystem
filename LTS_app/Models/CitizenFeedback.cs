@@ -12,7 +12,7 @@ namespace LTS_app.Models
         public string Comment { get; set; }
 
         [Required]
-        public DateTime DateSubmitted { get; set; } = DateTime.UtcNow;
+        public DateTime DateSubmitted { get; set; } = DateTime.Now;
 
         [ForeignKey("User")]
         public int UserId { get; set; }

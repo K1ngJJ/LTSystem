@@ -25,7 +25,7 @@ namespace LTS_app.Models
         public string Action { get; set; } // Example: "Login", "Logout", "Created Bill"
 
         [Required]
-        public DateTime Timestamp { get; set; } = DateTime.UtcNow;
+        public DateTime Timestamp { get; set; } = DateTime.Now;
 
         [StringLength(50)]
         public string IPAddress { get; set; }

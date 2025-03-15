@@ -81,7 +81,7 @@ namespace LTS_app.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CommitteeId")
+                    b.Property<int?>("CommitteeId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
@@ -93,9 +93,6 @@ namespace LTS_app.Migrations
 
                     b.Property<DateTime>("IntroducedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("LegislatorId")
-                        .HasColumnType("int");
 
                     b.Property<int>("SessionId")
                         .HasColumnType("int");
@@ -111,13 +108,16 @@ namespace LTS_app.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CommitteeId");
 
-                    b.HasIndex("LegislatorId");
-
                     b.HasIndex("SessionId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Bills");
                 });
@@ -496,14 +496,7 @@ namespace LTS_app.Migrations
                     b.HasOne("LTS_app.Models.Committee", "Committee")
                         .WithMany("Bills")
                         .HasForeignKey("CommitteeId")
-                        .OnDelete(DeleteBehavior.SetNull)
-                        .IsRequired();
-
-                    b.HasOne("LTS_app.Models.Legislator", "Legislator")
-                        .WithMany("Bills")
-                        .HasForeignKey("LegislatorId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("LTS_app.Models.Session", "Session")
                         .WithMany("Bills")
@@ -511,11 +504,17 @@ namespace LTS_app.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("LTS_app.Models.User", "User")
+                        .WithMany("Bills")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Committee");
 
-                    b.Navigation("Legislator");
-
                     b.Navigation("Session");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("LTS_app.Models.BillHistory", b =>
@@ -618,8 +617,6 @@ namespace LTS_app.Migrations
 
             modelBuilder.Entity("LTS_app.Models.Legislator", b =>
                 {
-                    b.Navigation("Bills");
-
                     b.Navigation("Votes");
                 });
 
@@ -630,6 +627,8 @@ namespace LTS_app.Migrations
 
             modelBuilder.Entity("LTS_app.Models.User", b =>
                 {
+                    b.Navigation("Bills");
+
                     b.Navigation("Legislator")
                         .IsRequired();
 

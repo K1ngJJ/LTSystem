@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Identity;
 
 namespace LTS_app.Models
 {
@@ -37,6 +38,7 @@ namespace LTS_app.Models
         public DateTime? ResetPasswordExpiry { get; set; } // Expiry time for reset token
 
         public ICollection<Notification> Notifications { get; set; } = new List<Notification>();
+        public ICollection<Bill> Bills { get; set; } = new List<Bill>();
 
         public Legislator Legislator { get; set; }
     }

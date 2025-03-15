@@ -17,7 +17,6 @@ namespace LTS_app.Models
         [Required]
         public string Position { get; set; } // Example: "Senator", "Representative"
 
-        public ICollection<Bill> Bills { get; set; } = new List<Bill>();
         public ICollection<Vote> Votes { get; set; } = new List<Vote>();
         public ICollection<Committee> Committees { get; set; } = new List<Committee>();
 

@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LTS_app.Models
@@ -14,20 +16,21 @@ namespace LTS_app.Models
         public string Description { get; set; }
 
         [Required]
-        public DateTime IntroducedDate { get; set; } = DateTime.UtcNow;
+        public DateTime IntroducedDate { get; set; } = DateTime.Now;
 
         [Required]
         public string Status { get; set; } = "Draft"; // Draft, In Committee, Voted, Passed, Rejected
 
+        // ✅ Direct Foreign Key to User
         [Required]
-        [ForeignKey("Legislator")]
-        public int LegislatorId { get; set; }
-        public Legislator Legislator { get; set; }
+        [ForeignKey("User")]
+        public int UserId { get; set; }
+        public User User { get; set; }
 
-        [Required]
+        // ✅ Make CommitteeId nullable
         [ForeignKey("Committee")]
-        public int CommitteeId { get; set; }
-        public Committee Committee { get; set; }
+        public int? CommitteeId { get; set; }  // <-- Changed to int?
+        public Committee? Committee { get; set; }  // Nullable reference
 
         [Required]
         [ForeignKey("Session")]
@@ -38,6 +41,5 @@ namespace LTS_app.Models
         public ICollection<Vote> Votes { get; set; } = new List<Vote>();
         public ICollection<BillHistory> BillHistories { get; set; } = new List<BillHistory>();
         public ICollection<CitizenFeedback> CitizenFeedbacks { get; set; } = new List<CitizenFeedback>();
-
     }
 }

@@ -13,7 +13,7 @@ namespace LTS_app.Models
         public string ActionTaken { get; set; } // Example: "Bill passed committee review"
 
         [Required]
-        public DateTime Date { get; set; } = DateTime.UtcNow;
+        public DateTime Date { get; set; } = DateTime.Now;
 
         [ForeignKey("Bill")]
         public int BillId { get; set; }

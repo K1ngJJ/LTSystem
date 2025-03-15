@@ -23,6 +23,10 @@ namespace LTS_app.Services
             _config = config;
         }
 
+        public async Task<User?> GetUserByUsernameAsync(string username)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+        }
 
         public async Task<(bool Success, string Message, User? User)> AuthenticateUserAsync(string username, string password)
         {

@@ -36,7 +36,7 @@
                             <thead class="table-dark small">
                                 <tr>
                                     <th>Bill Title</th>
-                                    <th>Legislator</th>
+                                    <th>Proposed by</th>
                                     <th>Committee</th>
                                     <th>Session</th>
                                     <th>Introduced Date</th>
@@ -49,21 +49,21 @@
                                 {
                                     <tr>
                                         <td>@bill.Title</td>
-                                        <td>@(bill.Legislator?.User?.FullName ?? "Unknown Legislator")</td>
+                                        <td>@(bill.User?.FullName ?? "Unknown Creator")</td>  <!-- Updated -->
                                         <td>@(bill.Committee?.Name ?? "N/A")</td>
                                         <td>@(bill.Session?.Name ?? "N/A")</td>
                                         <td>@bill.IntroducedDate.ToString("yyyy-MM-dd")</td>
                                         <td>@bill.Status</td>
                                         <td>
-                                           <button class="btn btn-info btn-sm"
+                                            <button class="btn btn-info btn-sm"
                                                 onclick="openViewBillModal(
                                                     '@bill.Id', 
                                                     '@bill.Title', 
                                                     '@bill.Description', 
                                                     '@bill.Status', 
-                                                    '@bill.Legislator.User.FullName', 
-                                                    '@bill.Committee.Name', 
-                                                    '@bill.Session.Name')">
+                                                    '@(bill.User?.FullName ?? "Unknown")',  <!-- Updated -->
+                                                    '@(bill.Committee?.Name ?? "N/A")', 
+                                                    '@(bill.Session?.Name ?? "N/A")')">
                                                 <i class="bi bi-eye"></i>
                                             </button>
 
@@ -75,7 +75,7 @@
                                                     '@bill.Title',
                                                     '@bill.Description',
                                                     '@bill.Status',
-                                                    '@bill.LegislatorId',
+                                                    '@(bill.User?.Id ?? 0)',  <!-- Updated -->
                                                     '@bill.CommitteeId',
                                                     '@bill.SessionId')">
                                                     <i class="bi bi-pencil-square"></i>
@@ -125,18 +125,7 @@
                         <label class="form-label">Description</label>
                         <textarea class="form-control" name="Description" required></textarea>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Legislator</label>
-                        <select class="form-control" name="LegislatorId" required>
-                            @if (ViewBag.Legislators != null)
-                            {
-                                @foreach (var legislator in ViewBag.Legislators as IEnumerable<SelectListItem>)
-                                {
-                                    <option value="@legislator.Value">@legislator.Text</option>
-                                }
-                            }
-                        </select>
-                    </div>
+
 
                     <div class="mb-3">
                         <label class="form-label">Committee</label>
@@ -182,6 +171,7 @@
     </div>
 </div>
 
+
 <!-- Edit Modal -->
 <div class="modal fade" id="editBillModal" tabindex="-1" aria-labelledby="editBillModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -212,11 +202,6 @@
                             <option value="Approved">Approved</option>
                             <option value="Rejected">Rejected</option>
                         </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Legislator</label>
-                        <select class="form-control" id="editBillLegislator" name="LegislatorId"></select>
                     </div>
 
                     <div class="mb-3">

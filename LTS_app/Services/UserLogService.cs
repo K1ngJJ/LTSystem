@@ -28,7 +28,7 @@ namespace LTS_app.Services
                 FullName = fullName, // 🔹 Include Full Name
                 Action = action,
                 IPAddress = ipAddress,
-                Timestamp = DateTime.UtcNow
+                Timestamp = DateTime.Now
             };
 
             _context.UserLogs.Add(log);
