@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace LTS_app.Controllers
 {
-    [Authorize(Roles = "Admin,Legislator")]
+    [Authorize(Roles = "Admin,Legislator,User")]
     public class BillController : Controller
     {
         private readonly ApplicationDbContext _context;

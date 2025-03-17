@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LTS_app.Models
 {
-    public class CitizenFeedback : BaseEntity
+    public class UserFeedback : BaseEntity
     {
         [Key]
         public int Id { get; set; }

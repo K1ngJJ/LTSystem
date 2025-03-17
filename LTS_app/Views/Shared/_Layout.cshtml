@@ -187,7 +187,7 @@
                                 <p class="mb-0">&copy; 2025 - LTS_app</p>
                             </div>
                             <div class="brand-logo d-flex align-items-center justify-content-between">
-                                 <a href="@Url.Action("Dashboard", "Admin")" class="text-nowrap logo-img">
+                                <a href="@Url.Action("Dashboard", "Legislator")" class="text-nowrap logo-img">
                                      <img src="~/assets/images/logos/LTSystemSm.png" alt="Logo" class="img-fluid" style="max-width: 150px;" />
                                  </a>
                             </div>
@@ -241,7 +241,7 @@
                                 <p class="mb-0">&copy; 2025 - LTS_app</p>
                             </div>
                         <div class="brand-logo d-flex align-items-center justify-content-between">
-                            <a href="@Url.Action("Dashboard", "Admin")" class="text-nowrap logo-img">
+                                <a href="@Url.Action("Dashboard", "User")" class="text-nowrap logo-img">
                                 <img src="~/assets/images/logos/LTSystemSm.png" alt="Logo" class="img-fluid" style="max-width: 150px;" />
                             </a>
                         </div>
@@ -251,6 +251,12 @@
                                         <a class="sidebar-link" href="@Url.Action("Dashboard", "User")">
                                             <iconify-icon icon="solar:atom-line-duotone"></iconify-icon>
                                             <span class="hide-menu small">Dashboard</span>
+                                        </a>
+                                    </li>
+                                    <li class="sidebar-item">
+                                        <a class="sidebar-link" asp-controller="Bill" asp-action="Index">
+                                            <iconify-icon icon="solar:document-text-line-duotone"></iconify-icon>
+                                            <span class="hide-menu small">Bills</span>
                                         </a>
                                     </li>
                                     <li class="sidebar-item">

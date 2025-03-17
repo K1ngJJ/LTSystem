@@ -41,6 +41,7 @@ data-sidebar-position="fixed" data-header-position="fixed">
                                     <th>Session</th>
                                     <th>Introduced Date</th>
                                     <th>Status</th>
+                                    <th>Feedbacks</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -54,6 +55,21 @@ data-sidebar-position="fixed" data-header-position="fixed">
                                         <td>@(bill.Session?.Name ?? "N/A")</td>
                                         <td>@bill.IntroducedDate.ToString("yyyy-MM-dd")</td>
                                         <td>@bill.Status</td>
+                                        <td>
+                                            @if (User.IsInRole("User"))
+                                            {
+                                                <button class="btn btn-primary btn-sm" onclick="openFeedbackModal(@bill.Id)">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </button>
+                                            }
+
+                                            @if (User.IsInRole("User") || User.IsInRole("Legislator") || User.IsInRole("Admin"))
+                                            {
+                                                <button class="btn btn-info btn-sm" onclick="viewFeedback(@bill.Id)">
+                                                    💬
+                                                </button>
+                                            }
+                                        </td>
                                         <td>
                                             <button class="btn btn-info btn-sm"
                                             onclick="openViewBillModal(
@@ -87,12 +103,6 @@ data-sidebar-position="fixed" data-header-position="fixed">
                                                 </button>
                                             }
                                         </td>
-                                        @if (User.IsInRole("User"))
-                                        {
-                                            <td>
-                                                <button class="btn btn-primary btn-sm" onclick="openFeedbackModal(@bill.Id)">💬 Feedback</button>
-                                            </td>
-                                        }
                                     </tr>
                                 }
                             </tbody>
@@ -137,20 +147,93 @@ data-sidebar-position="fixed" data-header-position="fixed">
 
 @if (User.IsInRole("User"))
 {
-    <div class="modal fade" id="feedbackModal" tabindex="-1">
+    <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Submit Feedback</h5>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <!-- Modal Header -->
+                <div class="modal-header text-white">
+                    <h5 class="modal-title" id="feedbackModalLabel">
+                        <i class="bi bi-pencil-square"></i> Submit Feedback
+                    </h5>
+                    <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="close"></button>
                 </div>
+
+                <!-- Modal Body -->
                 <div class="modal-body">
                     <input type="hidden" id="feedbackBillId">
-                    <textarea id="feedbackText" class="form-control" placeholder="Enter your feedback..." rows="3"></textarea>
+                    
+                    <div class="mb-3">
+                        <label for="feedbackText" class="form-label fw-bold text-lowercase">your feedback:</label>
+                        <textarea id="feedbackText" class="form-control text-lowercase" placeholder="enter your feedback..." rows="4" maxlength="500" oninput="updateCharacterCount()"></textarea>
+                        <small class="text-muted d-block mt-1 text-lowercase">
+                            <i class="bi bi-info-circle"></i> <span id="charCount">500</span> characters remaining
+                        </small>
+                    </div>
                 </div>
+
+                <!-- Modal Footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="submitFeedback()">Submit</button>
+                    <button type="button" class="btn btn-secondary text-lowercase" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> close
+                    </button>
+                    <button type="button" class="btn btn-primary text-lowercase" onclick="submitFeedback()">
+                        <i class="bi bi-send"></i> submit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@if (User.IsInRole("User") || User.IsInRole("Legislator") || User.IsInRole("Admin"))
+{
+    <div class="modal fade" id="feedbackListModal" tabindex="-1" aria-labelledby="feedbackListModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <!-- Large modal for readability -->
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header text-white">
+                    <h5 class="modal-title" id="feedbackListModalLabel">
+                        <i class="bi bi-chat-dots"></i> Feedback for Bill
+                    </h5>
+                    <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <div class="list-group" id="feedbackList">
+                        <!-- Placeholder while loading -->
+                        <div class="text-center text-muted py-3">
+                            <i class="bi bi-arrow-repeat"></i> Loading feedback...
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (User.IsInRole("User"))
+{
+    <!-- Notification Modal -->
+    <div class="modal fade" id="feedbackMessageModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="feedbackMessageTitle"></h6>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center" id="feedbackMessageBody"></div>
+                <div class="modal-footer">
+                    <button class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -336,19 +419,21 @@ data-sidebar-position="fixed" data-header-position="fixed">
     <script>
         function openFeedbackModal(billId) {
             $("#feedbackBillId").val(billId);
+            $("#feedbackText").val("");
+            $("#charCount").text(500); // Reset character count
             $("#feedbackModal").modal("show");
         }
 
         function submitFeedback() {
             var billId = $("#feedbackBillId").val();
-            var feedbackText = $("#feedbackText").val();
+            var feedbackText = $("#feedbackText").val().trim();
 
-            if (!feedbackText.trim()) {
+            if (!feedbackText) {
                 alert("Feedback cannot be empty.");
                 return;
             }
 
-            $.post("/CitizenFeedback/SubmitFeedback", { BillId: billId, FeedbackText: feedbackText })
+            $.post("/UserFeedback/SubmitFeedback", { BillId: billId, FeedbackText: feedbackText })
                 .done(function () {
                     alert("Feedback submitted successfully!");
                     $("#feedbackModal").modal("hide");
@@ -357,7 +442,63 @@ data-sidebar-position="fixed" data-header-position="fixed">
                     alert("An error occurred. Please try again.");
                 });
         }
+
+        function viewFeedback(billId) {
+            $.ajax({
+                url: '/UserFeedback/GetFeedbacks',
+                type: 'GET',
+                data: { billId: billId },
+                success: function (response) {
+                    let feedbackList = $("#feedbackList");
+                    feedbackList.empty();
+
+                    if (response.length === 0) {
+                        feedbackList.append('<li class="list-group-item text-center text-muted">No feedback available.</li>');
+                    } else {
+                        response.forEach(fb => {
+                            feedbackList.append(`<li class="list-group-item">
+                                <strong>${fb.userFullName}:</strong> ${fb.feedbackText} <br>
+                                <small class="text-muted">${fb.dateSubmitted}</small>
+                            </li>`);
+                        });
+                    }
+
+                    $("#feedbackListModal").modal("show");
+                },
+                error: function () {
+                    alert("Failed to load feedback. Please try again.");
+                }
+            });
+        }
+
+        function updateCharacterCount() {
+            const maxChars = 500;
+            const textArea = document.getElementById("feedbackText");
+            const charCount = document.getElementById("charCount");
+            charCount.textContent = maxChars - textArea.value.length;
+        }
     </script>
+
+    <script>
+        $(document).ready(function () {
+            var successMessage = '@TempData["SuccessMessage"]';
+            var errorMessage = '@TempData["ErrorMessage"]';
+
+            if (successMessage) {
+                showFeedbackModal("Success", successMessage);
+            }
+            if (errorMessage) {
+                showFeedbackModal("Error", errorMessage);
+            }
+        });
+
+        function showFeedbackModal(title, message) {
+            $("#feedbackMessageTitle").text(title);
+            $("#feedbackMessageBody").html(message);
+            $("#feedbackMessageModal").modal("show");
+        }
+    </script>
+
 
     <script>
         function openCreateBillModal() {

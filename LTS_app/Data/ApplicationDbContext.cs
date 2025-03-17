@@ -15,7 +15,7 @@ namespace LTS_app.Data
         public DbSet<Session> Sessions { get; set; }
         public DbSet<Amendment> Amendments { get; set; }
         public DbSet<BillHistory> BillHistories { get; set; }
-        public DbSet<CitizenFeedback> CitizenFeedbacks { get; set; }
+        public DbSet<UserFeedback> UserFeedbacks { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<UserLog> UserLogs { get; set; }
 
@@ -108,7 +108,7 @@ namespace LTS_app.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             // 💬 Citizen Feedback -> Bill (One-to-Many)
-            modelBuilder.Entity<CitizenFeedback>()
+            modelBuilder.Entity<UserFeedback>()
                 .HasOne(cf => cf.Bill)
                 .WithMany(b => b.CitizenFeedbacks)
                 .HasForeignKey(cf => cf.BillId)

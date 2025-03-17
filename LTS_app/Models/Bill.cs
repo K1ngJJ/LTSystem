@@ -40,6 +40,6 @@ namespace LTS_app.Models
         public ICollection<Amendment> Amendments { get; set; } = new List<Amendment>();
         public ICollection<Vote> Votes { get; set; } = new List<Vote>();
         public ICollection<BillHistory> BillHistories { get; set; } = new List<BillHistory>();
-        public ICollection<CitizenFeedback> CitizenFeedbacks { get; set; } = new List<CitizenFeedback>();
+        public ICollection<UserFeedback> CitizenFeedbacks { get; set; } = new List<UserFeedback>();
     }
 }

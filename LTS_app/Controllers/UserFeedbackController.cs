@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 
 namespace LTS_app.Controllers
 {
-    [Authorize(Roles = "User")]
-    public class CitizenFeedbackController : Controller
+    [Authorize(Roles = "Admin,Legislator,User")]
+    public class UserFeedbackController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public CitizenFeedbackController(ApplicationDbContext context)
+        public UserFeedbackController(ApplicationDbContext context)
         {
             _context = context;
         }
 
+        [Authorize(Roles = "User")]
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> SubmitFeedback(int BillId, string FeedbackText)
         {
             int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
@@ -29,40 +29,43 @@ namespace LTS_app.Controllers
             if (string.IsNullOrWhiteSpace(FeedbackText))
             {
                 TempData["ErrorMessage"] = "Feedback cannot be empty.";
-                return RedirectToAction("Index", "Bill");
+                return RedirectToAction(nameof(Index), "Bill"); // Stay on Bill Index
             }
 
-            var feedback = new CitizenFeedback
+            var feedback = new UserFeedback
             {
                 BillId = BillId,
                 UserId = userId,
                 FeedbackText = FeedbackText,
-                SubmittedAt = DateTime.UtcNow
+                SubmittedAt = DateTime.Now
             };
 
-            _context.CitizenFeedbacks.Add(feedback);
+            _context.UserFeedbacks.Add(feedback);
             await _context.SaveChangesAsync();
 
             TempData["SuccessMessage"] = "Feedback submitted successfully!";
-            return RedirectToAction("Details", "Bill", new { id = BillId });
+            return RedirectToAction(nameof(Index), "Bill"); // ✅ Stay on Bill Index
         }
 
+        [Authorize(Roles = "User,Legislator,Admin")]
         [HttpGet]
         public async Task<IActionResult> GetFeedbacks(int billId)
         {
-            var feedbacks = await _context.CitizenFeedbacks
+            var feedbacks = await _context.UserFeedbacks
                 .Where(f => f.BillId == billId)
-                .Include(f => f.User)
+                .Include(f => f.User) // Ensure User is included
                 .OrderByDescending(f => f.SubmittedAt)
                 .Select(f => new
                 {
-                    UserName = f.User.FullName,
+                    UserFullName = f.User != null ? f.User.FullName : "Unknown User", // Avoid null reference
                     FeedbackText = f.FeedbackText,
-                    SubmittedAt = f.SubmittedAt.ToString("yyyy-MM-dd HH:mm")
+                    DateSubmitted = f.SubmittedAt.ToString("yyyy-MM-dd HH:mm")
                 })
                 .ToListAsync();
 
             return Json(feedbacks);
         }
+
+
     }
 }
