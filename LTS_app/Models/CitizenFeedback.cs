@@ -9,17 +9,19 @@ namespace LTS_app.Models
         public int Id { get; set; }
 
         [Required]
-        public string Comment { get; set; }
+        public int BillId { get; set; }
+        [ForeignKey("BillId")]
+        public Bill Bill { get; set; }
 
         [Required]
-        public DateTime DateSubmitted { get; set; } = DateTime.Now;
-
-        [ForeignKey("User")]
         public int UserId { get; set; }
+        [ForeignKey("UserId")]
         public User User { get; set; }
 
-        [ForeignKey("Bill")]
-        public int BillId { get; set; }
-        public Bill Bill { get; set; }
+        [Required]
+        [MaxLength(1000)]
+        public string FeedbackText { get; set; }
+
+        public DateTime SubmittedAt { get; set; } = DateTime.UtcNow;
     }
 }

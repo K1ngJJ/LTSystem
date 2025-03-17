@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace LTS_app.Controllers
@@ -51,54 +52,35 @@ namespace LTS_app.Controllers
         }
 
 
+
+        [Authorize(Roles = "Legislator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Bill bill)
+        public async Task<IActionResult> Create(string Title, string Description, int CommitteeId, int SessionId, string Status)
         {
-            if (!ModelState.IsValid)
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            if (string.IsNullOrEmpty(Title) || CommitteeId == 0 || SessionId == 0)
             {
-                TempData["ErrorMessage"] = "Invalid data. Please check the form inputs.";
+                TempData["ErrorMessage"] = "Please fill in all required fields.";
                 return RedirectToAction(nameof(Index));
             }
-
-            // 1️⃣ Get the logged-in user's username from authentication claims
-            var username = User?.Identity?.Name; // This retrieves the username
-
-            if (string.IsNullOrEmpty(username))
+            var createbill = new Bill
             {
-                TempData["ErrorMessage"] = "User authentication failed.";
-                return RedirectToAction(nameof(Index));
-            }
+                UserId = userId,
+                Title = Title,
+                Description = Description,
+                CommitteeId = CommitteeId,
+                SessionId = SessionId,
+                Status = Status,
+                IntroducedDate = DateTime.Now
+            };
 
-            // 2️⃣ Retrieve the user from the database using the username
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
-            if (user == null)
-            {
-                TempData["ErrorMessage"] = "Unauthorized: User not found.";
-                return RedirectToAction(nameof(Index));
-            }
-
-            // 3️⃣ Assign UserId before saving
-            bill.UserId = user.Id;
-            bill.IntroducedDate = DateTime.UtcNow;
-            bill.CreatedAt = DateTime.UtcNow;
-
-            try
-            {
-                // 4️⃣ Save the bill
-                _context.Bills.Add(bill);
-                await _context.SaveChangesAsync();
-                TempData["SuccessMessage"] = "Bill created successfully!";
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error saving bill: {ex.Message}");
-                TempData["ErrorMessage"] = "An error occurred while saving the bill.";
-            }
+            _context.Bills.Add(createbill);
+            await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }
-
 
 
         // ✅ GET: Fetch Dropdown Data for Modal
@@ -117,17 +99,21 @@ namespace LTS_app.Controllers
             return Json(new { committees, sessions });
         }
 
+        [Authorize(Roles = "Legislator")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Bill bill)
         {
+            // Get the logged-in user's ID from claims
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
             if (id != bill.Id)
             {
                 TempData["ErrorMessage"] = "Invalid bill ID.";
                 return RedirectToAction(nameof(Index));
             }
 
-            // Validate if all required fields are provided
+            // Validate required fields
             if (bill.CommitteeId == 0 || bill.SessionId == 0 || string.IsNullOrEmpty(bill.Title))
             {
                 TempData["ErrorMessage"] = "Please fill in all required fields.";
@@ -141,6 +127,13 @@ namespace LTS_app.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
+            // Ensure the logged-in user is the owner of the bill
+            if (existingBill.UserId != userId)
+            {
+                TempData["ErrorMessage"] = "Unauthorized: You do not have permission to edit this bill.";
+                return RedirectToAction(nameof(Index));
+            }
+
             // Update fields
             existingBill.Title = bill.Title;
             existingBill.Description = bill.Description;
@@ -148,25 +141,26 @@ namespace LTS_app.Controllers
             existingBill.SessionId = bill.SessionId;
             existingBill.Status = bill.Status;
 
-            // Set IntroducedDate to current UTC date when updating the bill
+            // Update last modified time
             existingBill.IntroducedDate = DateTime.UtcNow;
 
             try
             {
-                _context.Update(existingBill);
+                _context.Bills.Update(existingBill);
                 await _context.SaveChangesAsync();
                 TempData["SuccessMessage"] = "Bill updated successfully!";
-                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
                 TempData["ErrorMessage"] = "An error occurred while updating the bill. " + ex.Message;
-                return RedirectToAction(nameof(Index));
             }
+
+            return RedirectToAction(nameof(Index));
         }
 
 
 
+        [Authorize(Roles = "Legislator")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -198,6 +192,7 @@ namespace LTS_app.Controllers
         public async Task<IActionResult> GetBillDetails(int id)
         {
             var bill = await _context.Bills
+                .Include(b => b.User)
                 .Include(b => b.Committee)
                 .Include(b => b.Session)
                 .FirstOrDefaultAsync(b => b.Id == id);
@@ -210,6 +205,7 @@ namespace LTS_app.Controllers
                 title = bill.Title,
                 description = bill.Description,
                 status = bill.Status,
+                proposedBy = bill.User?.FullName ?? "Unknown",
                 committee = bill.Committee?.Name ?? "N/A",
                 session = bill.Session?.Name ?? "N/A",
                 introducedDate = bill.IntroducedDate
@@ -217,7 +213,6 @@ namespace LTS_app.Controllers
 
             return Json(result);
         }
-
 
     }
 }

@@ -116,7 +116,7 @@
                         <div>
                             <div class="brand-logo d-flex align-items-center justify-content-between">
                                  <a href="@Url.Action("Dashboard", "Admin")" class="text-nowrap logo-img">
-                                     <img src="~/assets/images/logos/LTSystemSm.png" alt="Logo" class="img-fluid" style="max-width: 190px;" />
+                                     <img src="~/assets/images/logos/LTSystemSm.png" alt="Logo" class="img-fluid" style="max-width: 150px;" />
                                  </a>
                             </div>
                             <nav class="sidebar-nav scroll-sidebar">
@@ -187,13 +187,9 @@
                                 <p class="mb-0">&copy; 2025 - LTS_app</p>
                             </div>
                             <div class="brand-logo d-flex align-items-center justify-content-between">
-                                <a href="@Url.Action("Dashboard", "Legislator")" class="text-nowrap logo-img">
-                                    <img src="~/assets/images/logos/LTSystemSm.png" alt="Logo" class="img-fluid" style="max-width: 200px;" />
-                                </a>
-                                <!-- New Sidebar Toggle Button -->
-                                <button class="sidebar-toggler d-xl-none d-block" id="sidebarToggle">
-                                    <i class="ti ti-menu"></i>
-                                </button>
+                                 <a href="@Url.Action("Dashboard", "Admin")" class="text-nowrap logo-img">
+                                     <img src="~/assets/images/logos/LTSystemSm.png" alt="Logo" class="img-fluid" style="max-width: 150px;" />
+                                 </a>
                             </div>
                             <nav class="sidebar-nav scroll-sidebar">
                                 <ul id="sidebarnav">
@@ -244,15 +240,11 @@
                             <div class="card shadow-sm bg-danger text-white p-1 text-center" style="font-size: 0.6rem; margin-bottom: 0;">
                                 <p class="mb-0">&copy; 2025 - LTS_app</p>
                             </div>
-                            <div class="brand-logo d-flex align-items-center justify-content-between">
-                                <a href="@Url.Action("Dashboard", "Legislator")" class="text-nowrap logo-img">
-                                    <img src="~/assets/images/logos/LTSystemSm.png" alt="Logo" class="img-fluid" style="max-width: 200px;" />
-                                </a>
-                                <!-- New Sidebar Toggle Button -->
-                                <button class="sidebar-toggler d-xl-none d-block" id="sidebarToggle">
-                                    <i class="ti ti-menu"></i>
-                                </button>
-                            </div>
+                        <div class="brand-logo d-flex align-items-center justify-content-between">
+                            <a href="@Url.Action("Dashboard", "Admin")" class="text-nowrap logo-img">
+                                <img src="~/assets/images/logos/LTSystemSm.png" alt="Logo" class="img-fluid" style="max-width: 150px;" />
+                            </a>
+                        </div>
                             <nav class="sidebar-nav scroll-sidebar">
                                 <ul id="sidebarnav">
                                     <li class="sidebar-item">
@@ -293,25 +285,6 @@
             }
         };
 
-         document.addEventListener("DOMContentLoaded", function () {
-            let sidebarNav = document.querySelector(".sidebar-nav");
-
-            function updateSidebarScroll() {
-                let windowHeight = window.innerHeight;
-                let sidebarHeight = sidebarNav.scrollHeight;
-
-                if (sidebarHeight > windowHeight) {
-                    sidebarNav.style.overflowY = "auto";
-                    sidebarNav.style.maxHeight = (windowHeight - 20) + "px"; // Adjust height dynamically
-                } else {
-                    sidebarNav.style.overflowY = "visible";
-                }
-            }
-
-            // Run on page load and resize
-            updateSidebarScroll();
-            window.addEventListener("resize", updateSidebarScroll);
-        });
 
          function toggleDropdown(event, dropdownId) {
             event.preventDefault(); // Prevent default anchor behavior

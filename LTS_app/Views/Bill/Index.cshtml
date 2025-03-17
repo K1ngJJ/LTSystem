@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="~/assets/css/styles.min.css" />
 
 <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
-     data-sidebar-position="fixed" data-header-position="fixed">
+data-sidebar-position="fixed" data-header-position="fixed">
     <!-- Main wrapper -->
     <div class="body-wrapper">
         <div class="container-fluid mt-4">
@@ -20,7 +20,7 @@
             </div>
 
             <div class="d-flex gap-2 mb-3">
-                @if (User.IsInRole("Admin") || User.IsInRole("Legislator"))
+                @if (User.IsInRole("Legislator"))
                 {
                     <button class="btn btn-primary btn-sm" onclick="openCreateBillModal()">
                         <i class="bi bi-plus-circle"></i> Add Bill
@@ -56,7 +56,7 @@
                                         <td>@bill.Status</td>
                                         <td>
                                             <button class="btn btn-info btn-sm"
-                                                onclick="openViewBillModal(
+                                            onclick="openViewBillModal(
                                                     '@bill.Id', 
                                                     '@bill.Title', 
                                                     '@bill.Description', 
@@ -67,10 +67,10 @@
                                                 <i class="bi bi-eye"></i>
                                             </button>
 
-                                            @if (User.IsInRole("Admin") || User.IsInRole("Legislator"))
+                                            @if (User.IsInRole("Legislator"))
                                             {
                                                 <button class="btn btn-warning btn-sm"
-                                                        onclick="openEditBillModal(
+                                                onclick="openEditBillModal(
                                                     '@bill.Id',
                                                     '@bill.Title',
                                                     '@bill.Description',
@@ -82,11 +82,17 @@
                                                 </button>
 
                                                 <button class="btn btn-danger btn-sm"
-                                                        onclick="setDeleteBill(@bill.Id, '@bill.Title')">
+                                                onclick="setDeleteBill(@bill.Id, '@bill.Title')">
                                                     <i class="bi bi-trash"></i>
                                                 </button>
                                             }
                                         </td>
+                                        @if (User.IsInRole("User"))
+                                        {
+                                            <td>
+                                                <button class="btn btn-primary btn-sm" onclick="openFeedbackModal(@bill.Id)">💬 Feedback</button>
+                                            </td>
+                                        }
                                     </tr>
                                 }
                             </tbody>
@@ -105,127 +111,7 @@
     </div>
 </div>
 
-
-
-<!-- CREATE BILL MODAL -->
-<div class="modal fade" id="createBillModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Create New Bill</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <form asp-action="Create" method="post">
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label">Title</label>
-                        <input type="text" class="form-control" name="Title" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Description</label>
-                        <textarea class="form-control" name="Description" required></textarea>
-                    </div>
-
-
-                    <div class="mb-3">
-                        <label class="form-label">Committee</label>
-                        <select class="form-control" name="CommitteeId" required>
-                            @if (ViewBag.Committees != null)
-                            {
-                                @foreach (var committee in ViewBag.Committees as IEnumerable<SelectListItem>)
-                                {
-                                    <option value="@committee.Value">@committee.Text</option>
-                                }
-                            }
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Session</label>
-                        <select class="form-control" name="SessionId" required>
-                            @if (ViewBag.Sessions != null)
-                            {
-                                @foreach (var session in ViewBag.Sessions as IEnumerable<SelectListItem>)
-                                {
-                                    <option value="@session.Value">@session.Text</option>
-                                }
-                            }
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Status</label>
-                        <select class="form-control" name="Status">
-                            <option value="Draft">Draft</option>
-                            <option value="Pending">Pending</option>
-                            <option value="Approved">Approved</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Create</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-
-<!-- Edit Modal -->
-<div class="modal fade" id="editBillModal" tabindex="-1" aria-labelledby="editBillModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editBillModalLabel">Edit Bill</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form asp-action="Edit" method="post">
-                <div class="modal-body">
-                    <input type="hidden" id="editBillId" name="Id">
-
-                    <div class="mb-3">
-                        <label class="form-label">Title</label>
-                        <input type="text" class="form-control" id="editBillTitle" name="Title" required>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Description</label>
-                        <textarea class="form-control" id="editBillDescription" name="Description" required></textarea>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Status</label>
-                        <select class="form-control" id="editBillStatus" name="Status" required>
-                            <option value="Draft">Draft</option>
-                            <option value="Pending">Pending</option>
-                            <option value="Approved">Approved</option>
-                            <option value="Rejected">Rejected</option>
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Committee</label>
-                        <select class="form-control" id="editBillCommittee" name="CommitteeId"></select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Session</label>
-                        <select class="form-control" id="editBillSession" name="SessionId"></select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Save Changes</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-
-
-<!-- VIEW BILL MODAL -->
+<!-- View Bill Modal -->
 <div class="modal fade" id="viewBillModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -237,7 +123,7 @@
                 <p><strong>Title:</strong> <span id="viewBillTitle"></span></p>
                 <p><strong>Description:</strong> <span id="viewBillDescription"></span></p>
                 <p><strong>Status:</strong> <span id="viewBillStatus"></span></p>
-                <p><strong>Legislator:</strong> <span id="viewBillLegislator"></span></p>
+                <p><strong>Proposed by:</strong> <span id="viewBillUser"></span></p>
                 <p><strong>Committee:</strong> <span id="viewBillCommittee"></span></p>
                 <p><strong>Session:</strong> <span id="viewBillSession"></span></p>
                 <p><strong>Introduced Date:</strong> <span id="viewBillDate"></span></p>
@@ -249,29 +135,168 @@
     </div>
 </div>
 
+@if (User.IsInRole("User"))
+{
+    <div class="modal fade" id="feedbackModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Submit Feedback</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="feedbackBillId">
+                    <textarea id="feedbackText" class="form-control" placeholder="Enter your feedback..." rows="3"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="submitFeedback()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 
-<!-- DELETE BILL MODAL -->
-<div class="modal fade" id="deleteBillModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Confirm Delete</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <p>Are you sure you want to delete <strong id="deleteBillTitle"></strong>?</p>
-            </div>
-            <div class="modal-footer">
-                <form id="deleteBillForm" asp-action="Delete" method="post">
-                    <input type="hidden" id="deleteBillId" name="id">
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+@if (User.IsInRole("Legislator"))
+{
+    <!-- CREATE BILL MODAL -->
+    <div class="modal fade" id="createBillModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create New Bill</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form asp-action="Create" method="post">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Title</label>
+                            <input type="text" class="form-control" name="Title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" name="Description" required></textarea>
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label class="form-label">Committee</label>
+                            <select class="form-control" name="CommitteeId" required>
+                                @if (ViewBag.Committees != null)
+                                {
+                                    @foreach (var committee in ViewBag.Committees as IEnumerable<SelectListItem>)
+                                    {
+                                        <option value="@committee.Value">@committee.Text</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Session</label>
+                            <select class="form-control" name="SessionId" required>
+                                @if (ViewBag.Sessions != null)
+                                {
+                                    @foreach (var session in ViewBag.Sessions as IEnumerable<SelectListItem>)
+                                    {
+                                        <option value="@session.Value">@session.Text</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Status</label>
+                            <select class="form-control" name="Status">
+                                <option value="Draft">Draft</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Approved">Approved</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Create</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
-</div>
 
+
+    <!-- Edit Bill Modal -->
+    <div class="modal fade" id="editBillModal" tabindex="-1" aria-labelledby="editBillModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editBillModalLabel">Edit Bill</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form asp-action="Edit" method="post">
+                    <div class="modal-body">
+                        <input type="hidden" id="editBillId" name="Id">
+
+                        <div class="mb-3">
+                            <label class="form-label">Title</label>
+                            <input type="text" class="form-control" id="editBillTitle" name="Title" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" id="editBillDescription" name="Description" required></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Status</label>
+                            <select class="form-control" id="editBillStatus" name="Status" required>
+                                <option value="Draft">Draft</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Approved">Approved</option>
+                                <option value="Rejected">Rejected</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Committee</label>
+                            <select class="form-control" id="editBillCommittee" name="CommitteeId"></select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Session</label>
+                            <select class="form-control" id="editBillSession" name="SessionId"></select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- DELETE BILL MODAL -->
+    <div class="modal fade" id="deleteBillModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Delete</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete <strong id="deleteBillTitle"></strong>?</p>
+                </div>
+                <div class="modal-footer">
+                    <form id="deleteBillForm" asp-action="Delete" method="post">
+                        <input type="hidden" id="deleteBillId" name="id">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 
 @section Scripts {
     <script src="~/js/session_management.js"></script>
@@ -306,6 +331,32 @@
                 }
             });
         });
+    </script>
+
+    <script>
+        function openFeedbackModal(billId) {
+            $("#feedbackBillId").val(billId);
+            $("#feedbackModal").modal("show");
+        }
+
+        function submitFeedback() {
+            var billId = $("#feedbackBillId").val();
+            var feedbackText = $("#feedbackText").val();
+
+            if (!feedbackText.trim()) {
+                alert("Feedback cannot be empty.");
+                return;
+            }
+
+            $.post("/CitizenFeedback/SubmitFeedback", { BillId: billId, FeedbackText: feedbackText })
+                .done(function () {
+                    alert("Feedback submitted successfully!");
+                    $("#feedbackModal").modal("hide");
+                })
+                .fail(function () {
+                    alert("An error occurred. Please try again.");
+                });
+        }
     </script>
 
     <script>
@@ -355,9 +406,6 @@
             });
         }
 
-
-
-
         function openViewBillModal(billId) {
             $.get('/Bill/GetBillDetails/' + billId, function (data) {
                 $('#viewBillTitle').text(data.title);
@@ -368,6 +416,53 @@
                 $('#viewBillSession').text(data.session);
                 $('#viewBillDate').text(new Date(data.introducedDate).toLocaleString());
                 $('#viewBillModal').modal('show');
+            });
+                }function openEditBillModal(id, title, description, status, committeeId, sessionId) {
+            $('#editBillId').val(id);
+            $('#editBillTitle').val(title);
+            $('#editBillDescription').val(description);
+            $('#editBillStatus').val(status);
+
+            // Clear and show "Loading..."
+            $('#editBillCommittee').empty().append(new Option("Loading...", ""));
+            $('#editBillSession').empty().append(new Option("Loading...", ""));
+
+            // Fetch data for dropdowns
+            $.get('/Bill/GetDropdownData', function (data) {
+                $('#editBillCommittee').empty();
+                $('#editBillSession').empty();
+
+                data.committees.forEach(committee => {
+                    $('#editBillCommittee').append(new Option(committee.name, committee.id));
+                });
+
+                data.sessions.forEach(session => {
+                    $('#editBillSession').append(new Option(session.name, session.id));
+                });
+
+                // Set selected values
+                $('#editBillCommittee').val(committeeId);
+                $('#editBillSession').val(sessionId);
+
+                $('#editBillModal').modal('show');
+            }).fail(function () {
+                alert("Failed to load dropdown data.");
+            });
+        }
+
+        function openViewBillModal(billId) {
+            $.get('/Bill/GetBillDetails/' + billId, function (data) {
+                $('#viewBillTitle').text(data.title);
+                $('#viewBillDescription').text(data.description);
+                $('#viewBillStatus').text(data.status);
+                $('#viewBillUser').text(data.proposedBy);
+                $('#viewBillCommittee').text(data.committee);
+                $('#viewBillSession').text(data.session);
+                $('#viewBillDate').text(new Date(data.introducedDate).toLocaleString());
+
+                $('#viewBillModal').modal('show');
+            }).fail(function () {
+                alert("Failed to load bill details.");
             });
         }
 

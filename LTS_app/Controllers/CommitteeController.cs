@@ -20,7 +20,6 @@ namespace LTS_app.Controllers
         }
 
         // ✅ List all committees - Async for better performance
-        [HttpGet("")]
         public async Task<IActionResult> Index()
         {
             var committees = await _context.Committees.ToListAsync();

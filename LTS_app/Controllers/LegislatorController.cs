@@ -31,7 +31,6 @@ namespace LTS_app.Controllers
 
         // List All Legislators (Admins Only)
         [Authorize(Roles = "Admin")]
-        [HttpGet("")]
         public async Task<IActionResult> Index()
         {
             var legislators = await _context.Legislators
