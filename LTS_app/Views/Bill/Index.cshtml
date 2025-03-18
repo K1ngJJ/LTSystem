@@ -4,7 +4,7 @@
     ViewData["Title"] = "Bills";
 }
 
-<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
 <link rel="stylesheet" href="~/assets/css/styles.min.css" />
 
 <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
@@ -155,7 +155,7 @@ data-sidebar-position="fixed" data-header-position="fixed">
                     <h5 class="modal-title" id="feedbackModalLabel">
                         <i class="bi bi-pencil-square"></i> Submit Feedback
                     </h5>
-                    <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="close"></button>
+                    <button type="button" class="btn-close text-white btn-sm" data-bs-dismiss="modal" aria-label="close"></button>
                 </div>
 
                 <!-- Modal Body -->
@@ -173,10 +173,10 @@ data-sidebar-position="fixed" data-header-position="fixed">
 
                 <!-- Modal Footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary text-lowercase" data-bs-dismiss="modal">
-                        <i class="bi bi-x-circle"></i> close
+                    <button type="button" class="btn btn-secondary text-lowercase btn-sm" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> Close
                     </button>
-                    <button type="button" class="btn btn-primary text-lowercase" onclick="submitFeedback()">
+                    <button type="button" class="btn btn-primary text-lowercase btn-sm" onclick="submitFeedback()">
                         <i class="bi bi-send"></i> submit
                     </button>
                 </div>
@@ -190,20 +190,18 @@ data-sidebar-position="fixed" data-header-position="fixed">
 {
     <div class="modal fade" id="feedbackListModal" tabindex="-1" aria-labelledby="feedbackListModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
-            <!-- Large modal for readability -->
             <div class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header text-white">
-                    <h5 class="modal-title" id="feedbackListModalLabel">
-                        <i class="bi bi-chat-dots"></i> Feedback for Bill
+                    <h5 class="modal-title" id="feedbackModalLabel">
+                        <i class="bi bi-chat-dots"></i> Feedback for Bill - <span id="billTitle"></span>
                     </h5>
-                    <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close text-white btn-sm" data-bs-dismiss="modal"></button>
                 </div>
 
                 <!-- Modal Body -->
                 <div class="modal-body">
                     <div class="list-group" id="feedbackList">
-                        <!-- Placeholder while loading -->
                         <div class="text-center text-muted py-3">
                             <i class="bi bi-arrow-repeat"></i> Loading feedback...
                         </div>
@@ -212,28 +210,9 @@ data-sidebar-position="fixed" data-header-position="fixed">
 
                 <!-- Modal Footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
                         <i class="bi bi-x-circle"></i> Close
                     </button>
-                </div>
-            </div>
-        </div>
-    </div>
-}
-
-@if (User.IsInRole("User"))
-{
-    <!-- Notification Modal -->
-    <div class="modal fade" id="feedbackMessageModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h6 class="modal-title" id="feedbackMessageTitle"></h6>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body text-center" id="feedbackMessageBody"></div>
-                <div class="modal-footer">
-                    <button class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
@@ -396,7 +375,7 @@ data-sidebar-position="fixed" data-header-position="fixed">
 
     <script>
         $(document).ready(function () {
-            $('#logsTable').DataTable({
+            $('#billsTable').DataTable({
                 "paging": true,
                 "lengthMenu": [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
                 "searching": true,
@@ -405,8 +384,8 @@ data-sidebar-position="fixed" data-header-position="fixed">
                 "language": {
                     "search": "🔍",
                     "searchPlaceholder": "Search...",
-                    "lengthMenu": "Show _MENU_ logs",
-                    "info": "Showing _START_ to _END_ of _TOTAL_ Logs",
+                    "lengthMenu": "Show _MENU_ bills",
+                    "info": "Showing _START_ to _END_ of _TOTAL_ Bills",
                     "paginate": {
                         "previous": "«",
                         "next": "»"
@@ -417,6 +396,7 @@ data-sidebar-position="fixed" data-header-position="fixed">
     </script>
 
     <script>
+        var currentUserId = @User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
         function openFeedbackModal(billId) {
             $("#feedbackBillId").val(billId);
             $("#feedbackText").val("");
@@ -443,30 +423,73 @@ data-sidebar-position="fixed" data-header-position="fixed">
                 });
         }
 
+               // ✅ View Feedback for a Bill
         function viewFeedback(billId) {
             $.ajax({
-                url: '/UserFeedback/GetFeedbacks',
+                url: '/Bill/GetBillDetails',
                 type: 'GET',
-                data: { billId: billId },
-                success: function (response) {
-                    let feedbackList = $("#feedbackList");
-                    feedbackList.empty();
+                data: { id: billId },
+                success: function (billData) {
+                    // Update modal title with the bill title
+                    $("#billTitle").text(billData.title);
 
-                    if (response.length === 0) {
-                        feedbackList.append('<li class="list-group-item text-center text-muted">No feedback available.</li>');
-                    } else {
-                        response.forEach(fb => {
-                            feedbackList.append(`<li class="list-group-item">
-                                <strong>${fb.userFullName}:</strong> ${fb.feedbackText} <br>
-                                <small class="text-muted">${fb.dateSubmitted}</small>
-                            </li>`);
-                        });
-                    }
+                    // Fetch feedback after setting the bill title
+                    $.ajax({
+                        url: '/UserFeedback/GetFeedbacks',
+                        type: 'GET',
+                        data: { billId: billId },
+                        success: function (response) {
+                            let feedbackList = $("#feedbackList");
+                            feedbackList.empty();
 
-                    $("#feedbackListModal").modal("show");
+                            if (response.length === 0) {
+                                feedbackList.append('<li class="list-group-item text-center text-muted">No feedback available.</li>');
+                            } else {
+                                response.forEach(fb => {
+                                    let deleteBtn = (fb.userId == currentUserId) ?
+                                        `<button class="btn btn-sm btn-danger ms-2" onclick="deleteFeedback(${fb.feedbackId})">
+                                            <i class="bi bi-trash"></i>
+                                        </button>` : '';
+
+                                    feedbackList.append(`<li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <strong>${fb.userFullName}:</strong> ${fb.feedbackText} <br>
+                                            <small class="text-muted">${fb.dateSubmitted}</small>
+                                        </div>
+                                        ${deleteBtn}
+                                    </li>`);
+                                });
+                            }
+
+                            // Show the feedback modal after fetching the feedback
+                            $("#feedbackListModal").modal("show");
+                        },
+                        error: function () {
+                            alert("Failed to load feedback. Please try again.");
+                        }
+                    });
                 },
                 error: function () {
-                    alert("Failed to load feedback. Please try again.");
+                    alert("Failed to load bill details. Please try again.");
+                }
+            });
+        }
+
+
+        // ✅ Delete Feedback
+        function deleteFeedback(feedbackId) {
+            if (!confirm("Are you sure you want to delete this feedback?")) return;
+
+            $.ajax({
+                url: '/UserFeedback/DeleteFeedback',
+                type: 'POST',
+                data: { feedbackId: feedbackId },
+                success: function () {
+                    alert("Feedback deleted successfully!");
+                    viewFeedback($("#feedbackBillId").val()); // Refresh feedback list
+                },
+                error: function (xhr) {
+                    alert("Error: " + xhr.responseText);
                 }
             });
         }
@@ -478,27 +501,6 @@ data-sidebar-position="fixed" data-header-position="fixed">
             charCount.textContent = maxChars - textArea.value.length;
         }
     </script>
-
-    <script>
-        $(document).ready(function () {
-            var successMessage = '@TempData["SuccessMessage"]';
-            var errorMessage = '@TempData["ErrorMessage"]';
-
-            if (successMessage) {
-                showFeedbackModal("Success", successMessage);
-            }
-            if (errorMessage) {
-                showFeedbackModal("Error", errorMessage);
-            }
-        });
-
-        function showFeedbackModal(title, message) {
-            $("#feedbackMessageTitle").text(title);
-            $("#feedbackMessageBody").html(message);
-            $("#feedbackMessageModal").modal("show");
-        }
-    </script>
-
 
     <script>
         function openCreateBillModal() {

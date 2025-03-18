@@ -18,7 +18,7 @@ namespace LTS_app.Models
         public string Position { get; set; } // Example: "Senator", "Representative"
 
         public ICollection<Vote> Votes { get; set; } = new List<Vote>();
-        public ICollection<Committee> Committees { get; set; } = new List<Committee>();
+        public ICollection<CommitteeLegislator> CommitteeLegislators { get; set; }
 
         // Ensure only users with role "Legislator" are linked here (Logic applied in queries)
         [NotMapped]

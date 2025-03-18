@@ -18,6 +18,7 @@ namespace LTS_app.Data
         public DbSet<UserFeedback> UserFeedbacks { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<UserLog> UserLogs { get; set; }
+        public DbSet<CommitteeLegislator> CommitteeLegislators { get; set; }
 
         public override int SaveChanges()
         {
@@ -81,10 +82,18 @@ namespace LTS_app.Data
                 .OnDelete(DeleteBehavior.Cascade);
 
             // 🏛 Committee -> Legislators (Many-to-Many)
-            modelBuilder.Entity<Committee>()
-                .HasMany(c => c.Legislators)
-                .WithMany(l => l.Committees)
-                .UsingEntity(j => j.ToTable("CommitteeLegislators"));
+            modelBuilder.Entity<CommitteeLegislator>()
+                .HasKey(cl => new { cl.CommitteeId, cl.LegislatorId });
+
+            modelBuilder.Entity<CommitteeLegislator>()
+                .HasOne(cl => cl.Committee)
+                .WithMany(c => c.CommitteeLegislators)
+                .HasForeignKey(cl => cl.CommitteeId);
+
+            modelBuilder.Entity<CommitteeLegislator>()
+                .HasOne(cl => cl.Legislator)
+                .WithMany(l => l.CommitteeLegislators)
+                .HasForeignKey(cl => cl.LegislatorId);
 
             // 📜 Bill History -> Bill (One-to-Many)
             modelBuilder.Entity<BillHistory>()

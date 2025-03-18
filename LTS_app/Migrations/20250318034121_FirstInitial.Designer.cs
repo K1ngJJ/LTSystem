@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LTS_app.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250315062111_FirstInitial")]
+    [Migration("20250318034121_FirstInitial")]
     partial class FirstInitial
     {
         /// <inheritdoc />
@@ -24,21 +24,6 @@ namespace LTS_app.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("CommitteeLegislator", b =>
-                {
-                    b.Property<int>("CommitteesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("LegislatorsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CommitteesId", "LegislatorsId");
-
-                    b.HasIndex("LegislatorsId");
-
-                    b.ToTable("CommitteeLegislators", (string)null);
-                });
 
             modelBuilder.Entity("LTS_app.Models.Amendment", b =>
                 {
@@ -167,42 +152,6 @@ namespace LTS_app.Migrations
                     b.ToTable("BillHistories");
                 });
 
-            modelBuilder.Entity("LTS_app.Models.CitizenFeedback", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("BillId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Comment")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateSubmitted")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BillId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("CitizenFeedbacks");
-                });
-
             modelBuilder.Entity("LTS_app.Models.Committee", b =>
                 {
                     b.Property<int>("Id")
@@ -228,6 +177,30 @@ namespace LTS_app.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Committees");
+                });
+
+            modelBuilder.Entity("LTS_app.Models.CommitteeLegislator", b =>
+                {
+                    b.Property<int>("CommitteeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LegislatorId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("CommitteeId", "LegislatorId");
+
+                    b.HasIndex("LegislatorId");
+
+                    b.ToTable("CommitteeLegislators");
                 });
 
             modelBuilder.Entity("LTS_app.Models.Legislator", b =>
@@ -377,6 +350,43 @@ namespace LTS_app.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("LTS_app.Models.UserFeedback", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BillId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FeedbackText")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTime>("SubmittedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BillId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserFeedbacks");
+                });
+
             modelBuilder.Entity("LTS_app.Models.UserLog", b =>
                 {
                     b.Property<int>("Id")
@@ -460,21 +470,6 @@ namespace LTS_app.Migrations
                     b.ToTable("Votes");
                 });
 
-            modelBuilder.Entity("CommitteeLegislator", b =>
-                {
-                    b.HasOne("LTS_app.Models.Committee", null)
-                        .WithMany()
-                        .HasForeignKey("CommitteesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("LTS_app.Models.Legislator", null)
-                        .WithMany()
-                        .HasForeignKey("LegislatorsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("LTS_app.Models.Amendment", b =>
                 {
                     b.HasOne("LTS_app.Models.Bill", "Bill")
@@ -531,23 +526,23 @@ namespace LTS_app.Migrations
                     b.Navigation("Bill");
                 });
 
-            modelBuilder.Entity("LTS_app.Models.CitizenFeedback", b =>
+            modelBuilder.Entity("LTS_app.Models.CommitteeLegislator", b =>
                 {
-                    b.HasOne("LTS_app.Models.Bill", "Bill")
-                        .WithMany("CitizenFeedbacks")
-                        .HasForeignKey("BillId")
+                    b.HasOne("LTS_app.Models.Committee", "Committee")
+                        .WithMany("CommitteeLegislators")
+                        .HasForeignKey("CommitteeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LTS_app.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                    b.HasOne("LTS_app.Models.Legislator", "Legislator")
+                        .WithMany("CommitteeLegislators")
+                        .HasForeignKey("LegislatorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Bill");
+                    b.Navigation("Committee");
 
-                    b.Navigation("User");
+                    b.Navigation("Legislator");
                 });
 
             modelBuilder.Entity("LTS_app.Models.Legislator", b =>
@@ -568,6 +563,25 @@ namespace LTS_app.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("LTS_app.Models.UserFeedback", b =>
+                {
+                    b.HasOne("LTS_app.Models.Bill", "Bill")
+                        .WithMany("CitizenFeedbacks")
+                        .HasForeignKey("BillId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LTS_app.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Bill");
 
                     b.Navigation("User");
                 });
@@ -616,10 +630,14 @@ namespace LTS_app.Migrations
             modelBuilder.Entity("LTS_app.Models.Committee", b =>
                 {
                     b.Navigation("Bills");
+
+                    b.Navigation("CommitteeLegislators");
                 });
 
             modelBuilder.Entity("LTS_app.Models.Legislator", b =>
                 {
+                    b.Navigation("CommitteeLegislators");
+
                     b.Navigation("Votes");
                 });
 

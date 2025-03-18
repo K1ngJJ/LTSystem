@@ -47,23 +47,44 @@ namespace LTS_app.Controllers
             return RedirectToAction(nameof(Index), "Bill"); // ✅ Stay on Bill Index
         }
 
-        [Authorize(Roles = "User,Legislator,Admin")]
+        // ✅ Get Feedback for a Bill
         [HttpGet]
         public async Task<IActionResult> GetFeedbacks(int billId)
         {
             var feedbacks = await _context.UserFeedbacks
                 .Where(f => f.BillId == billId)
-                .Include(f => f.User) // Ensure User is included
+                .Include(f => f.User)
                 .OrderByDescending(f => f.SubmittedAt)
                 .Select(f => new
                 {
-                    UserFullName = f.User != null ? f.User.FullName : "Unknown User", // Avoid null reference
-                    FeedbackText = f.FeedbackText,
-                    DateSubmitted = f.SubmittedAt.ToString("yyyy-MM-dd HH:mm")
+                    feedbackId = f.Id,
+                    userId = f.UserId,
+                    userFullName = f.User.FullName,
+                    feedbackText = f.FeedbackText,
+                    dateSubmitted = f.SubmittedAt.ToString("yyyy-MM-dd HH:mm")
                 })
                 .ToListAsync();
 
             return Json(feedbacks);
+        }
+
+        // ✅ Delete Feedback (Only Owner Can Delete)
+        [HttpPost]
+        public async Task<IActionResult> DeleteFeedback(int feedbackId)
+        {
+            int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            var feedback = await _context.UserFeedbacks.FindAsync(feedbackId);
+            if (feedback == null)
+                return NotFound("Feedback not found.");
+
+            if (feedback.UserId != userId)
+                return Forbid(); // Only the owner can delete
+
+            _context.UserFeedbacks.Remove(feedback);
+            await _context.SaveChangesAsync();
+
+            return Ok("Feedback deleted successfully.");
         }
 
 

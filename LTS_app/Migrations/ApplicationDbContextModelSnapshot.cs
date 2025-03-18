@@ -22,21 +22,6 @@ namespace LTS_app.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("CommitteeLegislator", b =>
-                {
-                    b.Property<int>("CommitteesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("LegislatorsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CommitteesId", "LegislatorsId");
-
-                    b.HasIndex("LegislatorsId");
-
-                    b.ToTable("CommitteeLegislators", (string)null);
-                });
-
             modelBuilder.Entity("LTS_app.Models.Amendment", b =>
                 {
                     b.Property<int>("Id")
@@ -189,6 +174,30 @@ namespace LTS_app.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Committees");
+                });
+
+            modelBuilder.Entity("LTS_app.Models.CommitteeLegislator", b =>
+                {
+                    b.Property<int>("CommitteeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LegislatorId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("CommitteeId", "LegislatorId");
+
+                    b.HasIndex("LegislatorId");
+
+                    b.ToTable("CommitteeLegislators");
                 });
 
             modelBuilder.Entity("LTS_app.Models.Legislator", b =>
@@ -458,21 +467,6 @@ namespace LTS_app.Migrations
                     b.ToTable("Votes");
                 });
 
-            modelBuilder.Entity("CommitteeLegislator", b =>
-                {
-                    b.HasOne("LTS_app.Models.Committee", null)
-                        .WithMany()
-                        .HasForeignKey("CommitteesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("LTS_app.Models.Legislator", null)
-                        .WithMany()
-                        .HasForeignKey("LegislatorsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("LTS_app.Models.Amendment", b =>
                 {
                     b.HasOne("LTS_app.Models.Bill", "Bill")
@@ -527,6 +521,25 @@ namespace LTS_app.Migrations
                         .IsRequired();
 
                     b.Navigation("Bill");
+                });
+
+            modelBuilder.Entity("LTS_app.Models.CommitteeLegislator", b =>
+                {
+                    b.HasOne("LTS_app.Models.Committee", "Committee")
+                        .WithMany("CommitteeLegislators")
+                        .HasForeignKey("CommitteeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LTS_app.Models.Legislator", "Legislator")
+                        .WithMany("CommitteeLegislators")
+                        .HasForeignKey("LegislatorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Committee");
+
+                    b.Navigation("Legislator");
                 });
 
             modelBuilder.Entity("LTS_app.Models.Legislator", b =>
@@ -614,10 +627,14 @@ namespace LTS_app.Migrations
             modelBuilder.Entity("LTS_app.Models.Committee", b =>
                 {
                     b.Navigation("Bills");
+
+                    b.Navigation("CommitteeLegislators");
                 });
 
             modelBuilder.Entity("LTS_app.Models.Legislator", b =>
                 {
+                    b.Navigation("CommitteeLegislators");
+
                     b.Navigation("Votes");
                 });
 

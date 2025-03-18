@@ -49,6 +49,10 @@
                                         <td>@committee.Description</td>
                                         <td>@committee.CreatedAt.ToString("MMMM dd, yyyy")</td>
                                         <td>
+                                            <button class="btn btn-primary btn-sm"
+                                                    onclick="openMembersModal(@committee.Id, '@committee.Name')">
+                                                <i class="bi bi-people"></i>
+                                            </button>
                                             <button class="btn btn-info btn-sm"
                                                     onclick="openViewModal('@committee.Name', '@committee.Description', '@committee.CreatedAt.ToString("MMMM dd, yyyy")')">
                                                 <i class="bi bi-eye"></i>
@@ -105,6 +109,35 @@
     </div>
 </div>
 
+<!-- Committee Members Modal -->
+<div class="modal fade" id="membersModal" tabindex="-1" aria-labelledby="membersModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="membersModalLabel">Committee Members</h5>
+                <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h6>Committee: <span id="committeeName"></span></h6>
+                <table id="membersTable" class="table table-sm table-bordered text-small">
+                    <thead class="table-dark small">
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                        </tr>
+                    </thead>
+                    <tbody id="membersList">
+                        <tr>
+                            <td colspan="2" class="text-center">No members found.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
 @if (User.IsInRole("Admin"))
 {
     <!-- Create Committee Modal -->
@@ -125,6 +158,36 @@
                             <label class="form-label">Description:</label>
                             <textarea name="Description" class="form-control" required></textarea>
                         </div>
+                        <div class="mb-3">
+                            <label class="form-label">Assign Legislators:</label>
+                            <select name="LegislatorIds" class="form-select" multiple>
+                                @if (ViewBag.Legislators != null)
+                                {
+                                    var legislators = ViewBag.Legislators as List<LTS_app.Models.Legislator>;
+                                    var availableLegislators = legislators?.Where(l => l.CommitteeLegislators == null || !l.CommitteeLegislators.Any()).ToList();
+
+                                    if (availableLegislators != null && availableLegislators.Any())
+                                    {
+                                        @foreach (var legislator in availableLegislators)
+                                        {
+                                            <option value="@legislator.Id">
+                                                @($"{legislator.User?.FullName ?? "Unknown"} ({legislator.Position})")
+                                            </option>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <option disabled>No available legislators.</option>
+                                    }
+                                }
+                                else
+                                {
+                                    <option disabled>No legislators found.</option>
+                                }
+                            </select>
+
+                            <small class="form-text text-muted">Hold Ctrl (Cmd on Mac) to select multiple legislators.</small>
+                        </div>
                         <button type="submit" class="btn btn-primary">Create</button>
                     </form>
                 </div>
@@ -132,32 +195,67 @@
         </div>
     </div>
 
-    <!-- Edit Committee Modal -->
-    <div class="modal fade" id="editCommitteeModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Committee</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <form method="post" id="editCommitteeForm" asp-action="Edit">
-                        <input type="hidden" name="Id" id="editCommitteeId" />
 
-                        <div class="mb-3">
-                            <label class="form-label">Name:</label>
-                            <input type="text" name="Name" id="editCommitteeName" class="form-control" required />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Description:</label>
-                            <textarea name="Description" id="editCommitteeDescription" class="form-control" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-warning">Save Changes</button>
-                    </form>
-                </div>
+<!-- Edit Committee Modal -->
+<div class="modal fade" id="editCommitteeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Committee</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" id="editCommitteeForm">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="Id" id="editCommitteeId" />
+
+                    <div class="mb-3">
+                        <label class="form-label">Name:</label>
+                        <input type="text" name="Name" id="editCommitteeName" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Description:</label>
+                        <textarea name="Description" id="editCommitteeDescription" class="form-control" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Assign Legislators:</label>
+                            <select name="LegislatorIds" id="editCommitteeLegislators" class="form-select" multiple>
+                                @if (ViewBag.Legislators != null)
+                                {
+                                    var legislators = ViewBag.Legislators as List<LTS_app.Models.Legislator>;
+                                    var assignedLegislators = ViewBag.AssignedLegislators as List<int> ?? new List<int>();
+
+                                    if (legislators != null && legislators.Any())
+                                    {
+                                        @foreach (var legislator in legislators)
+                                        {
+                                            bool isSelected = assignedLegislators.Contains(legislator.Id);
+                                            <option value="@legislator.Id" selected="@(isSelected ? "selected" : null)">
+                                                @($"{legislator.User?.FullName ?? "Unknown"} ({legislator.Position})")
+                                            </option>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <option disabled>No available legislators.</option>
+                                    }
+                                }
+                                else
+                                {
+                                    <option disabled>No legislators found.</option>
+                                }
+                            </select>
+
+                        <small class="form-text text-muted">Hold Ctrl (Cmd on Mac) to select multiple legislators.</small>
+                    </div>
+                    <button type="submit" class="btn btn-warning">Save Changes</button>
+                </form>
+
             </div>
         </div>
     </div>
+</div>
+
 
     <!-- Delete Committee Modal -->
     <div class="modal fade" id="deleteCommitteeModal" tabindex="-1" aria-hidden="true">
@@ -216,22 +314,99 @@
     </script>
 
     <script>
+        function openMembersModal(committeeId, committeeName) {
+            $("#committeeName").text(committeeName);
+            $("#membersList").html('<tr><td colspan="2" class="text-center">Loading...</td></tr>');
+
+            $.ajax({
+                url: `/Committee/GetCommitteeMembers/${committeeId}`,
+                type: "GET",
+                success: function (data) {
+                    console.log("API Response:", data);
+                    let rows = "";
+
+                    if ($.fn.DataTable.isDataTable("#membersTable")) {
+                        $("#membersTable").DataTable().destroy(); // ✅ Destroy old instance
+                    }
+
+                    if (Array.isArray(data) && data.length > 0) {
+                        data.forEach(member => {
+                            let fullName = member.fullName ?? "N/A";
+                            let position = member.position ?? "Unknown";
+                            rows += `<tr><td>${fullName}</td><td>${position}</td></tr>`;
+                        });
+                    } else {
+                        rows = '<tr><td colspan="2" class="text-center">No members found.</td></tr>';
+                    }
+                    $("#membersList").html(rows);
+
+                    // ✅ Initialize DataTable
+                    $("#membersTable").DataTable({
+                        "paging": true,
+                        "lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
+                        "searching": true,
+                        "ordering": true,
+                        "info": true,
+                        "language": {
+                            "search": "🔍",
+                            "searchPlaceholder": "Search...",
+                            "lengthMenu": "Show _MENU_ members",
+                            "info": "Showing _START_ to _END_ of _TOTAL_ Members",
+                            "paginate": {
+                                "previous": "«",
+                                "next": "»"
+                            }
+                        }
+                    });
+
+                },
+                error: function (xhr) {
+                    console.error("Error fetching committee members:", xhr);
+                    $("#membersList").html('<tr><td colspan="2" class="text-center text-danger">Failed to load members.</td></tr>');
+                }
+            });
+
+            $("#membersModal").modal("show");
+        }
+    </script>
+
+    <script>
                 function openCreateModal() {
             var createModal = new bootstrap.Modal(document.getElementById('createCommitteeModal'));
             createModal.show();
         }
 
-        function openEditModal(id, name, description) {
+        function openEditModal(id, name, description, selectedLegislators) {
+            console.log("Opening Edit Modal for Committee ID:", id); // Debugging
+
             document.getElementById("editCommitteeId").value = id;
             document.getElementById("editCommitteeName").value = name;
             document.getElementById("editCommitteeDescription").value = description;
 
-            // Update form action dynamically
-            document.getElementById("editCommitteeForm").action = "/Committee/Edit/" + id;
+            // Set form action dynamically
+            document.getElementById("editCommitteeForm").action = "/Committee/Edit";
 
-            var editModal = new bootstrap.Modal(document.getElementById('editCommitteeModal'));
+            // Reset all options first
+            let legislatorSelect = document.getElementById("editCommitteeLegislators");
+            for (let option of legislatorSelect.options) {
+                option.selected = false;
+            }
+
+            // Select the legislators assigned to the committee
+            if (selectedLegislators && selectedLegislators.length > 0) {
+                selectedLegislators.forEach(legislatorId => {
+                    let option = legislatorSelect.querySelector(`option[value='${legislatorId}']`);
+                    if (option) {
+                        option.selected = true;
+                    }
+                });
+            }
+
+            // Show the modal
+            let editModal = new bootstrap.Modal(document.getElementById('editCommitteeModal'));
             editModal.show();
         }
+
 
         function openDeleteModal(id, name) {
             if (!id) {

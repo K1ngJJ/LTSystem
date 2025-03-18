@@ -206,29 +206,29 @@ namespace LTS_app.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CitizenFeedbacks",
+                name: "UserFeedbacks",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateSubmitted = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
                     BillId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    FeedbackText = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    SubmittedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CitizenFeedbacks", x => x.Id);
+                    table.PrimaryKey("PK_UserFeedbacks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CitizenFeedbacks_Bills_BillId",
+                        name: "FK_UserFeedbacks_Bills_BillId",
                         column: x => x.BillId,
                         principalTable: "Bills",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CitizenFeedbacks_Users_UserId",
+                        name: "FK_UserFeedbacks_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -269,21 +269,24 @@ namespace LTS_app.Migrations
                 name: "CommitteeLegislators",
                 columns: table => new
                 {
-                    CommitteesId = table.Column<int>(type: "int", nullable: false),
-                    LegislatorsId = table.Column<int>(type: "int", nullable: false)
+                    CommitteeId = table.Column<int>(type: "int", nullable: false),
+                    LegislatorId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CommitteeLegislators", x => new { x.CommitteesId, x.LegislatorsId });
+                    table.PrimaryKey("PK_CommitteeLegislators", x => new { x.CommitteeId, x.LegislatorId });
                     table.ForeignKey(
-                        name: "FK_CommitteeLegislators_Committees_CommitteesId",
-                        column: x => x.CommitteesId,
+                        name: "FK_CommitteeLegislators_Committees_CommitteeId",
+                        column: x => x.CommitteeId,
                         principalTable: "Committees",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CommitteeLegislators_Legislators_LegislatorsId",
-                        column: x => x.LegislatorsId,
+                        name: "FK_CommitteeLegislators_Legislators_LegislatorId",
+                        column: x => x.LegislatorId,
                         principalTable: "Legislators",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -350,19 +353,9 @@ namespace LTS_app.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CitizenFeedbacks_BillId",
-                table: "CitizenFeedbacks",
-                column: "BillId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CitizenFeedbacks_UserId",
-                table: "CitizenFeedbacks",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CommitteeLegislators_LegislatorsId",
+                name: "IX_CommitteeLegislators_LegislatorId",
                 table: "CommitteeLegislators",
-                column: "LegislatorsId");
+                column: "LegislatorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Legislators_UserId",
@@ -373,6 +366,16 @@ namespace LTS_app.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Notifications_UserId",
                 table: "Notifications",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserFeedbacks_BillId",
+                table: "UserFeedbacks",
+                column: "BillId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserFeedbacks_UserId",
+                table: "UserFeedbacks",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -401,13 +404,13 @@ namespace LTS_app.Migrations
                 name: "BillHistories");
 
             migrationBuilder.DropTable(
-                name: "CitizenFeedbacks");
-
-            migrationBuilder.DropTable(
                 name: "CommitteeLegislators");
 
             migrationBuilder.DropTable(
                 name: "Notifications");
+
+            migrationBuilder.DropTable(
+                name: "UserFeedbacks");
 
             migrationBuilder.DropTable(
                 name: "UserLogs");
