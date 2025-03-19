@@ -102,24 +102,6 @@ namespace LTS_app.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpGet]
-        public async Task<IActionResult> Edit(int id)
-        {
-            var committee = await _context.Committees
-                .Include(c => c.CommitteeLegislators)
-                .FirstOrDefaultAsync(c => c.Id == id);
-
-            if (committee == null)
-                return NotFound();
-
-            ViewBag.Legislators = await _context.Legislators.ToListAsync();
-            ViewBag.AssignedLegislators = committee.CommitteeLegislators.Select(cl => cl.LegislatorId).ToList();
-
-            return View(committee);
-        }
-
-
-        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int Id, string Name, string Description, List<int>? LegislatorIds)
@@ -134,23 +116,34 @@ namespace LTS_app.Controllers
             committee.Name = Name;
             committee.Description = Description;
 
-            _context.CommitteeLegislators.RemoveRange(committee.CommitteeLegislators);
+            // Get current legislator IDs assigned to this committee
+            var existingLegislatorIds = committee.CommitteeLegislators.Select(cl => cl.LegislatorId).ToList();
 
-            if (LegislatorIds != null && LegislatorIds.Any())
+            if (LegislatorIds != null)
             {
+                // Add new legislators that are not already assigned
                 foreach (var legislatorId in LegislatorIds)
                 {
-                    _context.CommitteeLegislators.Add(new CommitteeLegislator
+                    if (!existingLegislatorIds.Contains(legislatorId))
                     {
-                        CommitteeId = committee.Id,
-                        LegislatorId = legislatorId
-                    });
+                        _context.CommitteeLegislators.Add(new CommitteeLegislator
+                        {
+                            CommitteeId = committee.Id,
+                            LegislatorId = legislatorId
+                        });
+                    }
                 }
+            }
+            else
+            {
+                // If no LegislatorIds are provided, remove all members
+                _context.CommitteeLegislators.RemoveRange(committee.CommitteeLegislators);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
+
 
         // ✅ Admin only: Delete committee
         [Authorize(Roles = "Admin")]
@@ -187,22 +180,40 @@ namespace LTS_app.Controllers
             return RedirectToAction(nameof(Index), "Bill");
         }
 
-
         [HttpGet]
         public async Task<IActionResult> GetCommitteeMembers(int id)
         {
             var members = await _context.CommitteeLegislators
                 .Where(cl => cl.CommitteeId == id)
-                .Include(cl => cl.Legislator) // Load Legislator
-                .ThenInclude(l => l.User) // Load User (which contains FullName)
+                .Include(cl => cl.Legislator)
+                .ThenInclude(l => l.User)
                 .Select(cl => new
                 {
+                    CommitteeId = cl.CommitteeId,  // ✅ Use CommitteeId
+                    LegislatorId = cl.LegislatorId,  // ✅ Use LegislatorId
                     FullName = cl.Legislator.User != null ? cl.Legislator.User.FullName : "N/A",
-                    Position = cl.Legislator.Position ?? "Unknown"
+                    Position = !string.IsNullOrEmpty(cl.Legislator.Position) ? cl.Legislator.Position : "Unknown"
                 })
                 .ToListAsync();
 
             return Json(members);
+        }
+
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public async Task<IActionResult> RemoveCommitteeMember(int committeeId, int legislatorId)
+        {
+            var committeeLegislator = await _context.CommitteeLegislators
+                .FirstOrDefaultAsync(cl => cl.CommitteeId == committeeId && cl.LegislatorId == legislatorId);
+
+            if (committeeLegislator == null)
+                return NotFound();
+
+            _context.CommitteeLegislators.Remove(committeeLegislator);
+            await _context.SaveChangesAsync();
+
+            return Json(new { success = true });
         }
 
 

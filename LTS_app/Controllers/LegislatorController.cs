@@ -34,8 +34,10 @@ namespace LTS_app.Controllers
         public async Task<IActionResult> Index()
         {
             var legislators = await _context.Legislators
-                                            .Include(l => l.User)
-                                            .ToListAsync();
+                .Include(l => l.User)
+                .Include(l => l.CommitteeLegislators)
+                .ThenInclude(cl => cl.Committee) // Load Committee data
+                .ToListAsync();
 
             var usersWithRoleLegislator = await _context.Users
                 .Where(u => u.Role == "Legislator" && !_context.Legislators.Any(l => l.UserId == u.Id))
@@ -44,6 +46,7 @@ namespace LTS_app.Controllers
             ViewBag.Users = usersWithRoleLegislator;
             return View(legislators);
         }
+
 
         // Create Legislator (Admins Only)
         [Authorize(Roles = "Admin")]

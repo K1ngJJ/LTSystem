@@ -124,19 +124,20 @@
                         <tr>
                             <th>Name</th>
                             <th>Position</th>
+                            <th>Action</th> <!-- New Column for Delete Button -->
                         </tr>
                     </thead>
                     <tbody id="membersList">
                         <tr>
-                            <td colspan="2" class="text-center">No members found.</td>
+                            <td colspan="3" class="text-center">No members found.</td>
                         </tr>
                     </tbody>
                 </table>
-
             </div>
         </div>
     </div>
 </div>
+
 
 @if (User.IsInRole("Admin"))
 {
@@ -316,7 +317,7 @@
     <script>
         function openMembersModal(committeeId, committeeName) {
             $("#committeeName").text(committeeName);
-            $("#membersList").html('<tr><td colspan="2" class="text-center">Loading...</td></tr>');
+            $("#membersList").html('<tr><td colspan="3" class="text-center">Loading...</td></tr>');
 
             $.ajax({
                 url: `/Committee/GetCommitteeMembers/${committeeId}`,
@@ -333,10 +334,20 @@
                         data.forEach(member => {
                             let fullName = member.fullName ?? "N/A";
                             let position = member.position ?? "Unknown";
-                            rows += `<tr><td>${fullName}</td><td>${position}</td></tr>`;
+
+                            rows += `
+                                <tr id="memberRow-${committeeId}-${member.legislatorId}">
+                                    <td>${fullName}</td>
+                                    <td>${position}</td>
+                                    <td>
+                                        <button class="btn btn-danger btn-sm" onclick="deleteMember(${committeeId}, ${member.legislatorId})">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>`;
                         });
                     } else {
-                        rows = '<tr><td colspan="2" class="text-center">No members found.</td></tr>';
+                        rows = '<tr><td colspan="3" class="text-center">No members found.</td></tr>';
                     }
                     $("#membersList").html(rows);
 
@@ -362,12 +373,28 @@
                 },
                 error: function (xhr) {
                     console.error("Error fetching committee members:", xhr);
-                    $("#membersList").html('<tr><td colspan="2" class="text-center text-danger">Failed to load members.</td></tr>');
+                    $("#membersList").html('<tr><td colspan="3" class="text-center text-danger">Failed to load members.</td></tr>');
                 }
             });
 
             $("#membersModal").modal("show");
         }
+
+        function deleteMember(committeeId, legislatorId) {
+            if (!confirm("Are you sure you want to remove this member?")) return;
+
+            $.post("/Committee/RemoveCommitteeMember", { committeeId, legislatorId }, function (response) {
+                if (response.success) {
+                    $(`#memberRow-${committeeId}-${legislatorId}`).remove();
+                    alert("Member removed successfully!");
+                } else {
+                    alert("Failed to remove member.");
+                }
+            }).fail(function () {
+                alert("Error removing member.");
+            });
+        }
+
     </script>
 
     <script>

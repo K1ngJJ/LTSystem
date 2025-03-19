@@ -37,11 +37,11 @@
                                 <tr>
                                     <th>Full Name</th>
                                     <th>Position</th>
-                                    <!--th>Number of Bills</th-->
+                                    <th>Committee(s)</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
-                            <tbody  class="small">
+                            <tbody class="small">
                                 @foreach (var legislator in Model)
                                 {
                                     <tr>
@@ -57,12 +57,20 @@
                                         </td>
                                         <td>@legislator.Position</td>
                                         <td>
+                                            @if (legislator.CommitteeLegislators.Any())
+                                            {
+                                                @string.Join(", ", legislator.CommitteeLegislators.Select(cl => cl.Committee.Name))
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">Not Yet Assigned</span>
+                                            }
+                                        </td>
+                                        <td>
                                             <button class="btn btn-info btn-sm"
                                                     onclick="openViewModal('@legislator.User?.FullName', '@legislator.Position')">
                                                 <i class="bi bi-eye"></i>
                                             </button>
-
-
                                             @if (User.IsInRole("Admin"))
                                             {
                                                 <button class="btn btn-warning btn-sm"
