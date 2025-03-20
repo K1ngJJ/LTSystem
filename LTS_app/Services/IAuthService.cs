@@ -12,5 +12,6 @@ namespace LTS_app.Services
         Task<(bool Success, string Message)> RequestPasswordResetAsync(string email);
         Task<(bool Success, string Message)> ResetPasswordAsync(string token, string newPassword);
         Task<User?> GetUserByTokenAsync(string token);
+
     }
 }

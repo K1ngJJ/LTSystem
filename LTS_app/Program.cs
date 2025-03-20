@@ -3,6 +3,7 @@ using LTS_app.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddHttpContextAccessor();
@@ -38,7 +39,6 @@ builder.Services.AddAuthorization();
 
 // Add MVC services
 builder.Services.AddControllersWithViews();
-
 var app = builder.Build();
 
 // Error handling

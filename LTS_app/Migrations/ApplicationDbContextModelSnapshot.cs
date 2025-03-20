@@ -73,8 +73,16 @@ namespace LTS_app.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
+                        .HasMaxLength(5000)
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FilePath")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("ImagePath")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<DateTime>("IntroducedDate")
                         .HasColumnType("datetime2");
@@ -88,13 +96,18 @@ namespace LTS_app.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
+
+                    b.Property<string>("VideoPath")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.HasKey("Id");
 
@@ -567,7 +580,7 @@ namespace LTS_app.Migrations
             modelBuilder.Entity("LTS_app.Models.UserFeedback", b =>
                 {
                     b.HasOne("LTS_app.Models.Bill", "Bill")
-                        .WithMany("CitizenFeedbacks")
+                        .WithMany("UserFeedbacks")
                         .HasForeignKey("BillId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -619,7 +632,7 @@ namespace LTS_app.Migrations
 
                     b.Navigation("BillHistories");
 
-                    b.Navigation("CitizenFeedbacks");
+                    b.Navigation("UserFeedbacks");
 
                     b.Navigation("Votes");
                 });

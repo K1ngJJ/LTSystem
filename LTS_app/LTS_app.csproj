@@ -30,6 +30,11 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="wwwroot\BillVideos\" />
+    <Folder Include="wwwroot\BillImages\" />
+    <Folder Include="wwwroot\BillFiles\" />
+    <Folder Include="wwwroot\uploads\documents\" />
+    <Folder Include="wwwroot\uploads\images\" />
   </ItemGroup>
 
 </Project>

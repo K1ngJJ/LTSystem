@@ -21726,5 +21726,77 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\LTS_app.6kgbt3tnpc.bundle.scp.css'))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\documents\3a39da4b-1f82-4859-b357-9ab40cfa8951_Plastic Waste Reduction Act.pdf'))">
+      <SourceType>Package</SourceType>
+      <SourceId>LTS_app</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/LTS_app</BasePath>
+      <RelativePath>uploads/documents/3a39da4b-1f82-4859-b357-9ab40cfa8951_Plastic Waste Reduction Act.pdf</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>hygsvwr2nz</Fingerprint>
+      <Integrity>2XM5f5P3vHV6BeslpxekFlDUrMTjldIef3N5m/fQ95c=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\documents\3a39da4b-1f82-4859-b357-9ab40cfa8951_Plastic Waste Reduction Act.pdf'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\documents\af39ad99-03e3-4472-9b25-1a3a3e8bcb76_Plastic Waste Reduction Act.pdf'))">
+      <SourceType>Package</SourceType>
+      <SourceId>LTS_app</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/LTS_app</BasePath>
+      <RelativePath>uploads/documents/af39ad99-03e3-4472-9b25-1a3a3e8bcb76_Plastic Waste Reduction Act.pdf</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>hygsvwr2nz</Fingerprint>
+      <Integrity>2XM5f5P3vHV6BeslpxekFlDUrMTjldIef3N5m/fQ95c=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\documents\af39ad99-03e3-4472-9b25-1a3a3e8bcb76_Plastic Waste Reduction Act.pdf'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\documents\eef225f9-9bcb-4bcf-8fcf-58ef69c87a3d_Plastic Waste Reduction Act.pdf'))">
+      <SourceType>Package</SourceType>
+      <SourceId>LTS_app</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/LTS_app</BasePath>
+      <RelativePath>uploads/documents/eef225f9-9bcb-4bcf-8fcf-58ef69c87a3d_Plastic Waste Reduction Act.pdf</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>hygsvwr2nz</Fingerprint>
+      <Integrity>2XM5f5P3vHV6BeslpxekFlDUrMTjldIef3N5m/fQ95c=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\documents\eef225f9-9bcb-4bcf-8fcf-58ef69c87a3d_Plastic Waste Reduction Act.pdf'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\84ed09ff-cc90-43b3-afec-f4ba97df5732_pwr.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>LTS_app</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/LTS_app</BasePath>
+      <RelativePath>uploads/images/84ed09ff-cc90-43b3-afec-f4ba97df5732_pwr.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>w9eepnadeb</Fingerprint>
+      <Integrity>PGvWZwHJdFP4EqaCwRNYjKhOO7c0/QsHavDtEBoBFwE=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\84ed09ff-cc90-43b3-afec-f4ba97df5732_pwr.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
   </ItemGroup>
 </Project>

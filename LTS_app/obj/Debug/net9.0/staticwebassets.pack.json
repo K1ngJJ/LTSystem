@@ -4829,6 +4829,22 @@
       "PackagePath": "staticwebassets\\lib\\simplebar\\src\\simplebar.js"
     },
     {
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\uploads\\documents\\3a39da4b-1f82-4859-b357-9ab40cfa8951_Plastic Waste Reduction Act.pdf",
+      "PackagePath": "staticwebassets\\uploads\\documents\\3a39da4b-1f82-4859-b357-9ab40cfa8951_Plastic Waste Reduction Act.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\uploads\\documents\\af39ad99-03e3-4472-9b25-1a3a3e8bcb76_Plastic Waste Reduction Act.pdf",
+      "PackagePath": "staticwebassets\\uploads\\documents\\af39ad99-03e3-4472-9b25-1a3a3e8bcb76_Plastic Waste Reduction Act.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\uploads\\documents\\eef225f9-9bcb-4bcf-8fcf-58ef69c87a3d_Plastic Waste Reduction Act.pdf",
+      "PackagePath": "staticwebassets\\uploads\\documents\\eef225f9-9bcb-4bcf-8fcf-58ef69c87a3d_Plastic Waste Reduction Act.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\uploads\\images\\84ed09ff-cc90-43b3-afec-f4ba97df5732_pwr.jpg",
+      "PackagePath": "staticwebassets\\uploads\\images\\84ed09ff-cc90-43b3-afec-f4ba97df5732_pwr.jpg"
+    },
+    {
       "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.LTS_app.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
     },

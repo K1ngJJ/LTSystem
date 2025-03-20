@@ -119,7 +119,7 @@ namespace LTS_app.Data
             // 💬 Citizen Feedback -> Bill (One-to-Many)
             modelBuilder.Entity<UserFeedback>()
                 .HasOne(cf => cf.Bill)
-                .WithMany(b => b.CitizenFeedbacks)
+                .WithMany(b => b.UserFeedbacks)
                 .HasForeignKey(cf => cf.BillId)
                 .OnDelete(DeleteBehavior.Cascade);
 

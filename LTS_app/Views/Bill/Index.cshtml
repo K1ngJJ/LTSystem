@@ -41,6 +41,7 @@ data-sidebar-position="fixed" data-header-position="fixed">
                                     <th>Session</th>
                                     <th>Introduced Date</th>
                                     <th>Status</th>
+                                    <th>Attachment</th> <!-- Added -->
                                     <th>Feedbacks</th>
                                     <th>Actions</th>
                                 </tr>
@@ -50,11 +51,42 @@ data-sidebar-position="fixed" data-header-position="fixed">
                                 {
                                     <tr>
                                         <td>@bill.Title</td>
-                                        <td>@(bill.User?.FullName ?? "Unknown Creator")</td>  <!-- Updated -->
+                                        <td>@(bill.User?.FullName ?? "Unknown Creator")</td>
                                         <td>@(bill.Committee?.Name ?? "N/A")</td>
                                         <td>@(bill.Session?.Name ?? "N/A")</td>
                                         <td>@bill.IntroducedDate.ToString("yyyy-MM-dd")</td>
                                         <td>@bill.Status</td>
+
+                                        <!-- ✅ Display File if Available -->
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(bill.FilePath))
+                                            {
+                                                <a href="@bill.FilePath" target="_blank" class="btn btn-success btn-sm">
+                                                    📄
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">
+                                                    <i class="bi bi-file-earmark"></i>
+                                                </span>
+                                            }
+
+                                            @if (!string.IsNullOrEmpty(bill.ImagePath))
+                                            {
+                                                <!--img src="@bill.ImagePath" alt="Bill Cover" width="50"-->
+                                                <button class="btn btn-outline-primary btn-sm" onclick="viewImage('@bill.ImagePath')">
+                                                    🖼️
+                                                </button>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">
+                                                    <i class="bi bi-file-image"></i>
+                                                </span>
+                                            }
+                                        </td>
+
                                         <td>
                                             @if (User.IsInRole("User"))
                                             {
@@ -70,35 +102,36 @@ data-sidebar-position="fixed" data-header-position="fixed">
                                                 </button>
                                             }
                                         </td>
+
                                         <td>
                                             <button class="btn btn-info btn-sm"
-                                            onclick="openViewBillModal(
-                                                    '@bill.Id', 
-                                                    '@bill.Title', 
-                                                    '@bill.Description', 
-                                                    '@bill.Status', 
-                                                    '@(bill.User?.FullName ?? "Unknown")',  <!-- Updated -->
-                                                    '@(bill.Committee?.Name ?? "N/A")', 
-                                                    '@(bill.Session?.Name ?? "N/A")')">
+                                                    onclick="openViewBillModal(
+                            '@bill.Id',
+                            '@bill.Title',
+                            '@bill.Description',
+                            '@bill.Status',
+                            '@(bill.User?.FullName ?? "Unknown")',
+                            '@(bill.Committee?.Name ?? "N/A")',
+                            '@(bill.Session?.Name ?? "N/A")')">
                                                 <i class="bi bi-eye"></i>
                                             </button>
 
                                             @if (User.IsInRole("Legislator"))
                                             {
                                                 <button class="btn btn-warning btn-sm"
-                                                onclick="openEditBillModal(
-                                                    '@bill.Id',
-                                                    '@bill.Title',
-                                                    '@bill.Description',
-                                                    '@bill.Status',
-                                                    '@(bill.User?.Id ?? 0)',  <!-- Updated -->
-                                                    '@bill.CommitteeId',
-                                                    '@bill.SessionId')">
+                                                        onclick="openEditBillModal(
+                            '@bill.Id',
+                            '@bill.Title',
+                            '@bill.Description',
+                            '@bill.Status',
+                            '@(bill.User?.Id ?? 0)',
+                            '@bill.CommitteeId',
+                            '@bill.SessionId')">
                                                     <i class="bi bi-pencil-square"></i>
                                                 </button>
 
                                                 <button class="btn btn-danger btn-sm"
-                                                onclick="setDeleteBill(@bill.Id, '@bill.Title')">
+                                                        onclick="setDeleteBill(@bill.Id, '@bill.Title')">
                                                     <i class="bi bi-trash"></i>
                                                 </button>
                                             }
@@ -117,6 +150,22 @@ data-sidebar-position="fixed" data-header-position="fixed">
                     @TempData["SuccessMessage"]
                 </div>
             }
+        </div>
+    </div>
+</div>
+
+<!-- Image Preview Modal -->
+<div class="modal fade" id="imagePreviewModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Image Preview</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="previewImage" src="" class="img-fluid"
+                     onerror="this.src='/uploads/images/no-image.png'">
+            </div>
         </div>
     </div>
 </div>
@@ -229,7 +278,8 @@ data-sidebar-position="fixed" data-header-position="fixed">
                     <h5 class="modal-title">Create New Bill</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form asp-action="Create" method="post">
+                <!-- Add enctype for file uploads -->
+                <form asp-action="Create" method="post" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="mb-3">
                             <label class="form-label">Title</label>
@@ -240,10 +290,10 @@ data-sidebar-position="fixed" data-header-position="fixed">
                             <textarea class="form-control" name="Description" required></textarea>
                         </div>
 
-
                         <div class="mb-3">
                             <label class="form-label">Committee</label>
                             <select class="form-control" name="CommitteeId" required>
+                                <option value="" disabled selected>Select a Committee</option>
                                 @if (ViewBag.Committees != null)
                                 {
                                     @foreach (var committee in ViewBag.Committees as IEnumerable<SelectListItem>)
@@ -257,6 +307,7 @@ data-sidebar-position="fixed" data-header-position="fixed">
                         <div class="mb-3">
                             <label class="form-label">Session</label>
                             <select class="form-control" name="SessionId" required>
+                                <option value="" disabled selected>Select a Session</option>
                                 @if (ViewBag.Sessions != null)
                                 {
                                     @foreach (var session in ViewBag.Sessions as IEnumerable<SelectListItem>)
@@ -275,6 +326,17 @@ data-sidebar-position="fixed" data-header-position="fixed">
                                 <option value="Approved">Approved</option>
                             </select>
                         </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Upload Cover Image (JPG/PNG)</label>
+                            <input type="file" class="form-control" name="ImageFile" accept=".jpg,.jpeg,.png">
+                        </div>
+
+                        <!-- ✅ File Upload Field -->
+                        <div class="mb-3">
+                            <label class="form-label">Upload Document (PDF/DOCX)</label>
+                            <input type="file" class="form-control" name="BillFile" accept=".pdf,.doc,.docx">
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Create</button>
@@ -284,6 +346,7 @@ data-sidebar-position="fixed" data-header-position="fixed">
             </div>
         </div>
     </div>
+
 
 
     <!-- Edit Bill Modal -->
@@ -337,6 +400,7 @@ data-sidebar-position="fixed" data-header-position="fixed">
         </div>
     </div>
 
+
     <!-- DELETE BILL MODAL -->
     <div class="modal fade" id="deleteBillModal" tabindex="-1">
         <div class="modal-dialog">
@@ -372,6 +436,15 @@ data-sidebar-position="fixed" data-header-position="fixed">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    
+    <script>
+        function viewImage(imageUrl) {
+            document.getElementById('previewImage').src = imageUrl;
+            var imageModal = new bootstrap.Modal(document.getElementById('imagePreviewModal'));
+            imageModal.show();
+        }
+    </script>
 
     <script>
         $(document).ready(function () {
@@ -507,48 +580,6 @@ data-sidebar-position="fixed" data-header-position="fixed">
             $('#createBillModal').modal('show');
         }
 
-        function openEditBillModal(id, title, description, status, legislatorId, committeeId, sessionId) {
-            // Set values
-            $('#editBillId').val(id);
-            $('#editBillTitle').val(title);
-            $('#editBillDescription').val(description);
-            $('#editBillStatus').val(status);
-
-            // Clear and show "Loading..." before fetching data
-            $('#editBillLegislator').empty().append(new Option("Loading...", ""));
-            $('#editBillCommittee').empty().append(new Option("Loading...", ""));
-            $('#editBillSession').empty().append(new Option("Loading...", ""));
-
-            // Fetch dropdown data
-            $.get('/Bill/GetDropdownData', function (data) {
-                $('#editBillLegislator').empty();
-                $('#editBillCommittee').empty();
-                $('#editBillSession').empty();
-
-                data.legislators.forEach(function (legislator) {
-                    $('#editBillLegislator').append(new Option(legislator.name, legislator.id));
-                });
-
-                data.committees.forEach(function (committee) {
-                    $('#editBillCommittee').append(new Option(committee.name, committee.id));
-                });
-
-                data.sessions.forEach(function (session) {
-                    $('#editBillSession').append(new Option(session.name, session.id));
-                });
-
-                // Set selected values
-                $('#editBillLegislator').val(legislatorId);
-                $('#editBillCommittee').val(committeeId);
-                $('#editBillSession').val(sessionId);
-
-                // Show modal only after dropdowns are populated
-                $('#editBillModal').modal('show');
-            }).fail(function () {
-                alert("Failed to load dropdown data. Please try again.");
-            });
-        }
-
         function openViewBillModal(billId) {
             $.get('/Bill/GetBillDetails/' + billId, function (data) {
                 $('#viewBillTitle').text(data.title);
@@ -560,38 +591,43 @@ data-sidebar-position="fixed" data-header-position="fixed">
                 $('#viewBillDate').text(new Date(data.introducedDate).toLocaleString());
                 $('#viewBillModal').modal('show');
             });
-                }function openEditBillModal(id, title, description, status, committeeId, sessionId) {
-            $('#editBillId').val(id);
-            $('#editBillTitle').val(title);
-            $('#editBillDescription').val(description);
-            $('#editBillStatus').val(status);
+                }
 
-            // Clear and show "Loading..."
-            $('#editBillCommittee').empty().append(new Option("Loading...", ""));
-            $('#editBillSession').empty().append(new Option("Loading...", ""));
 
-            // Fetch data for dropdowns
-            $.get('/Bill/GetDropdownData', function (data) {
-                $('#editBillCommittee').empty();
-                $('#editBillSession').empty();
+        function openEditBillModal(id, title, description, status, committeeId, sessionId) {
+                 $('#editBillId').val(id);
+                 $('#editBillTitle').val(title);
+                 $('#editBillDescription').val(description);
+                 $('#editBillStatus').val(status);
 
-                data.committees.forEach(committee => {
-                    $('#editBillCommittee').append(new Option(committee.name, committee.id));
-                });
+                 // Clear and show "Loading..."
+                 $('#editBillCommittee').empty().append(new Option("Loading...", ""));
+                 $('#editBillSession').empty().append(new Option("Loading...", ""));
 
-                data.sessions.forEach(session => {
-                    $('#editBillSession').append(new Option(session.name, session.id));
-                });
+                 // Fetch data for dropdowns
+                 $.get('/Bill/GetDropdownData', function (data) {
+                     $('#editBillCommittee').empty();
+                     $('#editBillSession').empty();
 
-                // Set selected values
-                $('#editBillCommittee').val(committeeId);
-                $('#editBillSession').val(sessionId);
+                     data.committees.forEach(committee => {
+                         $('#editBillCommittee').append(new Option(committee.name, committee.id));
+                     });
 
-                $('#editBillModal').modal('show');
-            }).fail(function () {
-                alert("Failed to load dropdown data.");
-            });
-        }
+                     data.sessions.forEach(session => {
+                         $('#editBillSession').append(new Option(session.name, session.id));
+                     });
+
+                     // Set selected values
+                     $('#editBillCommittee').val(committeeId);
+                     $('#editBillSession').val(sessionId);
+
+                     $('#editBillModal').modal('show');
+                 }).fail(function () {
+                     alert("Failed to load dropdown data.");
+                 });
+             }
+
+
 
         function openViewBillModal(billId) {
             $.get('/Bill/GetBillDetails/' + billId, function (data) {
@@ -616,4 +652,5 @@ data-sidebar-position="fixed" data-header-position="fixed">
         }
 
     </script>
+
 }
