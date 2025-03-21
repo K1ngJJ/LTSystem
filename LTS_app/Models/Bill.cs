@@ -6,6 +6,18 @@ using Microsoft.AspNetCore.Http; // Required for IFormFile
 
 namespace LTS_app.Models
 {
+    public enum BillStatus
+    {
+        Draft,               // Bill is created but not yet submitted
+        PendingReview,       // Bill is waiting for committee review
+        UnderReview,         // Committee is reviewing the bill
+        Amended,            // Committee has suggested amendments
+        PendingVote,        // Ready for legislators to vote
+        Approved,           // Passed by vote
+        Rejected,           // Rejected by vote
+        Enacted,            // Signed into law
+        Archived            // No longer active (historical record)
+    }
     public class Bill : BaseEntity
     {
         [Key]
@@ -21,7 +33,7 @@ namespace LTS_app.Models
         public DateTime IntroducedDate { get; set; } = DateTime.UtcNow;
 
         [Required]
-        public string Status { get; set; } = "Draft"; // Draft, In Committee, Voted, Passed, Rejected
+        public BillStatus Status { get; set; } = BillStatus.Draft; // Draft, In Committee, Voted, Passed, Rejected
 
         // ✅ Foreign Key to User (Legislator)
         [Required]

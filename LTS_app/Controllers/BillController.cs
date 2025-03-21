@@ -170,7 +170,7 @@ namespace LTS_app.Controllers
                 Description = Description,
                 CommitteeId = CommitteeId,
                 SessionId = SessionId,
-                Status = Status,
+                Status = Enum.TryParse<BillStatus>(Status, out var billStatus) ? billStatus : BillStatus.Draft,
                 IntroducedDate = DateTime.Now,
                 FilePath = filePath,  // ✅ Save file path in DB
                 ImagePath = imagePath // ✅ Save image path in DB
@@ -223,7 +223,6 @@ namespace LTS_app.Controllers
             existingBill.Description = bill.Description;
             existingBill.CommitteeId = bill.CommitteeId;
             existingBill.SessionId = bill.SessionId;
-            existingBill.Status = bill.Status;
 
             // Update last modified time
             existingBill.IntroducedDate = DateTime.UtcNow;
@@ -304,30 +303,66 @@ namespace LTS_app.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> GetBillDetails(int id)
+        public IActionResult GetBillDetails(int id)
         {
-            var bill = await _context.Bills
+            var bill = _context.Bills
                 .Include(b => b.User)
                 .Include(b => b.Committee)
                 .Include(b => b.Session)
-                .FirstOrDefaultAsync(b => b.Id == id);
+                .FirstOrDefault(b => b.Id == id);
 
             if (bill == null)
                 return NotFound();
 
-            var result = new
+            var userIsLegislator = User.IsInRole("Legislator"); // Check if user is a legislator
+
+            return Json(new
             {
+                id = bill.Id,
                 title = bill.Title,
                 description = bill.Description,
                 status = bill.Status,
                 proposedBy = bill.User?.FullName ?? "Unknown",
                 committee = bill.Committee?.Name ?? "N/A",
                 session = bill.Session?.Name ?? "N/A",
-                introducedDate = bill.IntroducedDate
-            };
-
-            return Json(result);
+                introducedDate = bill.IntroducedDate,
+                committeeId = bill.CommitteeId,
+                sessionId = bill.SessionId,
+                isLegislator = userIsLegislator
+            });
         }
+
+        [HttpPost]
+        public IActionResult UpdateStatus(int id, int status)
+        {
+            var bill = _context.Bills.Find(id);
+            if (bill == null)
+            {
+                return Json(new { success = false, message = "Bill not found." });
+            }
+
+            try
+            {
+                // Convert integer to Enum
+                if (Enum.IsDefined(typeof(BillStatus), status))
+                {
+                    bill.Status = (BillStatus)status;
+                    _context.SaveChanges();
+
+                    return Json(new { success = true });
+                }
+                else
+                {
+                    return Json(new { success = false, message = "Invalid status value." });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+
 
     }
 }

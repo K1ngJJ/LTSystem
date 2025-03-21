@@ -35,54 +35,72 @@ data-sidebar-position="fixed" data-header-position="fixed">
                         <table id="billsTable" class="table table-sm table-striped table-bordered">
                             <thead class="table-dark small">
                                 <tr>
-                                    <th>Bill Title</th>
+                                    <th>Cover</th>
+                                    <th>📜Title</th>
                                     <th>Proposed by</th>
                                     <th>Committee</th>
                                     <th>Session</th>
                                     <th>Introduced Date</th>
                                     <th>Status</th>
-                                    <th>Attachment</th> <!-- Added -->
+                                    <th>Attachment</th>
                                     <th>Feedbacks</th>
-                                    <th>Actions</th>
+                                    @* <th>Actions</th> *@
                                 </tr>
                             </thead>
                             <tbody class="small">
                                 @foreach (var bill in Model)
                                 {
                                     <tr>
-                                        <td>@bill.Title</td>
-                                        <td>@(bill.User?.FullName ?? "Unknown Creator")</td>
-                                        <td>@(bill.Committee?.Name ?? "N/A")</td>
-                                        <td>@(bill.Session?.Name ?? "N/A")</td>
-                                        <td>@bill.IntroducedDate.ToString("yyyy-MM-dd")</td>
-                                        <td>@bill.Status</td>
-
-                                        <!-- ✅ Display File if Available -->
                                         <td>
-                                            @if (!string.IsNullOrEmpty(bill.FilePath))
-                                            {
-                                                <a href="@bill.FilePath" target="_blank" class="btn btn-success btn-sm">
-                                                    📄
-                                                </a>
-                                            }
-                                            else
-                                            {
-                                                <span class="text-muted">
-                                                    <i class="bi bi-file-earmark"></i>
-                                                </span>
-                                            }
-
                                             @if (!string.IsNullOrEmpty(bill.ImagePath))
                                             {
-                                                <!--img src="@bill.ImagePath" alt="Bill Cover" width="50"-->
-                                                <button class="btn btn-outline-primary btn-sm" onclick="viewImage('@bill.ImagePath')">
-                                                    🖼️
-                                                </button>
+                                                <img src="@bill.ImagePath"
+                                                     alt="Bill Cover"
+                                                     width="50"
+                                                     class="img-thumbnail"
+                                                     style="cursor:pointer; border-radius:5px;"
+                                                     onclick="showImageFullScreen(this.src)">
                                             }
                                             else
                                             {
                                                 <span class="text-muted">
                                                     <i class="bi bi-file-image"></i>
+                                                </span>
+                                            }
+                                        </td>
+
+                                        <td>
+                                            <a href="#" onclick="openViewBillModal(@bill.Id)" class="text-primary text-decoration-none">
+                                                @bill.Title
+                                            </a>
+                                        </td>
+                                        <td>@(bill.User?.FullName ?? "Unknown Creator")</td>
+                                        <td>@(bill.Committee?.Name ?? "N/A")</td>
+                                        <td>@(bill.Session?.Name ?? "N/A")</td>
+                                        <td>@bill.IntroducedDate.ToString("yyyy-MM-dd")</td>
+                                        <td>
+                                            <span id="statusText_@bill.Id" onclick="enableStatusEdit(@bill.Id, '@bill.Status')">@bill.Status</span>
+                                            <div id="editDiv_@bill.Id" class="d-none d-flex gap-2">
+                                                <select id="statusSelect_@bill.Id" class="form-select form-select-sm">
+                                                    @foreach (var status in Enum.GetValues(typeof(BillStatus)))
+                                                    {
+                                                        <option value="@((int)status)">@(status)</option>
+                                                    }
+                                                </select>
+                                                <button class="btn btn-success btn-sm" onclick="updateBillStatus(@bill.Id)"><i class="bi bi-check-lg"></i></button>
+                                                <button class="btn btn-danger btn-sm" onclick="cancelStatusEdit(@bill.Id)"><i class="bi bi-x-lg"></i></button>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(bill.FilePath))
+                                            {
+                                                <a href="@bill.FilePath" target="_blank" class="btn btn-success btn-sm">📄 Article</a>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">
+                                                    <i class="bi bi-file-earmark"></i>
                                                 </span>
                                             }
                                         </td>
@@ -97,45 +115,30 @@ data-sidebar-position="fixed" data-header-position="fixed">
 
                                             @if (User.IsInRole("User") || User.IsInRole("Legislator") || User.IsInRole("Admin"))
                                             {
-                                                <button class="btn btn-info btn-sm" onclick="viewFeedback(@bill.Id)">
-                                                    💬
-                                                </button>
+                                                <button class="btn btn-info btn-sm" onclick="viewFeedback(@bill.Id)">💬</button>
                                             }
                                         </td>
 
-                                        <td>
-                                            <button class="btn btn-info btn-sm"
-                                                    onclick="openViewBillModal(
-                            '@bill.Id',
-                            '@bill.Title',
-                            '@bill.Description',
-                            '@bill.Status',
-                            '@(bill.User?.FullName ?? "Unknown")',
-                            '@(bill.Committee?.Name ?? "N/A")',
-                            '@(bill.Session?.Name ?? "N/A")')">
-                                                <i class="bi bi-eye"></i>
-                                            </button>
+                                        @* <td> *@
+                                        @*     <button class="btn btn-info btn-sm" *@
+                                        @*             onclick="openViewBillModal(@bill.Id)"> *@
+                                        @*         <i class="bi bi-eye"></i> *@
+                                        @*     </button> *@
 
-                                            @if (User.IsInRole("Legislator"))
-                                            {
-                                                <button class="btn btn-warning btn-sm"
-                                                        onclick="openEditBillModal(
-                            '@bill.Id',
-                            '@bill.Title',
-                            '@bill.Description',
-                            '@bill.Status',
-                            '@(bill.User?.Id ?? 0)',
-                            '@bill.CommitteeId',
-                            '@bill.SessionId')">
-                                                    <i class="bi bi-pencil-square"></i>
-                                                </button>
+                                        @*     @if (User.IsInRole("Legislator")) *@
+                                        @*     { *@
+                                        @*         <button class="btn btn-warning btn-sm" *@
+                                        @*                 onclick="openEditBillModal('@bill.Id', '@bill.Title', '@bill.Description', *@
+                                        @*                '@bill.Status', '@(bill.User?.Id ?? 0)', '@bill.CommitteeId', '@bill.SessionId')"> *@
+                                        @*             <i class="bi bi-pencil-square"></i> *@
+                                        @*         </button> *@
 
-                                                <button class="btn btn-danger btn-sm"
-                                                        onclick="setDeleteBill(@bill.Id, '@bill.Title')">
-                                                    <i class="bi bi-trash"></i>
-                                                </button>
-                                            }
-                                        </td>
+                                        @*         <button class="btn btn-danger btn-sm" *@
+                                        @*                 onclick="setDeleteBill(@bill.Id, '@bill.Title')"> *@
+                                        @*             <i class="bi bi-trash"></i> *@
+                                        @*         </button> *@
+                                        @*     } *@
+                                        @* </td> *@
                                     </tr>
                                 }
                             </tbody>
@@ -154,21 +157,6 @@ data-sidebar-position="fixed" data-header-position="fixed">
     </div>
 </div>
 
-<!-- Image Preview Modal -->
-<div class="modal fade" id="imagePreviewModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Image Preview</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body text-center">
-                <img id="previewImage" src="" class="img-fluid"
-                     onerror="this.src='/uploads/images/no-image.png'">
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- View Bill Modal -->
 <div class="modal fade" id="viewBillModal" tabindex="-1">
@@ -187,12 +175,14 @@ data-sidebar-position="fixed" data-header-position="fixed">
                 <p><strong>Session:</strong> <span id="viewBillSession"></span></p>
                 <p><strong>Introduced Date:</strong> <span id="viewBillDate"></span></p>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer d-flex justify-content-between">
+                <div id="modalActionButtons"></div> <!-- Buttons will be dynamically added here -->
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
+
 
 @if (User.IsInRole("User"))
 {
@@ -319,15 +309,6 @@ data-sidebar-position="fixed" data-header-position="fixed">
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Status</label>
-                            <select class="form-control" name="Status">
-                                <option value="Draft">Draft</option>
-                                <option value="Pending">Pending</option>
-                                <option value="Approved">Approved</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
                             <label class="form-label">Upload Cover Image (JPG/PNG)</label>
                             <input type="file" class="form-control" name="ImageFile" accept=".jpg,.jpeg,.png">
                         </div>
@@ -337,6 +318,7 @@ data-sidebar-position="fixed" data-header-position="fixed">
                             <label class="form-label">Upload Document (PDF/DOCX)</label>
                             <input type="file" class="form-control" name="BillFile" accept=".pdf,.doc,.docx">
                         </div>
+
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Create</button>
@@ -369,16 +351,6 @@ data-sidebar-position="fixed" data-header-position="fixed">
                         <div class="mb-3">
                             <label class="form-label">Description</label>
                             <textarea class="form-control" id="editBillDescription" name="Description" required></textarea>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Status</label>
-                            <select class="form-control" id="editBillStatus" name="Status" required>
-                                <option value="Draft">Draft</option>
-                                <option value="Pending">Pending</option>
-                                <option value="Approved">Approved</option>
-                                <option value="Rejected">Rejected</option>
-                            </select>
                         </div>
 
                         <div class="mb-3">
@@ -437,14 +409,50 @@ data-sidebar-position="fixed" data-header-position="fixed">
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
-    
     <script>
-        function viewImage(imageUrl) {
-            document.getElementById('previewImage').src = imageUrl;
-            var imageModal = new bootstrap.Modal(document.getElementById('imagePreviewModal'));
-            imageModal.show();
+        function showImageFullScreen(imageSrc) {
+            // Check if overlay exists
+            let overlay = document.getElementById("imageOverlay");
+            let img;
+
+            if (!overlay) {
+                // Create overlay if it doesn’t exist
+                overlay = document.createElement("div");
+                overlay.id = "imageOverlay";
+                overlay.style.position = "fixed";
+                overlay.style.top = "0";
+                overlay.style.left = "0";
+                overlay.style.width = "100%";
+                overlay.style.height = "100%";
+                overlay.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+                overlay.style.display = "flex";
+                overlay.style.alignItems = "center";
+                overlay.style.justifyContent = "center";
+                overlay.style.zIndex = "9999";
+                overlay.style.cursor = "pointer";
+
+                // Close overlay when clicked
+                overlay.onclick = function () { overlay.remove(); };
+
+                // Create image element
+                img = document.createElement("img");
+                img.id = "fullscreenImage";
+                img.style.maxWidth = "90%";
+                img.style.maxHeight = "90%";
+                img.style.borderRadius = "10px";
+
+                overlay.appendChild(img);
+                document.body.appendChild(overlay);
+            } else {
+                // If overlay exists, get the image element
+                img = document.getElementById("fullscreenImage");
+            }
+
+            // Update image source
+            img.src = imageSrc;
         }
     </script>
+
 
     <script>
         $(document).ready(function () {
@@ -580,20 +588,6 @@ data-sidebar-position="fixed" data-header-position="fixed">
             $('#createBillModal').modal('show');
         }
 
-        function openViewBillModal(billId) {
-            $.get('/Bill/GetBillDetails/' + billId, function (data) {
-                $('#viewBillTitle').text(data.title);
-                $('#viewBillDescription').text(data.description);
-                $('#viewBillStatus').text(data.status);
-                $('#viewBillLegislator').text(data.legislator);
-                $('#viewBillCommittee').text(data.committee);
-                $('#viewBillSession').text(data.session);
-                $('#viewBillDate').text(new Date(data.introducedDate).toLocaleString());
-                $('#viewBillModal').modal('show');
-            });
-                }
-
-
         function openEditBillModal(id, title, description, status, committeeId, sessionId) {
                  $('#editBillId').val(id);
                  $('#editBillTitle').val(title);
@@ -628,7 +622,6 @@ data-sidebar-position="fixed" data-header-position="fixed">
              }
 
 
-
         function openViewBillModal(billId) {
             $.get('/Bill/GetBillDetails/' + billId, function (data) {
                 $('#viewBillTitle').text(data.title);
@@ -639,11 +632,34 @@ data-sidebar-position="fixed" data-header-position="fixed">
                 $('#viewBillSession').text(data.session);
                 $('#viewBillDate').text(new Date(data.introducedDate).toLocaleString());
 
+                let modalFooter = $('#viewBillModal .modal-footer');
+
+                // Clear existing buttons (to prevent duplicates)
+                modalFooter.find('.edit-delete-buttons').remove();
+
+                // Check if user is a Legislator before adding buttons
+                if (data.isLegislator) {
+                    let buttonsHtml = `
+                        <button class="btn btn-warning btn-sm"
+                                onclick="openEditBillModal(
+                                    '${data.id}', '${data.title}', '${data.description}',
+                                    '${data.status}', '${data.committeeId}', '${data.sessionId}')">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                        <button class="btn btn-danger btn-sm"
+                                onclick="setDeleteBill('${data.id}', '${data.title}')">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    `;
+                    document.getElementById("modalActionButtons").innerHTML = buttonsHtml;
+                }
+
                 $('#viewBillModal').modal('show');
             }).fail(function () {
                 alert("Failed to load bill details.");
             });
         }
+
 
         function setDeleteBill(id, title) {
             $('#deleteBillId').val(id);
@@ -653,4 +669,53 @@ data-sidebar-position="fixed" data-header-position="fixed">
 
     </script>
 
-}
+    <script>
+        function enableStatusEdit(billId, currentStatus) {
+            let statusCell = document.querySelector(`td span[onclick="enableStatusEdit(${billId}, '${currentStatus}')"]`);
+            let editDiv = statusCell.nextElementSibling;
+
+            // Set the dropdown value to the current status
+            let dropdown = editDiv.querySelector("select");
+            dropdown.value = currentStatus;
+
+            // Hide text, show dropdown & buttons
+            statusCell.classList.add("d-none");
+            editDiv.classList.remove("d-none");
+        }
+
+        function cancelStatusEdit(billId) {
+            let statusCell = document.querySelector(`td span[onclick^="enableStatusEdit(${billId}"]`);
+            let editDiv = statusCell.nextElementSibling;
+
+            // Restore visibility
+            statusCell.classList.remove("d-none");
+            editDiv.classList.add("d-none");
+        }
+
+        function updateBillStatus(billId) {
+            let dropdown = document.getElementById(`statusSelect_${billId}`);
+            let newStatus = parseInt(dropdown.value); // Convert selected value to integer
+
+            $.ajax({
+                url: "/Bill/UpdateStatus",
+                type: "POST",
+                data: { id: billId, status: newStatus }, // Send as form data
+                success: function (response) {
+                    if (response.success) {
+                        let statusCell = document.getElementById(`statusText_${billId}`);
+                        statusCell.textContent = dropdown.options[dropdown.selectedIndex].text; // Update display text
+
+                        cancelStatusEdit(billId);
+                    } else {
+                        alert("Failed to update status: " + response.message);
+                    }
+                },
+                error: function (xhr) {
+                    alert("Error updating status: " + xhr.responseText);
+                }
+            });
+        }
+
+
+    </script>
+    }
