@@ -21726,6 +21726,42 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\LTS_app.6kgbt3tnpc.bundle.scp.css'))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\documents\10bc23b3-12d8-48f6-a989-4569baac356f_Teacher Salary Increase Act.pdf'))">
+      <SourceType>Package</SourceType>
+      <SourceId>LTS_app</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/LTS_app</BasePath>
+      <RelativePath>uploads/documents/10bc23b3-12d8-48f6-a989-4569baac356f_Teacher Salary Increase Act.pdf</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>8l2v08yoaq</Fingerprint>
+      <Integrity>3F5TrkeUnTxs1oo9P/DYSKGZSKuj0YpkLO5ANDVhVD8=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\documents\10bc23b3-12d8-48f6-a989-4569baac356f_Teacher Salary Increase Act.pdf'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\documents\183b202c-383a-48b7-920e-63c8707f8212_Teacher Salary Increase Act.pdf'))">
+      <SourceType>Package</SourceType>
+      <SourceId>LTS_app</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/LTS_app</BasePath>
+      <RelativePath>uploads/documents/183b202c-383a-48b7-920e-63c8707f8212_Teacher Salary Increase Act.pdf</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>8l2v08yoaq</Fingerprint>
+      <Integrity>3F5TrkeUnTxs1oo9P/DYSKGZSKuj0YpkLO5ANDVhVD8=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\documents\183b202c-383a-48b7-920e-63c8707f8212_Teacher Salary Increase Act.pdf'))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\documents\358a6bee-87ea-44fb-8e59-69f30f16a5e0_logo.pdf'))">
       <SourceType>Package</SourceType>
       <SourceId>LTS_app</SourceId>
@@ -21959,6 +21995,24 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\29ea4d63-d0d6-439e-8742-3b5701038d11_ITDCSytem.png'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\58490d4e-6808-4e39-a215-9b01952e5d02_Teacher-Salary-Increase-Act.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>LTS_app</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/LTS_app</BasePath>
+      <RelativePath>uploads/images/58490d4e-6808-4e39-a215-9b01952e5d02_Teacher-Salary-Increase-Act.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>r8xkzckb3f</Fingerprint>
+      <Integrity>S5jIjzwkRsApLazwmrMdSbHBmY5XLWmUHavEIs3RKyU=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\58490d4e-6808-4e39-a215-9b01952e5d02_Teacher-Salary-Increase-Act.jpg'))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\6380d356-2cf0-48de-8f3e-461d6583d5ad_ITDCSytem.png'))">
       <SourceType>Package</SourceType>

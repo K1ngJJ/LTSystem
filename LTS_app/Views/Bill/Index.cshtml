@@ -20,7 +20,7 @@ data-sidebar-position="fixed" data-header-position="fixed">
             </div>
 
             <div class="d-flex gap-2 mb-3">
-                @if (User.IsInRole("Legislator"))
+                @if (User.IsInRole("Legislator") || User.IsInRole("Admin"))
                 {
                     <button class="btn btn-primary btn-sm" onclick="openCreateBillModal()">
                         <i class="bi bi-plus-circle"></i> Add Bill
@@ -258,7 +258,7 @@ data-sidebar-position="fixed" data-header-position="fixed">
     </div>
 }
 
-@if (User.IsInRole("Legislator"))
+@if (User.IsInRole("Legislator") || User.IsInRole("Admin"))
 {
     <!-- CREATE BILL MODAL -->
     <div class="modal fade" id="createBillModal" tabindex="-1">
@@ -638,7 +638,7 @@ data-sidebar-position="fixed" data-header-position="fixed">
                 modalFooter.find('.edit-delete-buttons').remove();
 
                 // Check if user is a Legislator before adding buttons
-                if (data.isLegislator) {
+                if (data.isLegislator || data.isAdmin) {
                     let buttonsHtml = `
                         <button class="btn btn-warning btn-sm"
                                 onclick="openEditBillModal(

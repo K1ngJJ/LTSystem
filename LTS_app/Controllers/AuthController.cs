@@ -184,6 +184,10 @@ namespace LTS_app.Controllers
         [HttpPost]
         public async Task<IActionResult> ResetPassword(string token, string newPassword)
         {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var username = User.Identity?.Name;
+            var fullName = User.FindFirst("FullName")?.Value;
+
             var result = await _authService.ResetPasswordAsync(token, newPassword);
             if (!result.Success)
             {
@@ -191,18 +195,14 @@ namespace LTS_app.Controllers
                 return View(new { token });
             }
 
-            // 🔹 Log User Reset Password Activity
-            var user = await _authService.GetUserByTokenAsync(token);
-            if (user != null)
-            {
-                await _userLogService.LogActivityAsync(
-                    user.Id,
-                    user.Username,
-                    user.FullName, // ✅ Full Name included
-                    "Reset Password",
-                    HttpContext.Connection.RemoteIpAddress?.ToString()
-                );
-            }
+
+            await _userLogService.LogActivityAsync(
+                int.Parse(userId),
+                username,
+                fullName ?? "Unknown User",
+                "ResetPassword",
+                HttpContext.Connection.RemoteIpAddress?.ToString()
+            );
 
             ViewBag.Message = result.Message;
             return RedirectToAction("Login");

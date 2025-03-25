@@ -8,7 +8,6 @@ namespace LTS_app.Models
 {
     public enum BillStatus
     {
-        Draft,               // Bill is created but not yet submitted
         PendingReview,       // Bill is waiting for committee review
         UnderReview,         // Committee is reviewing the bill
         Amended,            // Committee has suggested amendments
@@ -33,7 +32,7 @@ namespace LTS_app.Models
         public DateTime IntroducedDate { get; set; } = DateTime.UtcNow;
 
         [Required]
-        public BillStatus Status { get; set; } = BillStatus.Draft; // Draft, In Committee, Voted, Passed, Rejected
+        public BillStatus Status { get; set; } = BillStatus.PendingReview; // Draft, In Committee, Voted, Passed, Rejected
 
         // ✅ Foreign Key to User (Legislator)
         [Required]

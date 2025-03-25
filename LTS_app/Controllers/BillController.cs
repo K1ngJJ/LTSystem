@@ -170,7 +170,7 @@ namespace LTS_app.Controllers
                 Description = Description,
                 CommitteeId = CommitteeId,
                 SessionId = SessionId,
-                Status = Enum.TryParse<BillStatus>(Status, out var billStatus) ? billStatus : BillStatus.Draft,
+                Status = Enum.TryParse<BillStatus>(Status, out var billStatus) ? billStatus : BillStatus.PendingReview,
                 IntroducedDate = DateTime.Now,
                 FilePath = filePath,  // ✅ Save file path in DB
                 ImagePath = imagePath // ✅ Save image path in DB
@@ -225,7 +225,7 @@ namespace LTS_app.Controllers
             existingBill.SessionId = bill.SessionId;
 
             // Update last modified time
-            existingBill.IntroducedDate = DateTime.UtcNow;
+            existingBill.IntroducedDate = DateTime.Now;
 
             try
             {
@@ -305,6 +305,9 @@ namespace LTS_app.Controllers
         [HttpGet]
         public IActionResult GetBillDetails(int id)
         {
+            if (id <= 0)
+                return BadRequest(new { message = "Invalid Bill ID" });
+
             var bill = _context.Bills
                 .Include(b => b.User)
                 .Include(b => b.Committee)
@@ -314,7 +317,8 @@ namespace LTS_app.Controllers
             if (bill == null)
                 return NotFound();
 
-            var userIsLegislator = User.IsInRole("Legislator"); // Check if user is a legislator
+            var userIsLegislator = User.IsInRole("Legislator"); // Check if user is a Legislator
+            var userIsAdmin = User.IsInRole("Admin"); // Check if user is an Admin
 
             return Json(new
             {
@@ -328,9 +332,11 @@ namespace LTS_app.Controllers
                 introducedDate = bill.IntroducedDate,
                 committeeId = bill.CommitteeId,
                 sessionId = bill.SessionId,
-                isLegislator = userIsLegislator
+                isLegislator = userIsLegislator,
+                isAdmin = userIsAdmin
             });
         }
+
 
         [HttpPost]
         public IActionResult UpdateStatus(int id, int status)

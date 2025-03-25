@@ -14484,6 +14484,30 @@
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-ah6bufw\u002BPuXtwXB2Aks\u002BhGF1WJyowqRYtbt\u002BoOm9jQI="}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"1125"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022ah6bufw\u002BPuXtwXB2Aks\u002BhGF1WJyowqRYtbt\u002BoOm9jQI=\u0022"},{"Name":"Last-Modified","Value":"Fri, 28 Feb 2025 02:03:05 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/LTS_app/uploads/documents/10bc23b3-12d8-48f6-a989-4569baac356f_Teacher Salary Increase Act.8l2v08yoaq.pdf">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\documents\10bc23b3-12d8-48f6-a989-4569baac356f_Teacher Salary Increase Act.pdf'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"8l2v08yoaq"},{"Name":"integrity","Value":"sha256-3F5TrkeUnTxs1oo9P/DYSKGZSKuj0YpkLO5ANDVhVD8="},{"Name":"label","Value":"_content/LTS_app/uploads/documents/10bc23b3-12d8-48f6-a989-4569baac356f_Teacher Salary Increase Act.pdf"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"555443"},{"Name":"Content-Type","Value":"application/pdf"},{"Name":"ETag","Value":"\u00223F5TrkeUnTxs1oo9P/DYSKGZSKuj0YpkLO5ANDVhVD8=\u0022"},{"Name":"Last-Modified","Value":"Tue, 25 Mar 2025 03:54:03 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/LTS_app/uploads/documents/10bc23b3-12d8-48f6-a989-4569baac356f_Teacher Salary Increase Act.pdf">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\documents\10bc23b3-12d8-48f6-a989-4569baac356f_Teacher Salary Increase Act.pdf'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-3F5TrkeUnTxs1oo9P/DYSKGZSKuj0YpkLO5ANDVhVD8="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"555443"},{"Name":"Content-Type","Value":"application/pdf"},{"Name":"ETag","Value":"\u00223F5TrkeUnTxs1oo9P/DYSKGZSKuj0YpkLO5ANDVhVD8=\u0022"},{"Name":"Last-Modified","Value":"Tue, 25 Mar 2025 03:54:03 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/LTS_app/uploads/documents/183b202c-383a-48b7-920e-63c8707f8212_Teacher Salary Increase Act.8l2v08yoaq.pdf">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\documents\183b202c-383a-48b7-920e-63c8707f8212_Teacher Salary Increase Act.pdf'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"8l2v08yoaq"},{"Name":"integrity","Value":"sha256-3F5TrkeUnTxs1oo9P/DYSKGZSKuj0YpkLO5ANDVhVD8="},{"Name":"label","Value":"_content/LTS_app/uploads/documents/183b202c-383a-48b7-920e-63c8707f8212_Teacher Salary Increase Act.pdf"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"555443"},{"Name":"Content-Type","Value":"application/pdf"},{"Name":"ETag","Value":"\u00223F5TrkeUnTxs1oo9P/DYSKGZSKuj0YpkLO5ANDVhVD8=\u0022"},{"Name":"Last-Modified","Value":"Tue, 25 Mar 2025 03:54:03 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/LTS_app/uploads/documents/183b202c-383a-48b7-920e-63c8707f8212_Teacher Salary Increase Act.pdf">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\documents\183b202c-383a-48b7-920e-63c8707f8212_Teacher Salary Increase Act.pdf'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-3F5TrkeUnTxs1oo9P/DYSKGZSKuj0YpkLO5ANDVhVD8="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"555443"},{"Name":"Content-Type","Value":"application/pdf"},{"Name":"ETag","Value":"\u00223F5TrkeUnTxs1oo9P/DYSKGZSKuj0YpkLO5ANDVhVD8=\u0022"},{"Name":"Last-Modified","Value":"Tue, 25 Mar 2025 03:54:03 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/LTS_app/uploads/documents/358a6bee-87ea-44fb-8e59-69f30f16a5e0_logo.blqydkm6pl.pdf">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\documents\358a6bee-87ea-44fb-8e59-69f30f16a5e0_logo.pdf'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
@@ -14639,6 +14663,18 @@
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"wpdxmto1jd"},{"Name":"integrity","Value":"sha256-TBLBEa3RDGetnaNxwNyxb3NrhVpydWAelkBppKnRo5g="},{"Name":"label","Value":"_content/LTS_app/uploads/images/29ea4d63-d0d6-439e-8742-3b5701038d11_ITDCSytem.png"}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"77643"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022TBLBEa3RDGetnaNxwNyxb3NrhVpydWAelkBppKnRo5g=\u0022"},{"Name":"Last-Modified","Value":"Fri, 21 Mar 2025 00:34:59 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/LTS_app/uploads/images/58490d4e-6808-4e39-a215-9b01952e5d02_Teacher-Salary-Increase-Act.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\58490d4e-6808-4e39-a215-9b01952e5d02_Teacher-Salary-Increase-Act.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-S5jIjzwkRsApLazwmrMdSbHBmY5XLWmUHavEIs3RKyU="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"217590"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022S5jIjzwkRsApLazwmrMdSbHBmY5XLWmUHavEIs3RKyU=\u0022"},{"Name":"Last-Modified","Value":"Tue, 25 Mar 2025 03:54:03 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/LTS_app/uploads/images/58490d4e-6808-4e39-a215-9b01952e5d02_Teacher-Salary-Increase-Act.r8xkzckb3f.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\58490d4e-6808-4e39-a215-9b01952e5d02_Teacher-Salary-Increase-Act.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"r8xkzckb3f"},{"Name":"integrity","Value":"sha256-S5jIjzwkRsApLazwmrMdSbHBmY5XLWmUHavEIs3RKyU="},{"Name":"label","Value":"_content/LTS_app/uploads/images/58490d4e-6808-4e39-a215-9b01952e5d02_Teacher-Salary-Increase-Act.jpg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"217590"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022S5jIjzwkRsApLazwmrMdSbHBmY5XLWmUHavEIs3RKyU=\u0022"},{"Name":"Last-Modified","Value":"Tue, 25 Mar 2025 03:54:03 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/LTS_app/uploads/images/6380d356-2cf0-48de-8f3e-461d6583d5ad_ITDCSytem.png">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\6380d356-2cf0-48de-8f3e-461d6583d5ad_ITDCSytem.png'))</AssetFile>

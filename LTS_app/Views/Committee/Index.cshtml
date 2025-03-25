@@ -124,12 +124,13 @@
                         <tr>
                             <th>Name</th>
                             <th>Position</th>
-                            <th>Action</th> <!-- New Column for Delete Button -->
+                            <th>Admin</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody id="membersList">
                         <tr>
-                            <td colspan="3" class="text-center">No members found.</td>
+                            <td colspan="4" class="text-center">No members found.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -137,7 +138,6 @@
         </div>
     </div>
 </div>
-
 
 @if (User.IsInRole("Admin"))
 {
@@ -317,7 +317,7 @@
     <script>
         function openMembersModal(committeeId, committeeName) {
             $("#committeeName").text(committeeName);
-            $("#membersList").html('<tr><td colspan="3" class="text-center">Loading...</td></tr>');
+            $("#membersList").html('<tr><td colspan="4" class="text-center">Loading...</td></tr>');
 
             $.ajax({
                 url: `/Committee/GetCommitteeMembers/${committeeId}`,
@@ -326,19 +326,26 @@
                     console.log("API Response:", data);
                     let rows = "";
 
+                    // Destroy DataTable if it exists
                     if ($.fn.DataTable.isDataTable("#membersTable")) {
-                        $("#membersTable").DataTable().destroy(); // ✅ Destroy old instance
+                        $("#membersTable").DataTable().clear().destroy();
                     }
 
                     if (Array.isArray(data) && data.length > 0) {
                         data.forEach(member => {
                             let fullName = member.fullName ?? "N/A";
                             let position = member.position ?? "Unknown";
+                            let isAdmin = member.isAdmin ?
+                                `<span class="badge bg-success">Admin</span>` :
+                                `<button class="btn btn-outline-success btn-sm" onclick="toggleAdmin(${committeeId}, ${member.legislatorId}, true)">
+                                    <i class="bi bi-person-check"></i>
+                                </button>`;
 
                             rows += `
                                 <tr id="memberRow-${committeeId}-${member.legislatorId}">
                                     <td>${fullName}</td>
                                     <td>${position}</td>
+                                    <td id="adminColumn-${member.legislatorId}">${isAdmin}</td>
                                     <td>
                                         <button class="btn btn-danger btn-sm" onclick="deleteMember(${committeeId}, ${member.legislatorId})">
                                             <i class="bi bi-trash"></i>
@@ -347,11 +354,11 @@
                                 </tr>`;
                         });
                     } else {
-                        rows = '<tr><td colspan="3" class="text-center">No members found.</td></tr>';
+                        rows = '<tr><td colspan="4" class="text-center">No members found.</td></tr>';
                     }
                     $("#membersList").html(rows);
 
-                    // ✅ Initialize DataTable
+                    // Reinitialize DataTable
                     $("#membersTable").DataTable({
                         "paging": true,
                         "lengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
@@ -373,12 +380,13 @@
                 },
                 error: function (xhr) {
                     console.error("Error fetching committee members:", xhr);
-                    $("#membersList").html('<tr><td colspan="3" class="text-center text-danger">Failed to load members.</td></tr>');
+                    $("#membersList").html('<tr><td colspan="4" class="text-center text-danger">Failed to load members.</td></tr>');
                 }
             });
 
             $("#membersModal").modal("show");
         }
+
 
         function deleteMember(committeeId, legislatorId) {
             if (!confirm("Are you sure you want to remove this member?")) return;
@@ -395,10 +403,43 @@
             });
         }
 
+        function toggleAdmin(committeeId, legislatorId) {
+            $.ajax({
+                url: `/Committee/SetCommitteeAdmin`,
+                type: "POST",
+                data: { committeeId: committeeId, legislatorId: legislatorId },
+                success: function (response) {
+                    let adminCell = $(`#adminColumn-${legislatorId}`);
+                    let button = adminCell.find("button");
+
+                    if (button.hasClass("btn-outline-success")) {
+                        adminCell.html(`
+                            <span class="badge bg-success">Admin</span>
+                            <button class="btn btn-outline-danger btn-sm ms-1" onclick="toggleAdmin(${committeeId}, ${legislatorId})">
+                                <i class="bi bi-person-dash"></i>
+                            </button>
+                        `);
+                    } else {
+                        adminCell.html(`
+                            <button class="btn btn-outline-success btn-sm" onclick="toggleAdmin(${committeeId}, ${legislatorId})">
+                                <i class="bi bi-person-check"></i>
+                            </button>
+                        `);
+                    }
+                },
+                error: function (xhr) {
+                    console.error("Error toggling admin:", xhr);
+                    alert("Failed to update admin status.");
+                }
+            });
+        }
+
+
+
     </script>
 
     <script>
-                function openCreateModal() {
+        function openCreateModal() {
             var createModal = new bootstrap.Modal(document.getElementById('createCommitteeModal'));
             createModal.show();
         }

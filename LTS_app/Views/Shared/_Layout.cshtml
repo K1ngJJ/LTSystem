@@ -68,9 +68,8 @@
                                             <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
                                                 <i class="ti ti-mail fs-6"></i> <span>My Account</span>
                                             </a>
-                                            <a asp-area="" asp-controller="Auth" asp-action="Logout" class="btn btn-outline-primary mx-3 mt-2 d-block">
-                                                Logout
-                                            </a>
+                                            <a href="javascript:void(0);" class="btn btn-outline-primary mx-3 mt-2 d-block" onclick="showLogoutModal()">Logout</a>
+
                                         </div>
                                     </div>
                                 </li>
@@ -164,10 +163,11 @@
                                         </a>
                                     </li>
                                     <li class="sidebar-item">
-                                        <a class="sidebar-link bg-danger text-white" asp-controller="Auth" asp-action="Logout">
+                                        <a href="javascript:void(0);" class="sidebar-link bg-danger text-white" onclick="showLogoutModal()">
                                             <iconify-icon icon="solar:logout-2-line-duotone"></iconify-icon>
                                             <span class="hide-menu small">Logout</span>
                                         </a>
+
                                     </li>
                                 </ul>
                             </nav>
@@ -279,6 +279,80 @@
             </main>
         </div>
     </div>
+
+    <!-- Logout Confirmation Modal -->
+    <!--div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <h1 class="modal-title fw-bold w-100 display-1" id="logoutModalLabel">CONFIRM LOGOUT</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body display-3 fw-bold">
+                    ARE YOU SURE YOU WANT TO LOG OUT?
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="button" class="btn btn-lg btn-secondary px-5 py-3" data-bs-dismiss="modal">
+                        CANCEL
+                    </button>
+                    <a id="confirmLogout" class="btn btn-danger px-5 py-3">
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div-->
+
+    <!--style>
+        #confirmLogout {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 10px;
+            transition: top 0.3s, left 0.3s;
+        }
+    </style-->
+
+
+    <!--script>
+        const logoutButton = document.getElementById("confirmLogout");
+
+        logoutButton.addEventListener("mouseover", function () {
+            const newX = Math.random() * (window.innerWidth - logoutButton.offsetWidth);
+            const newY = Math.random() * (window.innerHeight - logoutButton.offsetHeight);
+            logoutButton.style.left = newX + "px";
+            logoutButton.style.top = newY + "px";
+        });
+    </script-->
+
+    <!-- Logout Confirmation Modal -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="logoutModalLabel">Confirm Logout</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to log out?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <a id="confirmLogout" class="btn btn-danger">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showLogoutModal() {
+            var logoutUrl = '@Url.Action("Logout", "Auth")';
+            document.getElementById('confirmLogout').setAttribute('href', logoutUrl);
+            var logoutModal = new bootstrap.Modal(document.getElementById('logoutModal'));
+            logoutModal.show();
+        }
+    </script>
 
     <script>
         if (window.history.replaceState) {

@@ -15,6 +15,7 @@ namespace LTS_app.Models
         [ForeignKey("Legislator")]
         public int LegislatorId { get; set; }
         public Legislator Legislator { get; set; }
+        public bool IsAdmin { get; set; } // ✅ New Column
     }
 
 }

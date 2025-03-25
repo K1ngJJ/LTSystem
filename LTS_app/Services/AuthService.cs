@@ -73,7 +73,7 @@ namespace LTS_app.Services
                 IsConfirmed = false,
                 ConfirmationToken = confirmationToken,
                 FullName = fullName,
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = DateTime.Now
             };
 
             _context.Users.Add(newUser);
@@ -148,7 +148,7 @@ namespace LTS_app.Services
                 return (false, "No confirmed account found with this email.");
 
             user.ResetPasswordToken = GenerateToken();
-            user.ResetPasswordExpiry = DateTime.UtcNow.AddHours(1); // Token valid for 1 hour
+            user.ResetPasswordExpiry = DateTime.Now.AddHours(1); // Token valid for 1 hour
 
             await _context.SaveChangesAsync();
 
@@ -160,7 +160,7 @@ namespace LTS_app.Services
         public async Task<(bool Success, string Message)> ResetPasswordAsync(string token, string newPassword)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.ResetPasswordToken == token);
-            if (user == null || user.ResetPasswordExpiry < DateTime.UtcNow)
+            if (user == null || user.ResetPasswordExpiry < DateTime.Now)
                 return (false, "Invalid or expired token.");
 
             user.PasswordHash = HashPassword(newPassword);

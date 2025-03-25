@@ -202,6 +202,9 @@ namespace LTS_app.Migrations
                     b.Property<int>("Id")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsAdmin")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 

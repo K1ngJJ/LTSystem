@@ -21,16 +21,34 @@ namespace LTS_app.Controllers
         // ✅ List all committees - Async for better performance
         public async Task<IActionResult> Index()
         {
-            // Get all legislators who are NOT assigned to any committee
             var unassignedLegislators = await _context.Legislators
-                .Where(l => !_context.CommitteeLegislators.Any(cl => cl.LegislatorId == l.Id))
-                .Include(l => l.User) // Include User details for displaying full name
-                .ToListAsync();
+            .Where(l => !_context.CommitteeLegislators.Any(cl => cl.LegislatorId == l.Id))
+            .Include(l => l.User) // Include User details for displaying full name
+            .ToListAsync();
 
             ViewBag.Legislators = unassignedLegislators; // Send only unassigned legislators to the view
-            var committees = await _context.Committees.ToListAsync();
+
+            var user = await _context.Users
+                .Include(u => u.Legislator) // Ensure we load Legislator data
+                .FirstOrDefaultAsync(u => u.Username == User.Identity.Name);
+
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            IQueryable<Committee> committeesQuery = _context.Committees;
+
+            if (!User.IsInRole("Admin")) // If not an Admin, show only assigned committees
+            {
+                committeesQuery = committeesQuery
+                    .Where(c => c.CommitteeLegislators.Any(cl => cl.LegislatorId == user.Legislator.Id));
+            }
+
+            var committees = await committeesQuery.ToListAsync();
             return View(committees);
         }
+
 
         // ✅ View Committee Details
         [HttpGet("Details/{id}")]
@@ -183,21 +201,40 @@ namespace LTS_app.Controllers
         [HttpGet]
         public async Task<IActionResult> GetCommitteeMembers(int id)
         {
+            var user = await _context.Users
+                .Include(u => u.Legislator)
+                .FirstOrDefaultAsync(u => u.Username == User.Identity.Name);
+
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+            // Check if the user is an Admin or a member of the requested committee
+            bool isAuthorized = User.IsInRole("Admin") ||
+                _context.CommitteeLegislators.Any(cl => cl.CommitteeId == id && cl.LegislatorId == user.Legislator.Id);
+
+            if (!isAuthorized)
+            {
+                return Forbid();
+            }
+
             var members = await _context.CommitteeLegislators
                 .Where(cl => cl.CommitteeId == id)
                 .Include(cl => cl.Legislator)
                 .ThenInclude(l => l.User)
                 .Select(cl => new
                 {
-                    CommitteeId = cl.CommitteeId,  // ✅ Use CommitteeId
-                    LegislatorId = cl.LegislatorId,  // ✅ Use LegislatorId
+                    CommitteeId = cl.CommitteeId,
+                    LegislatorId = cl.LegislatorId,
                     FullName = cl.Legislator.User != null ? cl.Legislator.User.FullName : "N/A",
-                    Position = !string.IsNullOrEmpty(cl.Legislator.Position) ? cl.Legislator.Position : "Unknown"
+                    Position = !string.IsNullOrEmpty(cl.Legislator.Position) ? cl.Legislator.Position : "Unknown",
+  
                 })
                 .ToListAsync();
 
             return Json(members);
         }
+
 
 
         [Authorize(Roles = "Admin")]
@@ -216,6 +253,31 @@ namespace LTS_app.Controllers
             return Json(new { success = true });
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public IActionResult SetCommitteeAdmin(int committeeId, int legislatorId)
+        {
+            var committeeMember = _context.CommitteeLegislators
+                .FirstOrDefault(cl => cl.CommitteeId == committeeId && cl.LegislatorId == legislatorId);
+
+            if (committeeMember == null)
+            {
+                return NotFound(new { message = "Committee member not found" });
+            }
+
+            // Set current admin to false (if any)
+            var existingAdmin = _context.CommitteeLegislators
+                .FirstOrDefault(cl => cl.CommitteeId == committeeId && cl.IsAdmin);
+            if (existingAdmin != null)
+            {
+                existingAdmin.IsAdmin = false;
+            }
+
+            committeeMember.IsAdmin = true;
+            _context.SaveChanges();
+
+            return Ok(new { message = "Admin assigned successfully" });
+        }
 
     }
 }

@@ -4829,6 +4829,14 @@
       "PackagePath": "staticwebassets\\lib\\simplebar\\src\\simplebar.js"
     },
     {
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\uploads\\documents\\10bc23b3-12d8-48f6-a989-4569baac356f_Teacher Salary Increase Act.pdf",
+      "PackagePath": "staticwebassets\\uploads\\documents\\10bc23b3-12d8-48f6-a989-4569baac356f_Teacher Salary Increase Act.pdf"
+    },
+    {
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\uploads\\documents\\183b202c-383a-48b7-920e-63c8707f8212_Teacher Salary Increase Act.pdf",
+      "PackagePath": "staticwebassets\\uploads\\documents\\183b202c-383a-48b7-920e-63c8707f8212_Teacher Salary Increase Act.pdf"
+    },
+    {
       "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\uploads\\documents\\358a6bee-87ea-44fb-8e59-69f30f16a5e0_logo.pdf",
       "PackagePath": "staticwebassets\\uploads\\documents\\358a6bee-87ea-44fb-8e59-69f30f16a5e0_logo.pdf"
     },
@@ -4879,6 +4887,10 @@
     {
       "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\uploads\\images\\29ea4d63-d0d6-439e-8742-3b5701038d11_ITDCSytem.png",
       "PackagePath": "staticwebassets\\uploads\\images\\29ea4d63-d0d6-439e-8742-3b5701038d11_ITDCSytem.png"
+    },
+    {
+      "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\uploads\\images\\58490d4e-6808-4e39-a215-9b01952e5d02_Teacher-Salary-Increase-Act.jpg",
+      "PackagePath": "staticwebassets\\uploads\\images\\58490d4e-6808-4e39-a215-9b01952e5d02_Teacher-Salary-Increase-Act.jpg"
     },
     {
       "Id": "C:\\Users\\Jay\\source\\repos\\LTSystem\\LTS_app\\wwwroot\\uploads\\images\\6380d356-2cf0-48de-8f3e-461d6583d5ad_ITDCSytem.png",
