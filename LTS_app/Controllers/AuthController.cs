@@ -184,9 +184,6 @@ namespace LTS_app.Controllers
         [HttpPost]
         public async Task<IActionResult> ResetPassword(string token, string newPassword)
         {
-            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var username = User.Identity?.Name;
-            var fullName = User.FindFirst("FullName")?.Value;
 
             var result = await _authService.ResetPasswordAsync(token, newPassword);
             if (!result.Success)
@@ -194,15 +191,6 @@ namespace LTS_app.Controllers
                 ModelState.AddModelError("", result.Message);
                 return View(new { token });
             }
-
-
-            await _userLogService.LogActivityAsync(
-                int.Parse(userId),
-                username,
-                fullName ?? "Unknown User",
-                "ResetPassword",
-                HttpContext.Connection.RemoteIpAddress?.ToString()
-            );
 
             ViewBag.Message = result.Message;
             return RedirectToAction("Login");

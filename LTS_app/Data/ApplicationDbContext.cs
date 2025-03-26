@@ -46,6 +46,9 @@ namespace LTS_app.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            // Seed Users Table
+            DbSeeder.Seed(modelBuilder);
+
             // 🏛 Legislator - User (One-to-One)
             modelBuilder.Entity<Legislator>()
                 .HasOne(l => l.User)
@@ -138,6 +141,7 @@ namespace LTS_app.Data
             modelBuilder.Entity<BillHistory>()
                 .Property(bh => bh.Status)
                 .HasConversion<string>();
+
         }
     }
 }
