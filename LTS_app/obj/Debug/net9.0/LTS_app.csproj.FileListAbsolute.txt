@@ -481,7 +481,6 @@ C:\Users\Jay\source\repos\LTSystem\LTS_app\obj\Debug\net9.0\staticwebassets\msbu
 C:\Users\Jay\source\repos\LTSystem\LTS_app\obj\Debug\net9.0\staticwebassets\msbuild.buildMultiTargeting.LTS_app.props
 C:\Users\Jay\source\repos\LTSystem\LTS_app\obj\Debug\net9.0\staticwebassets\msbuild.buildTransitive.LTS_app.props
 C:\Users\Jay\source\repos\LTSystem\LTS_app\obj\Debug\net9.0\staticwebassets.pack.json
-C:\Users\Jay\source\repos\LTSystem\LTS_app\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\Users\Jay\source\repos\LTSystem\LTS_app\obj\Debug\net9.0\LTS_app.csproj.Up2Date
 C:\Users\Jay\source\repos\LTSystem\LTS_app\obj\Debug\net9.0\LTS_app.genruntimeconfig.cache
 C:\Users\Jay\source\repos\LTSystem\LTS_app\obj\Debug\net9.0\ref\LTS_app.dll
@@ -1386,3 +1385,5 @@ C:\Users\Jay\source\repos\LTSystem\LTS_app\obj\Debug\net9.0\compressed\6g4k36gbc
 C:\Users\Jay\source\repos\LTSystem\LTS_app\obj\Debug\net9.0\compressed\7xugsglbvy-0stb5e7twv.gz
 C:\Users\Jay\source\repos\LTSystem\LTS_app\obj\Debug\net9.0\compressed\71iov0n0tx-j3mnwp4drc.gz
 C:\Users\Jay\source\repos\LTSystem\LTS_app\obj\Debug\net9.0\compressed\f4z1iimoe3-kn3qfu87tt.gz
+C:\Users\Jay\source\repos\LTSystem\LTS_app\obj\Debug\net9.0\compressed\szzae5e5pc-krfsx831y0.gz
+C:\Users\Jay\source\repos\LTSystem\LTS_app\obj\Debug\net9.0\compressed\q44fa5a4iz-r0d0qwx326.gz

@@ -1,8 +1,10 @@
 ﻿using LTS_app.Data;
 using LTS_app.Models;
+using LTS_app.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -209,26 +211,23 @@ namespace LTS_app.Controllers
             {
                 return Unauthorized();
             }
-            // Check if the user is an Admin or a member of the requested committee
-            bool isAuthorized = User.IsInRole("Admin") ||
-                _context.CommitteeLegislators.Any(cl => cl.CommitteeId == id && cl.LegislatorId == user.Legislator.Id);
 
-            if (!isAuthorized)
-            {
-                return Forbid();
-            }
+            bool isSystemAdmin = User.IsInRole("Admin");
 
-            var members = await _context.CommitteeLegislators
-                .Where(cl => cl.CommitteeId == id)
+            // Apply filtering before including related entities
+            var membersQuery = _context.CommitteeLegislators
+                .Where(cl => cl.CommitteeId == id && (isSystemAdmin || cl.LegislatorId != user.Legislator.Id)) // Exclude self if not System Admin
                 .Include(cl => cl.Legislator)
-                .ThenInclude(l => l.User)
+                .ThenInclude(l => l.User);
+
+            var members = await membersQuery
                 .Select(cl => new
                 {
                     CommitteeId = cl.CommitteeId,
                     LegislatorId = cl.LegislatorId,
                     FullName = cl.Legislator.User != null ? cl.Legislator.User.FullName : "N/A",
                     Position = !string.IsNullOrEmpty(cl.Legislator.Position) ? cl.Legislator.Position : "Unknown",
-  
+                    IsAdmin = cl.IsAdmin
                 })
                 .ToListAsync();
 
@@ -236,11 +235,26 @@ namespace LTS_app.Controllers
         }
 
 
-
-        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> RemoveCommitteeMember(int committeeId, int legislatorId)
         {
+            var user = await _context.Users
+                .Include(u => u.Legislator)
+                .FirstOrDefaultAsync(u => u.Username == User.Identity.Name);
+
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            bool isAdmin = User.IsInRole("Admin") ||
+                _context.CommitteeLegislators.Any(cl => cl.CommitteeId == committeeId && cl.LegislatorId == user.Legislator.Id && cl.IsAdmin);
+
+            if (!isAdmin)
+            {
+                return Forbid();
+            }
+
             var committeeLegislator = await _context.CommitteeLegislators
                 .FirstOrDefaultAsync(cl => cl.CommitteeId == committeeId && cl.LegislatorId == legislatorId);
 
@@ -253,31 +267,29 @@ namespace LTS_app.Controllers
             return Json(new { success = true });
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")] // Only system Admin can assign Committee Admins
         [HttpPost]
-        public IActionResult SetCommitteeAdmin(int committeeId, int legislatorId)
+        public async Task<IActionResult> SetCommitteeAdmin(int committeeId, int legislatorId)
         {
-            var committeeMember = _context.CommitteeLegislators
-                .FirstOrDefault(cl => cl.CommitteeId == committeeId && cl.LegislatorId == legislatorId);
+            var committeeMember = await _context.CommitteeLegislators
+                .FirstOrDefaultAsync(cl => cl.CommitteeId == committeeId && cl.LegislatorId == legislatorId);
 
             if (committeeMember == null)
             {
                 return NotFound(new { message = "Committee member not found" });
             }
 
-            // Set current admin to false (if any)
-            var existingAdmin = _context.CommitteeLegislators
-                .FirstOrDefault(cl => cl.CommitteeId == committeeId && cl.IsAdmin);
-            if (existingAdmin != null)
+            // Only System Admins can toggle admin status
+            committeeMember.IsAdmin = !committeeMember.IsAdmin;
+            await _context.SaveChangesAsync();
+
+            return Ok(new
             {
-                existingAdmin.IsAdmin = false;
-            }
-
-            committeeMember.IsAdmin = true;
-            _context.SaveChanges();
-
-            return Ok(new { message = "Admin assigned successfully" });
+                message = "Admin status updated successfully",
+                isAdmin = committeeMember.IsAdmin
+            });
         }
+
 
     }
 }

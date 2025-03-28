@@ -1,0 +1,29 @@
+/* General Styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f9f9f9; /* Light background */
+    color: #333; /* Darker text for readability */
+    margin: 0;
+    padding: 0;
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(to right, rgba(0, 123, 255, 0.3), rgba(102, 16, 242, 0.3)); /* Lighter gradient */
+    padding: 60px 0; /* Reduce padding */
+    text-align: center;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.hero-content h1 {
+    font-size: 2.2rem; /* Smaller */
+    font-weight: 600;
+    margin-bottom: 10px;
+    text-shadow: none; /* Remove dark shadow */
+}
+
+.hero-content .lead {
+    font-size: 1rem; /* Reduce text size */
+    opacity: 0.8;
+    margin-bottom: 10px;
+}

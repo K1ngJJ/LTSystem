@@ -315,12 +315,12 @@
     </script>
 
     <script>
-        function openMembersModal(committeeId, committeeName) {
+               function openMembersModal(committeeId, committeeName) {
             $("#committeeName").text(committeeName);
             $("#membersList").html('<tr><td colspan="4" class="text-center">Loading...</td></tr>');
 
             $.ajax({
-                url: `/Committee/GetCommitteeMembers/${committeeId}`,
+                url: `/Committee/GetCommitteeMembers/${committeeId}?_=${new Date().getTime()}`, // Prevent caching
                 type: "GET",
                 success: function (data) {
                     console.log("API Response:", data);
@@ -335,11 +335,14 @@
                         data.forEach(member => {
                             let fullName = member.fullName ?? "N/A";
                             let position = member.position ?? "Unknown";
-                            let isAdmin = member.isAdmin ?
-                                `<span class="badge bg-success">Admin</span>` :
-                                `<button class="btn btn-outline-success btn-sm" onclick="toggleAdmin(${committeeId}, ${member.legislatorId}, true)">
-                                    <i class="bi bi-person-check"></i>
-                                </button>`;
+                            let isAdmin = member.isAdmin
+                                ? `<span class="badge bg-success">Admin</span>
+                                   <button class="btn btn-outline-danger btn-sm ms-1" onclick="toggleAdmin(${committeeId}, ${member.legislatorId})">
+                                       <i class="bi bi-person-dash"></i>
+                                   </button>`
+                                : `<button class="btn btn-outline-success btn-sm" onclick="toggleAdmin(${committeeId}, ${member.legislatorId})">
+                                       <i class="bi bi-person-check"></i>
+                                   </button>`;
 
                             rows += `
                                 <tr id="memberRow-${committeeId}-${member.legislatorId}">
@@ -356,6 +359,7 @@
                     } else {
                         rows = '<tr><td colspan="4" class="text-center">No members found.</td></tr>';
                     }
+
                     $("#membersList").html(rows);
 
                     // Reinitialize DataTable
@@ -376,7 +380,6 @@
                             }
                         }
                     });
-
                 },
                 error: function (xhr) {
                     console.error("Error fetching committee members:", xhr);
@@ -403,36 +406,37 @@
             });
         }
 
-        function toggleAdmin(committeeId, legislatorId) {
-            $.ajax({
-                url: `/Committee/SetCommitteeAdmin`,
-                type: "POST",
-                data: { committeeId: committeeId, legislatorId: legislatorId },
-                success: function (response) {
-                    let adminCell = $(`#adminColumn-${legislatorId}`);
-                    let button = adminCell.find("button");
-
-                    if (button.hasClass("btn-outline-success")) {
-                        adminCell.html(`
-                            <span class="badge bg-success">Admin</span>
-                            <button class="btn btn-outline-danger btn-sm ms-1" onclick="toggleAdmin(${committeeId}, ${legislatorId})">
-                                <i class="bi bi-person-dash"></i>
-                            </button>
-                        `);
-                    } else {
-                        adminCell.html(`
-                            <button class="btn btn-outline-success btn-sm" onclick="toggleAdmin(${committeeId}, ${legislatorId})">
-                                <i class="bi bi-person-check"></i>
-                            </button>
-                        `);
-                    }
-                },
-                error: function (xhr) {
-                    console.error("Error toggling admin:", xhr);
-                    alert("Failed to update admin status.");
-                }
-            });
+function toggleAdmin(committeeId, legislatorId) {
+    $.ajax({
+        url: `/Committee/SetCommitteeAdmin`,
+        type: "POST",
+        data: { committeeId: committeeId, legislatorId: legislatorId },
+        success: function (response) {
+            console.log("Admin status updated:", response);
+            let adminCell = $(`#adminColumn-${legislatorId}`);
+            
+            if (response.isAdmin) {
+                adminCell.html(`
+                    <span class="badge bg-success">Admin</span>
+                    <button class="btn btn-outline-danger btn-sm ms-1" onclick="toggleAdmin(${committeeId}, ${legislatorId})">
+                        <i class="bi bi-person-dash"></i>
+                    </button>
+                `);
+            } else {
+                adminCell.html(`
+                    <button class="btn btn-outline-success btn-sm" onclick="toggleAdmin(${committeeId}, ${legislatorId})">
+                        <i class="bi bi-person-check"></i>
+                    </button>
+                `);
+            }
+        },
+        error: function (xhr) {
+            console.error("Error toggling admin:", xhr);
+            alert("Failed to update admin status.");
         }
+    });
+}
+
 
 
 

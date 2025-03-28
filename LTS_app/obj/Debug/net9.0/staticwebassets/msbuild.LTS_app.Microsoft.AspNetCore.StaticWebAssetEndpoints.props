@@ -14484,6 +14484,30 @@
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-ah6bufw\u002BPuXtwXB2Aks\u002BhGF1WJyowqRYtbt\u002BoOm9jQI="}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"1125"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022ah6bufw\u002BPuXtwXB2Aks\u002BhGF1WJyowqRYtbt\u002BoOm9jQI=\u0022"},{"Name":"Last-Modified","Value":"Fri, 28 Feb 2025 02:03:05 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/LTS_app/manifest.json">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\manifest.json'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-0I8EvueXTRpexNJLSHbpVXcmEZmi5I0IIMHtP5z0JfI="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"470"},{"Name":"Content-Type","Value":"application/json"},{"Name":"ETag","Value":"\u00220I8EvueXTRpexNJLSHbpVXcmEZmi5I0IIMHtP5z0JfI=\u0022"},{"Name":"Last-Modified","Value":"Fri, 28 Mar 2025 07:02:04 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/LTS_app/manifest.krfsx831y0.json">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\manifest.json'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"krfsx831y0"},{"Name":"integrity","Value":"sha256-0I8EvueXTRpexNJLSHbpVXcmEZmi5I0IIMHtP5z0JfI="},{"Name":"label","Value":"_content/LTS_app/manifest.json"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"470"},{"Name":"Content-Type","Value":"application/json"},{"Name":"ETag","Value":"\u00220I8EvueXTRpexNJLSHbpVXcmEZmi5I0IIMHtP5z0JfI=\u0022"},{"Name":"Last-Modified","Value":"Fri, 28 Mar 2025 07:02:04 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/LTS_app/service-worker.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\service-worker.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-FRRLKCpzl8\u002B8S0Y/JB9fFZaLqZHJ9F8rAKpp5TuABAE="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"465"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022FRRLKCpzl8\u002B8S0Y/JB9fFZaLqZHJ9F8rAKpp5TuABAE=\u0022"},{"Name":"Last-Modified","Value":"Fri, 28 Mar 2025 06:54:06 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/LTS_app/service-worker.r0d0qwx326.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\service-worker.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"r0d0qwx326"},{"Name":"integrity","Value":"sha256-FRRLKCpzl8\u002B8S0Y/JB9fFZaLqZHJ9F8rAKpp5TuABAE="},{"Name":"label","Value":"_content/LTS_app/service-worker.js"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"465"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022FRRLKCpzl8\u002B8S0Y/JB9fFZaLqZHJ9F8rAKpp5TuABAE=\u0022"},{"Name":"Last-Modified","Value":"Fri, 28 Mar 2025 06:54:06 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/LTS_app/uploads/documents/10bc23b3-12d8-48f6-a989-4569baac356f_Teacher Salary Increase Act.8l2v08yoaq.pdf">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\documents\10bc23b3-12d8-48f6-a989-4569baac356f_Teacher Salary Increase Act.pdf'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
