@@ -1,0 +1,356 @@
+Database Design using MS SQL 2022. With proper database normalization and standard naming conventions. Limit to 10 tables about Legislative Tracking System using  SQL 2022 Developer Edition
+
+LTS_app - dbvqzqhxtsxfaybd
+
+Add-Migration AddMusicTable -Context MusicDbContext
+Add-Migration UpdateMusicModel -Context MusicDbContext
+Update-Database -Context MusicDbContext
+
+Add-Migration AddProductsTable -Context AppDbContext
+Update-Database -Context AppDbContext
+
+Add-Migration AddPlaylistFeature -Context MusicDbContext
+Update-Database -Context MusicDbContext
+
+Add-Migration FirstInitial -Context ApplicationDbContext
+Update-Database -Context ApplicationDbContext
+Remove-Migration
+
+
+Flow of the Legislative Tracking System (LTS_app)
+The Legislative Tracking System is designed to help manage bills, legislators, committees, and voting records while allowing citizens to provide feedback. Here’s how it works step by step:
+
+1. User Roles & Authentication
+Admin: Manages users, notifications, and system settings.
+Legislator: Can create, amend, and vote on bills.
+Citizen: Can view bills and submit feedback.
+Authentication: Users log in via Identity authentication.
+
+2. Bill Management Process
+Bill Creation: A legislator drafts a bill using the BillController.
+Committee Review: The bill is assigned to a Committee for review.
+Amendments: Changes can be proposed via the AmendmentController.
+Voting Process: Legislators vote on the bill using the VoteController.
+Bill Status Updates: Actions are recorded in the BillHistoryController.
+Citizen Feedback: Citizens can submit opinions via the CitizenFeedbackController.
+Final Decision: If approved, the bill moves to the next stage.
+
+3. Session Management
+Each legislative session (handled by SessionController) defines a time period for introducing and passing bills.
+
+4. Notifications System
+Users receive notifications (NotificationController) about updates on bills they follow.
+
+5. UI & Dashboard
+Dashboard shows bill progress, recent votes, and notifications.
+Bootstrap 5 ensures a responsive design.
+
+6. Database Flow
+LegislativeContext connects all entities using Entity Framework Core.
+
+Relationships:
+A Bill links to a Legislator and a Committee.
+A Vote connects a Legislator and a Bill.
+CitizenFeedback links directly to Bills.
+
+
+### Legislative Tracking System - ASP.NET Core 9 Project
+
+#### Technologies Used:
+- ASP.NET Core 9 (C#)
+- Entity Framework Core
+- SQL Server
+- Bootstrap 5
+- Visual Studio Community 2022
+
+---
+
+## **1. Database Schema (10 Tables)**
+### **LegislativeContext**
+
+1. **Bill** (Id, Title, Description, Status, IntroducedDate, LegislatorId, CommitteeId)
+2. **Legislator** (Id, Name, Party, State, District)
+3. **Committee** (Id, Name, Description)
+4. **Vote** (Id, BillId, LegislatorId, VoteType, VoteDate)
+5. **Session** (Id, Year, StartDate, EndDate, Status)
+6. **Amendment** (Id, BillId, Content, ProposedDate, Status)
+7. **BillHistory** (Id, BillId, Action, ActionDate, Notes)
+8. **CitizenFeedback** (Id, BillId, Name, Email, Comments, SubmittedDate)
+9. **User** (Id, Username, PasswordHash, Role)
+10. **Notification** (Id, UserId, Message, CreatedAt, IsRead)
+
+
+
+Here’s the complete flow of the Legislative Tracking System (LTS_app) with the roles of Admin, Legislator, and User (instead of Citizen):
+
+1. User Authentication & Access Control
+Roles & Authentication Flow
+User, Legislator, and Admin must log in via AuthController.
+Session-based authentication ensures secure access.
+Admin approves Legislator accounts before they can create or amend bills.
+Email verification via SMTP ensures valid registrations.
+2. Admin Panel (System Management)
+🔹 Admin Dashboard (AdminController)
+
+Manages users (Approve legislators, deactivate accounts).
+Manages notifications (Send updates to users).
+Configures system settings.
+3. Legislator Panel (Bill Management)
+🔹 Bill Creation (BillController)
+
+Legislators create new bills, adding details such as title, description, sponsors, and status.
+Bills are linked to legislative sessions via SessionController.
+🔹 Bill Amendments (AmendmentController)
+
+Legislators propose amendments to existing bills.
+Amendments are stored in the Amendment table.
+🔹 Voting Process (VoteController)
+
+Legislators vote on bills (YES, NO, ABSTAIN).
+Votes are recorded and displayed in bill history.
+🔹 Committee Review (CommitteeController)
+
+Bills are assigned to committees for review.
+Committees discuss and provide recommendations.
+🔹 Bill Progress Tracking (BillHistoryController)
+
+Every change in bill status (e.g., introduced, reviewed, passed) is logged.
+4. User Panel (Public Engagement)
+🔹 Bill Viewing & Tracking (BillController)
+
+Users browse bills, view details, and track progress.
+🔹 Providing Feedback (CitizenFeedbackController)
+
+Users submit opinions and comments on bills.
+🔹 Notifications (NotificationController)
+
+Users receive updates on bill status and government announcements.
+5. Notification System
+Admins send system-wide alerts.
+Legislators receive reminders on upcoming votes.
+Users get updates on bill status and feedback responses.
+Complete Flow Summary
+Admin manages users & settings.
+Legislators create, amend, and vote on bills.
+Users track bills and provide feedback.
+Notifications keep everyone informed.
+Would you like a flowchart to visualize this process? 🚀
+
+
+    using LTS_app.Data;
+    using LTS_app.Models;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.EntityFrameworkCore;
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    namespace LTS_app.Controllers
+    {
+        [Authorize(Roles = "Admin,Legislator")]
+        public class BillController : Controller
+        {
+            private readonly ApplicationDbContext _context;
+
+            public BillController(ApplicationDbContext context)
+            {
+                _context = context;
+            }
+
+            public async Task<IActionResult> Index()
+            {
+                var bills = await _context.Bills
+                    .Include(b => b.Legislator)
+                        .ThenInclude(l => l.User)
+                    .Include(b => b.Committee)
+                    .Include(b => b.Session)
+                    .ToListAsync();
+
+                var legislators = await _context.Legislators
+                    .Include(l => l.User)
+                    .Where(l => l.User != null)  // Ensure User exists
+                    .ToListAsync();
+
+                var committees = await _context.Committees.ToListAsync();
+                var sessions = await _context.Sessions.ToListAsync();
+
+                ViewBag.Legislators = legislators.Any()
+                    ? new SelectList(legislators, "Id", "User.FullName")
+                    : new SelectList(new List<Legislator>());
+
+                ViewBag.Committees = committees.Any()
+                    ? new SelectList(committees, "Id", "Name")
+                    : new SelectList(new List<Committee>());
+
+                ViewBag.Sessions = sessions.Any()
+                    ? new SelectList(sessions, "Id", "Name")
+                    : new SelectList(new List<Session>());
+
+                return View(bills);
+            }
+
+            [HttpPost]
+            [ValidateAntiForgeryToken]
+            public async Task<IActionResult> Create(Bill bill)
+            {
+                if (bill.LegislatorId == 0 || bill.CommitteeId == 0 || bill.SessionId == 0 || string.IsNullOrEmpty(bill.Title))
+                {
+                    TempData["ErrorMessage"] = "Please fill in all required fields.";
+                    return RedirectToAction(nameof(Index));
+                }
+
+                var legislator = await _context.Legislators.FindAsync(bill.LegislatorId);
+                if (legislator == null)
+                {
+                    TempData["ErrorMessage"] = "Selected legislator not found.";
+                    return RedirectToAction(nameof(Index));
+                }
+
+                bill.IntroducedDate = DateTime.UtcNow; // Set current date when creating a bill
+
+                _context.Bills.Add(bill);
+                await _context.SaveChangesAsync();
+
+                TempData["SuccessMessage"] = "Bill created successfully!";
+                return RedirectToAction(nameof(Index));
+            }
+
+
+
+            // ✅ GET: Fetch Dropdown Data for Modal
+            [HttpGet]
+            public IActionResult GetDropdownData()
+            {
+                var legislators = _context.Legislators
+                    .Include(l => l.User)
+                    .Select(l => new { id = l.Id, name = l.User.FullName })
+                    .ToList();
+
+                var committees = _context.Committees
+                    .Select(c => new { id = c.Id, name = c.Name })
+                    .ToList();
+
+                var sessions = _context.Sessions
+                    .Select(s => new { id = s.Id, name = s.Name })
+                    .ToList();
+
+                return Json(new { legislators, committees, sessions });
+            }
+
+            [HttpPost]
+            [ValidateAntiForgeryToken]
+            public async Task<IActionResult> Edit(int id, Bill bill)
+            {
+                if (id != bill.Id)
+                {
+                    TempData["ErrorMessage"] = "Invalid bill ID.";
+                    return RedirectToAction(nameof(Index));
+                }
+
+                // Validate if all required fields are provided
+                if (bill.LegislatorId == 0 || bill.CommitteeId == 0 || bill.SessionId == 0 || string.IsNullOrEmpty(bill.Title))
+                {
+                    TempData["ErrorMessage"] = "Please fill in all required fields.";
+                    return RedirectToAction(nameof(Index));
+                }
+
+                var existingBill = await _context.Bills.FindAsync(id);
+                if (existingBill == null)
+                {
+                    TempData["ErrorMessage"] = "Bill not found.";
+                    return RedirectToAction(nameof(Index));
+                }
+
+                // Update fields
+                existingBill.Title = bill.Title;
+                existingBill.Description = bill.Description;
+                existingBill.LegislatorId = bill.LegislatorId;
+                existingBill.CommitteeId = bill.CommitteeId;
+                existingBill.SessionId = bill.SessionId;
+                existingBill.Status = bill.Status;
+
+                // Set IntroducedDate to current UTC date when updating the bill
+                existingBill.IntroducedDate = DateTime.UtcNow;
+
+                try
+                {
+                    _context.Update(existingBill);
+                    await _context.SaveChangesAsync();
+                    TempData["SuccessMessage"] = "Bill updated successfully!";
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception ex)
+                {
+                    TempData["ErrorMessage"] = "An error occurred while updating the bill. " + ex.Message;
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+
+
+
+            [HttpPost, ActionName("Delete")]
+            [ValidateAntiForgeryToken]
+            public async Task<IActionResult> DeleteConfirmed(int id)
+            {
+                var bill = await _context.Bills.FindAsync(id);
+                if (bill == null)
+                {
+                    TempData["ErrorMessage"] = "Bill not found.";
+                    return RedirectToAction(nameof(Index));
+                }
+
+                try
+                {
+                    _context.Bills.Remove(bill);
+                    await _context.SaveChangesAsync();
+                    TempData["SuccessMessage"] = "Bill deleted successfully!";
+                }
+                catch (Exception ex)
+                {
+                    TempData["ErrorMessage"] = "An error occurred while deleting the bill.";
+                    Console.WriteLine($"Error deleting bill: {ex.Message}");
+                }
+
+                return RedirectToAction(nameof(Index));
+            }
+
+
+            [HttpGet]
+            public async Task<IActionResult> GetBillDetails(int id)
+            {
+                var bill = await _context.Bills
+                    .Include(b => b.Legislator).ThenInclude(l => l.User)
+                    .Include(b => b.Committee)
+                    .Include(b => b.Session)
+                    .FirstOrDefaultAsync(b => b.Id == id);
+
+                if (bill == null)
+                    return NotFound();
+
+                var result = new
+                {
+                    title = bill.Title,
+                    description = bill.Description,
+                    status = bill.Status,
+                    legislator = bill.Legislator?.User?.FullName ?? "N/A",
+                    committee = bill.Committee?.Name ?? "N/A",
+                    session = bill.Session?.Name ?? "N/A",
+                    introducedDate = bill.IntroducedDate
+                };
+
+                return Json(result);
+            }
+
+
+        }
+    }
+
+
+
+
+
+
+
+

@@ -14508,6 +14508,18 @@
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"r0d0qwx326"},{"Name":"integrity","Value":"sha256-FRRLKCpzl8\u002B8S0Y/JB9fFZaLqZHJ9F8rAKpp5TuABAE="},{"Name":"label","Value":"_content/LTS_app/service-worker.js"}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"465"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022FRRLKCpzl8\u002B8S0Y/JB9fFZaLqZHJ9F8rAKpp5TuABAE=\u0022"},{"Name":"Last-Modified","Value":"Fri, 28 Mar 2025 06:54:06 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/LTS_app/uploads/documents/0ecdca9a-b753-4fb5-ac12-04a2bc0373b4_Plastic Waste Reduction Act.hygsvwr2nz.pdf">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\documents\0ecdca9a-b753-4fb5-ac12-04a2bc0373b4_Plastic Waste Reduction Act.pdf'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"hygsvwr2nz"},{"Name":"integrity","Value":"sha256-2XM5f5P3vHV6BeslpxekFlDUrMTjldIef3N5m/fQ95c="},{"Name":"label","Value":"_content/LTS_app/uploads/documents/0ecdca9a-b753-4fb5-ac12-04a2bc0373b4_Plastic Waste Reduction Act.pdf"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"16102851"},{"Name":"Content-Type","Value":"application/pdf"},{"Name":"ETag","Value":"\u00222XM5f5P3vHV6BeslpxekFlDUrMTjldIef3N5m/fQ95c=\u0022"},{"Name":"Last-Modified","Value":"Sat, 29 Mar 2025 05:33:18 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/LTS_app/uploads/documents/0ecdca9a-b753-4fb5-ac12-04a2bc0373b4_Plastic Waste Reduction Act.pdf">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\documents\0ecdca9a-b753-4fb5-ac12-04a2bc0373b4_Plastic Waste Reduction Act.pdf'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-2XM5f5P3vHV6BeslpxekFlDUrMTjldIef3N5m/fQ95c="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"16102851"},{"Name":"Content-Type","Value":"application/pdf"},{"Name":"ETag","Value":"\u00222XM5f5P3vHV6BeslpxekFlDUrMTjldIef3N5m/fQ95c=\u0022"},{"Name":"Last-Modified","Value":"Sat, 29 Mar 2025 05:33:18 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/LTS_app/uploads/documents/10bc23b3-12d8-48f6-a989-4569baac356f_Teacher Salary Increase Act.8l2v08yoaq.pdf">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\documents\10bc23b3-12d8-48f6-a989-4569baac356f_Teacher Salary Increase Act.pdf'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
@@ -14556,6 +14568,18 @@
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-H5jo8LI/YbgZv\u002Bvscf2oHVLxgoFnSZAdRjOtwClvxd0="}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"37080"},{"Name":"Content-Type","Value":"application/pdf"},{"Name":"ETag","Value":"\u0022H5jo8LI/YbgZv\u002Bvscf2oHVLxgoFnSZAdRjOtwClvxd0=\u0022"},{"Name":"Last-Modified","Value":"Fri, 21 Mar 2025 06:25:04 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/LTS_app/uploads/documents/39cab1bd-9e3c-4893-ac7f-2bcf4a3262cd_Plastic Waste Reduction Act.hygsvwr2nz.pdf">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\documents\39cab1bd-9e3c-4893-ac7f-2bcf4a3262cd_Plastic Waste Reduction Act.pdf'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"hygsvwr2nz"},{"Name":"integrity","Value":"sha256-2XM5f5P3vHV6BeslpxekFlDUrMTjldIef3N5m/fQ95c="},{"Name":"label","Value":"_content/LTS_app/uploads/documents/39cab1bd-9e3c-4893-ac7f-2bcf4a3262cd_Plastic Waste Reduction Act.pdf"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"16102851"},{"Name":"Content-Type","Value":"application/pdf"},{"Name":"ETag","Value":"\u00222XM5f5P3vHV6BeslpxekFlDUrMTjldIef3N5m/fQ95c=\u0022"},{"Name":"Last-Modified","Value":"Sat, 29 Mar 2025 05:02:01 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/LTS_app/uploads/documents/39cab1bd-9e3c-4893-ac7f-2bcf4a3262cd_Plastic Waste Reduction Act.pdf">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\documents\39cab1bd-9e3c-4893-ac7f-2bcf4a3262cd_Plastic Waste Reduction Act.pdf'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-2XM5f5P3vHV6BeslpxekFlDUrMTjldIef3N5m/fQ95c="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"16102851"},{"Name":"Content-Type","Value":"application/pdf"},{"Name":"ETag","Value":"\u00222XM5f5P3vHV6BeslpxekFlDUrMTjldIef3N5m/fQ95c=\u0022"},{"Name":"Last-Modified","Value":"Sat, 29 Mar 2025 05:02:01 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/LTS_app/uploads/documents/3a39da4b-1f82-4859-b357-9ab40cfa8951_Plastic Waste Reduction Act.hygsvwr2nz.pdf">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\documents\3a39da4b-1f82-4859-b357-9ab40cfa8951_Plastic Waste Reduction Act.pdf'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
@@ -14579,6 +14603,30 @@
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-H5jo8LI/YbgZv\u002Bvscf2oHVLxgoFnSZAdRjOtwClvxd0="}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"37080"},{"Name":"Content-Type","Value":"application/pdf"},{"Name":"ETag","Value":"\u0022H5jo8LI/YbgZv\u002Bvscf2oHVLxgoFnSZAdRjOtwClvxd0=\u0022"},{"Name":"Last-Modified","Value":"Fri, 21 Mar 2025 07:15:02 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/LTS_app/uploads/documents/5cd60b6a-7a5b-4a9c-bef1-cb0f487e85d8_Plastic Waste Reduction Act.hygsvwr2nz.pdf">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\documents\5cd60b6a-7a5b-4a9c-bef1-cb0f487e85d8_Plastic Waste Reduction Act.pdf'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"hygsvwr2nz"},{"Name":"integrity","Value":"sha256-2XM5f5P3vHV6BeslpxekFlDUrMTjldIef3N5m/fQ95c="},{"Name":"label","Value":"_content/LTS_app/uploads/documents/5cd60b6a-7a5b-4a9c-bef1-cb0f487e85d8_Plastic Waste Reduction Act.pdf"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"16102851"},{"Name":"Content-Type","Value":"application/pdf"},{"Name":"ETag","Value":"\u00222XM5f5P3vHV6BeslpxekFlDUrMTjldIef3N5m/fQ95c=\u0022"},{"Name":"Last-Modified","Value":"Sat, 29 Mar 2025 05:33:18 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/LTS_app/uploads/documents/5cd60b6a-7a5b-4a9c-bef1-cb0f487e85d8_Plastic Waste Reduction Act.pdf">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\documents\5cd60b6a-7a5b-4a9c-bef1-cb0f487e85d8_Plastic Waste Reduction Act.pdf'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-2XM5f5P3vHV6BeslpxekFlDUrMTjldIef3N5m/fQ95c="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"16102851"},{"Name":"Content-Type","Value":"application/pdf"},{"Name":"ETag","Value":"\u00222XM5f5P3vHV6BeslpxekFlDUrMTjldIef3N5m/fQ95c=\u0022"},{"Name":"Last-Modified","Value":"Sat, 29 Mar 2025 05:33:18 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/LTS_app/uploads/documents/6694b495-e968-4013-a5e9-d123a80ca828_Plastic Waste Reduction Act.hygsvwr2nz.pdf">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\documents\6694b495-e968-4013-a5e9-d123a80ca828_Plastic Waste Reduction Act.pdf'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"hygsvwr2nz"},{"Name":"integrity","Value":"sha256-2XM5f5P3vHV6BeslpxekFlDUrMTjldIef3N5m/fQ95c="},{"Name":"label","Value":"_content/LTS_app/uploads/documents/6694b495-e968-4013-a5e9-d123a80ca828_Plastic Waste Reduction Act.pdf"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"16102851"},{"Name":"Content-Type","Value":"application/pdf"},{"Name":"ETag","Value":"\u00222XM5f5P3vHV6BeslpxekFlDUrMTjldIef3N5m/fQ95c=\u0022"},{"Name":"Last-Modified","Value":"Sat, 29 Mar 2025 05:02:00 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/LTS_app/uploads/documents/6694b495-e968-4013-a5e9-d123a80ca828_Plastic Waste Reduction Act.pdf">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\documents\6694b495-e968-4013-a5e9-d123a80ca828_Plastic Waste Reduction Act.pdf'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-2XM5f5P3vHV6BeslpxekFlDUrMTjldIef3N5m/fQ95c="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"16102851"},{"Name":"Content-Type","Value":"application/pdf"},{"Name":"ETag","Value":"\u00222XM5f5P3vHV6BeslpxekFlDUrMTjldIef3N5m/fQ95c=\u0022"},{"Name":"Last-Modified","Value":"Sat, 29 Mar 2025 05:02:00 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/LTS_app/uploads/documents/a057ea7e-fa2b-46bd-93a2-ea085123798d_logo.blqydkm6pl.pdf">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\documents\a057ea7e-fa2b-46bd-93a2-ea085123798d_logo.pdf'))</AssetFile>
@@ -14735,6 +14783,30 @@
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-gMcviI6z3xnIbR4Kz7aHIFVW/qbFEdtwGFc27TILibw="}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"53842"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022gMcviI6z3xnIbR4Kz7aHIFVW/qbFEdtwGFc27TILibw=\u0022"},{"Name":"Last-Modified","Value":"Fri, 21 Mar 2025 06:25:04 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/LTS_app/uploads/images/ba479032-2741-4d03-8156-738c814ecfb3_Cover.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\ba479032-2741-4d03-8156-738c814ecfb3_Cover.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-PGvWZwHJdFP4EqaCwRNYjKhOO7c0/QsHavDtEBoBFwE="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"87644"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022PGvWZwHJdFP4EqaCwRNYjKhOO7c0/QsHavDtEBoBFwE=\u0022"},{"Name":"Last-Modified","Value":"Sat, 29 Mar 2025 05:02:01 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/LTS_app/uploads/images/ba479032-2741-4d03-8156-738c814ecfb3_Cover.w9eepnadeb.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\ba479032-2741-4d03-8156-738c814ecfb3_Cover.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"w9eepnadeb"},{"Name":"integrity","Value":"sha256-PGvWZwHJdFP4EqaCwRNYjKhOO7c0/QsHavDtEBoBFwE="},{"Name":"label","Value":"_content/LTS_app/uploads/images/ba479032-2741-4d03-8156-738c814ecfb3_Cover.jpg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"87644"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022PGvWZwHJdFP4EqaCwRNYjKhOO7c0/QsHavDtEBoBFwE=\u0022"},{"Name":"Last-Modified","Value":"Sat, 29 Mar 2025 05:02:01 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/LTS_app/uploads/images/c41a5925-bc25-4d01-b06e-9e8d5a23d969_Cover.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\c41a5925-bc25-4d01-b06e-9e8d5a23d969_Cover.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-PGvWZwHJdFP4EqaCwRNYjKhOO7c0/QsHavDtEBoBFwE="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"87644"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022PGvWZwHJdFP4EqaCwRNYjKhOO7c0/QsHavDtEBoBFwE=\u0022"},{"Name":"Last-Modified","Value":"Sat, 29 Mar 2025 05:33:18 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/LTS_app/uploads/images/c41a5925-bc25-4d01-b06e-9e8d5a23d969_Cover.w9eepnadeb.jpg">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\c41a5925-bc25-4d01-b06e-9e8d5a23d969_Cover.jpg'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"w9eepnadeb"},{"Name":"integrity","Value":"sha256-PGvWZwHJdFP4EqaCwRNYjKhOO7c0/QsHavDtEBoBFwE="},{"Name":"label","Value":"_content/LTS_app/uploads/images/c41a5925-bc25-4d01-b06e-9e8d5a23d969_Cover.jpg"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"87644"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022PGvWZwHJdFP4EqaCwRNYjKhOO7c0/QsHavDtEBoBFwE=\u0022"},{"Name":"Last-Modified","Value":"Sat, 29 Mar 2025 05:33:18 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/LTS_app/uploads/images/ce415675-1df1-46bd-b711-a392d8694b73_ITDCSytem.png">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\ce415675-1df1-46bd-b711-a392d8694b73_ITDCSytem.png'))</AssetFile>

@@ -26,7 +26,13 @@ data-sidebar-position="fixed" data-header-position="fixed">
                         <i class="bi bi-plus-circle"></i> Add Bill
                     </button>
                 }
-                <a href="@Url.Action("Dashboard", User.IsInRole("Admin") ? "Admin" : "Legislator")" class="btn btn-secondary btn-sm">Dashboard</a>
+                <!--a href="@Url.Action("Dashboard", User.IsInRole("Admin") ? "Admin" : "Legislator")" class="btn btn-secondary btn-sm">Dashboard</a-->
+                @if (User.IsInRole("Legislator") || User.IsInRole("Admin"))
+                {
+                    <a asp-area="" asp-controller="Home" asp-action="UnderConstruction" title="UnderConstruction" class="btn btn-secondary btn-sm">History</a>
+                    <a asp-area="" asp-controller="Home" asp-action="UnderConstruction" title="UnderConstruction" class="btn btn-secondary btn-sm">Vote(s)</a>
+                    <a asp-area="" asp-controller="Home" asp-action="UnderConstruction" title="UnderConstruction" class="btn btn-secondary btn-sm">Amendment(s)</a>
+                }
             </div>
 
             <div class="card shadow-sm">
@@ -169,10 +175,10 @@ data-sidebar-position="fixed" data-header-position="fixed">
             <div class="modal-body">
                 <p><strong>Title:</strong> <span id="viewBillTitle"></span></p>
                 <p><strong>Description:</strong> <span id="viewBillDescription"></span></p>
-                <p><strong>Status:</strong> <span id="viewBillStatus"></span></p>
+                <!--p><strong>Status:</strong> <span id="viewBillStatus"></span></p-->
                 <p><strong>Proposed by:</strong> <span id="viewBillUser"></span></p>
-                <p><strong>Committee:</strong> <span id="viewBillCommittee"></span></p>
-                <p><strong>Session:</strong> <span id="viewBillSession"></span></p>
+                <!--p><strong>Committee:</strong> <span id="viewBillCommittee"></span></p-->
+                <!--p><strong>Session:</strong> <span id="viewBillSession"></span></p-->
                 <p><strong>Introduced Date:</strong> <span id="viewBillDate"></span></p>
             </div>
             <div class="modal-footer d-flex justify-content-between">
